@@ -1,0 +1,138 @@
+{
+  "contract_version": "eu-reporters-v2",
+  "iea": {
+    "endpoint": "https://api.iea.org/minerals",
+    "edition": "GCMO2026",
+    "materials": [
+      "Copper",
+      "Cobalt",
+      "Lithium",
+      "Nickel",
+      "Graphite",
+      "Magnet rare earth elements",
+      "Graphite: all grades"
+    ],
+    "demand_years": [
+      2025,
+      2030,
+      2035,
+      2040,
+      2045,
+      2050
+    ],
+    "supply_years": [
+      2025,
+      2030,
+      2035,
+      2040
+    ],
+    "demand_scenarios": [
+      "Current Policies Scenario",
+      "High Demand Scenario",
+      "Stated Policies Scenario"
+    ],
+    "supply_scenarios": [
+      "Stated Policies Scenario"
+    ],
+    "licensing": {
+      "licence": "CC BY 4.0",
+      "licence_url": "https://www.iea.org/terms/creative-commons-cc-licenses",
+      "attribution": "IEA (2026), Critical Minerals Dataset, IEA, Paris, https://www.iea.org/data-and-statistics/data-product/critical-minerals-dataset, Licence: CC BY 4.0",
+      "publication_status": "original_bytes_attribution_required; derived_work_notice_before_publication"
+    }
+  },
+  "comext": {
+    "endpoint": "https://ec.europa.eu/eurostat/api/comext/dissemination/statistics/1.0/data/DS-045409",
+    "years": [
+      2018,
+      2019,
+      2020,
+      2021,
+      2022,
+      2023,
+      2024
+    ],
+    "licensing": {
+      "licence": "Eurostat attributed statistical reuse with exceptions",
+      "licence_url": "https://ec.europa.eu/eurostat/help/copyright-notice",
+      "attribution": "Source: Eurostat, DS-045409; cite extraction and source-update dates; derived results are not the responsibility of Eurostat.",
+      "publication_status": "reviewed_EU_member_reporters_DE_FR_IT_ES_PL_NL_and_Eurostat_EU27_2020_aggregate; attributed_reuse; no_Austria_declaring_CN8"
+    },
+    "products": [
+      {
+        "code": "28369100",
+        "material_context": "lithium",
+        "label_contains": [
+          "lithium",
+          "carbonates"
+        ],
+        "scope_note": "Lithium carbonate product mass; not lithium metal content or all lithium products"
+      },
+      {
+        "code": "28220000",
+        "material_context": "cobalt",
+        "label_contains": [
+          "cobalt",
+          "oxides"
+        ],
+        "scope_note": "Cobalt oxides/hydroxides product mass; G04 cross-source quantity discrepancy unresolved"
+      },
+      {
+        "code": "26030000",
+        "material_context": "copper",
+        "label_contains": [
+          "copper",
+          "ores",
+          "concentrates"
+        ],
+        "scope_note": "Ore/concentrate gross product mass; not contained copper or refined copper"
+      },
+      {
+        "code": "26040000",
+        "material_context": "nickel",
+        "label_contains": [
+          "nickel",
+          "ores",
+          "concentrates"
+        ],
+        "scope_note": "Ore/concentrate product mass; not contained nickel or refining output"
+      },
+      {
+        "code": "25041000",
+        "material_context": "graphite",
+        "label_contains": [
+          "natural",
+          "graphite"
+        ],
+        "scope_note": "Natural graphite powder/flakes; not synthetic or all-grades IEA graphite"
+      },
+      {
+        "code": "85051110",
+        "material_context": "rare_earth_magnets_product",
+        "label_contains": [
+          "permanent magnets",
+          "neodymium"
+        ],
+        "scope_note": "Finished magnet articles including Nd/Pr/Dy/Sm; not equivalent to IEA magnet-REE demand or contained REE mass"
+      }
+    ],
+    "reporters": [
+      "DE",
+      "FR",
+      "IT",
+      "ES",
+      "PL",
+      "NL",
+      "EU27_2020"
+    ],
+    "reporter_scope": {
+      "DE": "all_partners",
+      "FR": "all_partners",
+      "IT": "all_partners",
+      "ES": "all_partners",
+      "PL": "all_partners",
+      "NL": "all_partners",
+      "EU27_2020": "extra_EU27_2020_only_for_business_metrics"
+    }
+  }
+}

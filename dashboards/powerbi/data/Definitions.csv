@@ -1,0 +1,8 @@
+DefinitionKey,Material,MaterialButton,Family,DefinitionScope,QuantityBasis
+65a65a934a20e758f9553d6a6161160e,Graphite,C · Graphite,Graphite,IEA Graphite; distinct from all grades,unverified_native_equivalent
+75567cc225f0d28e5208376d50af7fa8,Magnet rare earth elements,REE · Magnets,Magnet rare earth context,IEA magnet rare earth elements; not all REE or finished magnets,unverified_native_equivalent
+a22a29f33f9851c3b42faa288bee9096,Copper,Cu · Copper,Copper,IEA native copper,unverified_native_equivalent
+ac7c58520ef0efb934e27f5872ae0172,Lithium,Li · Lithium,Lithium,IEA native lithium,unverified_native_equivalent
+cd3f637d7e4e9b5aac7f192a8bcc082f,Cobalt,Co · Cobalt,Cobalt,IEA native cobalt,unverified_native_equivalent
+ea3fdf50e97a225bb33eb586232e2b72,Graphite: all grades,C · All grades,Graphite,IEA all grades graphite; separate demand definition,unverified_native_equivalent
+f85e05a83530953b5a5621544541d0ac,Nickel,Ni · Nickel,Nickel,IEA native nickel,unverified_native_equivalent

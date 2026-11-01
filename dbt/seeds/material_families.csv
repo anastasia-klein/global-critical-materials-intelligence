@@ -1,0 +1,7 @@
+family_id,material_family,definition_note
+cobalt,Cobalt,Context grouping only; never sum incompatible product forms or native definitions
+copper,Copper,Context grouping only; never sum incompatible product forms or native definitions
+graphite,Graphite,Context grouping only; never sum incompatible product forms or native definitions
+lithium,Lithium,Context grouping only; never sum incompatible product forms or native definitions
+magnet_rare_earths,Magnet rare earth context,Context grouping only; never sum incompatible product forms or native definitions
+nickel,Nickel,Context grouping only; never sum incompatible product forms or native definitions

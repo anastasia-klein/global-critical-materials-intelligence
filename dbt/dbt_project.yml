@@ -1,0 +1,46 @@
+name: global_critical_materials
+version: 1.0.0
+config-version: 2
+profile: global_critical_materials
+model-paths:
+- models
+seed-paths:
+- seeds
+macro-paths:
+- macros
+test-paths:
+- tests
+clean-targets:
+- target
+- dbt_packages
+models:
+  global_critical_materials:
+    +persist_docs:
+      relation: true
+      columns: true
+    staging:
+      +schema: silver
+      +materialized: view
+    intermediate:
+      +schema: silver
+      +materialized: view
+    marts:
+      core:
+        +schema: gold
+        +materialized: table
+      quality:
+        +schema: quality
+        +materialized: view
+      business:
+        +schema: analytics
+        +materialized: table
+seeds:
+  global_critical_materials:
+    +schema: reference
+    +quote_columns: false
+    trade_product_mapping:
+      +column_types:
+        product_code: varchar
+    trade_flow_mapping:
+      +column_types:
+        flow_code: varchar

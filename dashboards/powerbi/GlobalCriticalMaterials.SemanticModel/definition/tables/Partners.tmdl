@@ -1,0 +1,128 @@
+/// Reviewed DuckDB business-layer export. See export_manifest.json for exact source SQL and snapshot selection.
+table Partners
+	lineageTag: bedc95a1-a02e-509a-b8ab-15487e69d5b7
+
+	column RowKey
+		dataType: string
+		lineageTag: acc7753f-86e4-5f16-b23c-3748661c0ada
+		summarizeBy: none
+		sourceColumn: RowKey
+		isHidden
+
+	column SelectionKey
+		dataType: string
+		lineageTag: 880b9d7c-ce69-57bc-8fd6-0a2e6bf49a49
+		summarizeBy: none
+		sourceColumn: SelectionKey
+		isHidden
+
+	column ProductCode
+		dataType: string
+		lineageTag: d2e64c8d-6c7d-5c6e-a732-e43d076e91d5
+		summarizeBy: none
+		sourceColumn: ProductCode
+
+	column ReporterKey
+		dataType: string
+		lineageTag: 38f66f27-53b7-5dea-917b-44432647b0f4
+		summarizeBy: none
+		sourceColumn: ReporterKey
+		isHidden
+
+	column Year
+		dataType: int64
+		lineageTag: f8d7b0d9-1087-5f42-a70e-f61f264112ee
+		summarizeBy: none
+		sourceColumn: Year
+		formatString: 0
+
+	column Flow
+		dataType: string
+		lineageTag: 048c0327-172e-5db9-9be4-225fcd03c528
+		summarizeBy: none
+		sourceColumn: Flow
+
+	column PartnerKey
+		dataType: string
+		lineageTag: b5008ad7-43fd-5632-9a61-52fc3322f12b
+		summarizeBy: none
+		sourceColumn: PartnerKey
+		isHidden
+
+	column Partner
+		dataType: string
+		lineageTag: 0888e701-ccf7-54bf-9255-7e3579df6c47
+		summarizeBy: none
+		sourceColumn: Partner
+
+	column PartnerType
+		dataType: string
+		lineageTag: 078ee7d6-f94f-5ae7-8c08-61a81d985afe
+		summarizeBy: none
+		sourceColumn: PartnerType
+
+	column Basis
+		dataType: string
+		lineageTag: b9264758-6d82-56d7-951f-9123e4e1222a
+		summarizeBy: none
+		sourceColumn: Basis
+
+	column Amount
+		dataType: double
+		lineageTag: 9846a18f-dab3-597d-92c4-284af72aeb6c
+		summarizeBy: none
+		sourceColumn: Amount
+
+	column DenominatorScope
+		dataType: string
+		lineageTag: 3126e1fe-4297-51f9-8eae-d63be2272f9f
+		summarizeBy: none
+		sourceColumn: DenominatorScope
+
+	column Share
+		dataType: double
+		lineageTag: 3af7e976-a004-5639-9507-29a1d9cfae29
+		summarizeBy: none
+		sourceColumn: Share
+
+	column SourceStatus
+		dataType: string
+		lineageTag: ae9ac473-a29a-51a1-adc4-39efe7a0a00e
+		summarizeBy: none
+		sourceColumn: SourceStatus
+
+	column SourceRecordKey
+		dataType: string
+		lineageTag: ac1a146d-61de-5b85-87f2-3d4db7243bd3
+		summarizeBy: none
+		sourceColumn: SourceRecordKey
+		isHidden
+
+	column Evidence
+		dataType: string
+		lineageTag: 9609a856-538a-5666-b98d-b3a6f96526fb
+		summarizeBy: none
+		sourceColumn: Evidence
+
+	column SnapshotKey
+		dataType: string
+		lineageTag: 0b7c0d3f-10e1-58df-8394-04e86b920625
+		summarizeBy: none
+		sourceColumn: SnapshotKey
+		isHidden
+
+	column PartnerDisplay
+		dataType: string
+		lineageTag: ab5a8f36-f596-5ff2-9e6a-22c5f6830ff3
+		summarizeBy: none
+		sourceColumn: PartnerDisplay
+
+	partition Partners = m
+		mode: import
+		source =
+			let
+				Source = Csv.Document(File.Contents(DataFolder & "/Partners.csv"),[Delimiter=",", Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+				Headers = Table.PromoteHeaders(Source,[PromoteAllScalars=true]),
+				Typed = Table.TransformColumnTypes(Headers,{{"RowKey", type text}, {"SelectionKey", type text}, {"ProductCode", type text}, {"ReporterKey", type text}, {"Year", Int64.Type}, {"Flow", type text}, {"PartnerKey", type text}, {"Partner", type text}, {"PartnerType", type text}, {"Basis", type text}, {"Amount", type number}, {"DenominatorScope", type text}, {"Share", type number}, {"SourceStatus", type text}, {"SourceRecordKey", type text}, {"Evidence", type text}, {"SnapshotKey", type text}, {"PartnerDisplay", type text}},"en-US")
+			in
+				Typed

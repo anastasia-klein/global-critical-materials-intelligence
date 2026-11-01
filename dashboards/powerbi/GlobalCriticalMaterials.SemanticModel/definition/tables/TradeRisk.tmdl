@@ -1,0 +1,153 @@
+/// Reviewed DuckDB business-layer export. See export_manifest.json for exact source SQL and snapshot selection.
+table TradeRisk
+	lineageTag: 31f64e05-56e4-5178-8be3-ae9acf63a653
+
+	column RowKey
+		dataType: string
+		lineageTag: b1ca9f72-6d84-5248-bb86-21955d1ffeec
+		summarizeBy: none
+		sourceColumn: RowKey
+		isHidden
+
+	column SelectionKey
+		dataType: string
+		lineageTag: 4e057949-c5a9-52c2-885d-a29f99cf2665
+		summarizeBy: none
+		sourceColumn: SelectionKey
+		isHidden
+
+	column ProductCode
+		dataType: string
+		lineageTag: 7b631f27-34e6-5a5c-914d-eef7817b3b1f
+		summarizeBy: none
+		sourceColumn: ProductCode
+
+	column ReporterKey
+		dataType: string
+		lineageTag: 59d8322b-0e2b-59ec-b1ca-d002d3af4974
+		summarizeBy: none
+		sourceColumn: ReporterKey
+		isHidden
+
+	column Year
+		dataType: int64
+		lineageTag: 222519b7-c5ce-5ba6-ab72-ba3bb902a9b1
+		summarizeBy: none
+		sourceColumn: Year
+		formatString: 0
+
+	column BaseYear
+		dataType: int64
+		lineageTag: e5e8dfcc-14d9-56f4-bca5-6174fe38ee74
+		summarizeBy: none
+		sourceColumn: BaseYear
+		formatString: 0
+
+	column EndYear
+		dataType: int64
+		lineageTag: f2c1a373-c054-5905-b122-6ad2b770253c
+		summarizeBy: none
+		sourceColumn: EndYear
+		formatString: 0
+
+	column Stage
+		dataType: string
+		lineageTag: 63974d51-a97c-52be-83e0-51c713213213
+		summarizeBy: none
+		sourceColumn: Stage
+
+	column Scenario
+		dataType: string
+		lineageTag: 282d5e00-8554-5926-b274-af8ccab5cdd9
+		summarizeBy: none
+		sourceColumn: Scenario
+
+	column ScenarioCase
+		dataType: string
+		lineageTag: bcdcaccb-ed5f-53b7-950b-e0bce81baab4
+		summarizeBy: none
+		sourceColumn: ScenarioCase
+
+	column Edition
+		dataType: string
+		lineageTag: 36b97e08-cffe-516f-a0d4-090b4316866b
+		summarizeBy: none
+		sourceColumn: Edition
+
+	column Basis
+		dataType: string
+		lineageTag: d3733ff8-13c1-5f64-b1c0-35e1e6c04c02
+		summarizeBy: none
+		sourceColumn: Basis
+
+	column Component
+		dataType: string
+		lineageTag: 9902e056-58b7-5fde-bf7a-15038962eed7
+		summarizeBy: none
+		sourceColumn: Component
+
+	column Unit
+		dataType: string
+		lineageTag: f19020c6-73ca-5033-81f7-e18659a42a6d
+		summarizeBy: none
+		sourceColumn: Unit
+
+	column Value
+		dataType: double
+		lineageTag: fb7e1614-e14f-5fbf-82a6-b3dbeff819ca
+		summarizeBy: none
+		sourceColumn: Value
+
+	column LowerBound
+		dataType: double
+		lineageTag: d1b30402-50e6-5a95-b6b4-424a140345ec
+		summarizeBy: none
+		sourceColumn: LowerBound
+
+	column UpperBound
+		dataType: double
+		lineageTag: c8d4b3bb-a344-519a-8110-8b58cd481201
+		summarizeBy: none
+		sourceColumn: UpperBound
+
+	column Availability
+		dataType: string
+		lineageTag: 542ba93e-be3c-5075-9138-716e6c84e753
+		summarizeBy: none
+		sourceColumn: Availability
+
+	column AvailabilityReason
+		dataType: string
+		lineageTag: d250feeb-7046-5312-af5a-bb9511b3759c
+		summarizeBy: none
+		sourceColumn: AvailabilityReason
+
+	column Evidence
+		dataType: string
+		lineageTag: 11fe23d6-a7c4-59e4-8ea3-4486df1b42f5
+		summarizeBy: none
+		sourceColumn: Evidence
+
+	column ComparisonContractKey
+		dataType: string
+		lineageTag: d658b927-5936-5754-8041-17ad2714006d
+		summarizeBy: none
+		sourceColumn: ComparisonContractKey
+		isHidden
+
+	column SnapshotKey
+		dataType: string
+		lineageTag: ddfe64df-a846-5c30-9203-7472c3e6a169
+		summarizeBy: none
+		sourceColumn: SnapshotKey
+		isHidden
+
+	partition TradeRisk = m
+		mode: import
+		source =
+			let
+				Source = Csv.Document(File.Contents(DataFolder & "/TradeRisk.csv"),[Delimiter=",", Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+				Headers = Table.PromoteHeaders(Source,[PromoteAllScalars=true]),
+				Typed = Table.TransformColumnTypes(Headers,{{"RowKey", type text}, {"SelectionKey", type text}, {"ProductCode", type text}, {"ReporterKey", type text}, {"Year", Int64.Type}, {"BaseYear", Int64.Type}, {"EndYear", Int64.Type}, {"Stage", type text}, {"Scenario", type text}, {"ScenarioCase", type text}, {"Edition", type text}, {"Basis", type text}, {"Component", type text}, {"Unit", type text}, {"Value", type number}, {"LowerBound", type number}, {"UpperBound", type number}, {"Availability", type text}, {"AvailabilityReason", type text}, {"Evidence", type text}, {"ComparisonContractKey", type text}, {"SnapshotKey", type text}},"en-US")
+			in
+				Typed

@@ -1,0 +1,90 @@
+/// Reviewed DuckDB business-layer export. See export_manifest.json for exact source SQL and snapshot selection.
+table Sensitivity
+	lineageTag: ddb14367-f3ba-59d3-a208-915457ec5d27
+
+	column RowKey
+		dataType: string
+		lineageTag: 5128237d-faae-51bb-8f9b-2ff6c95df461
+		summarizeBy: none
+		sourceColumn: RowKey
+		isHidden
+
+	column SelectionKey
+		dataType: string
+		lineageTag: 2797bb96-7d49-52da-b795-6b25a4e47696
+		summarizeBy: none
+		sourceColumn: SelectionKey
+		isHidden
+
+	column ProductCode
+		dataType: string
+		lineageTag: 06de85e8-5be7-5df9-8662-e34b9d6356b6
+		summarizeBy: none
+		sourceColumn: ProductCode
+
+	column ReporterKey
+		dataType: string
+		lineageTag: 2ea63a03-fae8-5360-b2e2-971ecf9d00db
+		summarizeBy: none
+		sourceColumn: ReporterKey
+		isHidden
+
+	column Year
+		dataType: int64
+		lineageTag: 5f268a26-87c7-5c5d-94f7-3d277bc5f11d
+		summarizeBy: none
+		sourceColumn: Year
+		formatString: 0
+
+	column ValueHHILower
+		dataType: double
+		lineageTag: 79a39182-f745-59a4-93a0-a298e34e10ce
+		summarizeBy: none
+		sourceColumn: ValueHHILower
+
+	column ValueHHIUpper
+		dataType: double
+		lineageTag: 086994d4-916c-55eb-aab9-b8a966b0b402
+		summarizeBy: none
+		sourceColumn: ValueHHIUpper
+
+	column MassHHILower
+		dataType: double
+		lineageTag: cfd6237c-c740-5bef-a06a-c34f4f35d1db
+		summarizeBy: none
+		sourceColumn: MassHHILower
+
+	column MassHHIUpper
+		dataType: double
+		lineageTag: f80cebb0-ccd7-51be-bc93-a2adacda677b
+		summarizeBy: none
+		sourceColumn: MassHHIUpper
+
+	column SensitivityResult
+		dataType: string
+		lineageTag: 2485f2ed-27ae-5b5d-92ac-fd7412a51c71
+		summarizeBy: none
+		sourceColumn: SensitivityResult
+
+	column ExternalReconciliationCaveat
+		dataType: string
+		lineageTag: 321fd252-97d7-52f8-8cef-fa297abb62af
+		summarizeBy: none
+		sourceColumn: ExternalReconciliationCaveat
+
+	column SnapshotKey
+		dataType: string
+		lineageTag: 1e689195-eca8-5474-930e-621e43a3304c
+		summarizeBy: none
+		sourceColumn: SnapshotKey
+		isHidden
+
+	partition Sensitivity = m
+		mode: import
+		source =
+			let
+				Source = Csv.Document(File.Contents(DataFolder & "/Sensitivity.csv"),[Delimiter=",", Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+				Headers = Table.PromoteHeaders(Source,[PromoteAllScalars=true]),
+				Typed = Table.TransformColumnTypes(Headers,{{"RowKey", type text}, {"SelectionKey", type text}, {"ProductCode", type text}, {"ReporterKey", type text}, {"Year", Int64.Type}, {"ValueHHILower", type number}, {"ValueHHIUpper", type number}, {"MassHHILower", type number}, {"MassHHIUpper", type number}, {"SensitivityResult", type text}, {"ExternalReconciliationCaveat", type text}, {"SnapshotKey", type text}},"en-US")
+			in
+				Typed

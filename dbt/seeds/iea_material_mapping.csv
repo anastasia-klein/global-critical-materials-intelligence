@@ -1,0 +1,8 @@
+native_material,family_id,definition_scope
+Cobalt,cobalt,IEA native cobalt
+Copper,copper,IEA native copper
+Graphite,graphite,IEA Graphite; distinct from all grades
+Graphite: all grades,graphite,IEA all grades graphite; separate demand definition
+Lithium,lithium,IEA native lithium
+Magnet rare earth elements,magnet_rare_earths,IEA magnet rare earth elements; not all REE or finished magnets
+Nickel,nickel,IEA native nickel

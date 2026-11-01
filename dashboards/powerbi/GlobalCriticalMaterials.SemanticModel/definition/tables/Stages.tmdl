@@ -1,0 +1,19 @@
+/// Reviewed DuckDB business-layer export. See export_manifest.json for exact source SQL and snapshot selection.
+table Stages
+	lineageTag: 69695914-6cc8-5c2a-bf5c-f70404c62955
+
+	column Stage
+		dataType: string
+		lineageTag: 93ac5a74-928e-5fc5-9fac-62e15280ab52
+		summarizeBy: none
+		sourceColumn: Stage
+
+	partition Stages = m
+		mode: import
+		source =
+			let
+				Source = Csv.Document(File.Contents(DataFolder & "/Stages.csv"),[Delimiter=",", Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+				Headers = Table.PromoteHeaders(Source,[PromoteAllScalars=true]),
+				Typed = Table.TransformColumnTypes(Headers,{{"Stage", type text}},"en-US")
+			in
+				Typed

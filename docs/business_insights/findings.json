@@ -1,0 +1,77 @@
+{
+  "lithium_stage_concentration": [
+    {
+      "Material": "Lithium",
+      "Year": 2030,
+      "Stage": "Mining",
+      "HHILower": 0.1846296078879405,
+      "HHIUpper": 0.19772840504293612
+    },
+    {
+      "Material": "Lithium",
+      "Year": 2030,
+      "Stage": "Refining",
+      "HHILower": 0.48329168143285284,
+      "HHIUpper": 0.4849625388041449
+    }
+  ],
+  "graphite_stage_concentration": [
+    {
+      "Material": "Graphite",
+      "Year": 2030,
+      "Stage": "Mining",
+      "HHILower": 0.3484422586706603,
+      "HHIUpper": 0.3540547816114916
+    },
+    {
+      "Material": "Graphite",
+      "Year": 2030,
+      "Stage": "Refining",
+      "HHILower": 0.8151907154928958,
+      "HHIUpper": 0.8176270103430836
+    }
+  ],
+  "nickel_stage_concentration": [
+    {
+      "Material": "Nickel",
+      "Year": 2030,
+      "Stage": "Mining",
+      "HHILower": 0.49874782090141706,
+      "HHIUpper": 0.5047162305105457
+    },
+    {
+      "Material": "Nickel",
+      "Year": 2030,
+      "Stage": "Refining",
+      "HHILower": 0.3245584938029095,
+      "HHIUpper": 0.3344405361660898
+    }
+  ],
+  "german_lithium_carbonate_suppliers": [
+    {
+      "Partner": "Chile",
+      "Year": 2024,
+      "Basis": "trade_value",
+      "Share": 0.40630253968287244
+    },
+    {
+      "Partner": "Belgium",
+      "Year": 2024,
+      "Basis": "trade_value",
+      "Share": 0.26847421555217094
+    },
+    {
+      "Partner": "United States",
+      "Year": 2024,
+      "Basis": "trade_value",
+      "Share": 0.24622778025302833
+    }
+  ],
+  "lithium_ev_demand_share": [
+    {
+      "EVKT": 765.2739868164062,
+      "TotalKT": 932.4825668334961,
+      "EVShare": 0.8206844975291141
+    }
+  ]
+}

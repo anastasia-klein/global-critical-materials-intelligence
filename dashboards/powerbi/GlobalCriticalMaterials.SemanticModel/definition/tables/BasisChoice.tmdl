@@ -1,0 +1,25 @@
+/// Reviewed DuckDB business-layer export. See export_manifest.json for exact source SQL and snapshot selection.
+table BasisChoice
+	lineageTag: 0b6e9607-3562-509c-b17d-6f0f8aa77d41
+
+	column Basis
+		dataType: string
+		lineageTag: fc8ebd90-2f94-5954-952b-acedbe7faeec
+		summarizeBy: none
+		sourceColumn: Basis
+
+	column BasisLabel
+		dataType: string
+		lineageTag: 9cdbb72f-09d0-5098-bf19-3feca912e99a
+		summarizeBy: none
+		sourceColumn: BasisLabel
+
+	partition BasisChoice = m
+		mode: import
+		source =
+			let
+				Source = Csv.Document(File.Contents(DataFolder & "/BasisChoice.csv"),[Delimiter=",", Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+				Headers = Table.PromoteHeaders(Source,[PromoteAllScalars=true]),
+				Typed = Table.TransformColumnTypes(Headers,{{"Basis", type text}, {"BasisLabel", type text}},"en-US")
+			in
+				Typed

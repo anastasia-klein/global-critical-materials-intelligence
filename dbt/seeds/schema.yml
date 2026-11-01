@@ -1,0 +1,145 @@
+version: 2
+seeds:
+- name: geography_mapping
+  description: Version-controlled reviewed reference mapping; native identifiers preserved.
+  data_tests:
+  - unique_combination:
+      arguments:
+        columns:
+        - source
+        - native_id
+  columns:
+  - name: source
+    description: Reviewed source identifier; mappings are source-qualified.
+    data_tests:
+    - not_null
+    data_type: VARCHAR
+  - name: native_id
+    description: Unchanged native geography identifier; never fuzzy-matched.
+    data_tests:
+    - not_null
+    data_type: VARCHAR
+  - name: native_label
+    description: Original observed source label, including historical or aggregate
+      notes.
+    data_type: VARCHAR
+  - name: geography_id
+    description: ISO area identity or explicit source-qualified residual/special identifier.
+    data_type: VARCHAR
+  - name: canonical_name
+    description: Reference display name; native labels remain preserved.
+    data_type: VARCHAR
+  - name: iso_alpha2
+    description: Assigned ISO alpha-2 only; NA is Namibia, not a missing marker.
+    data_type: VARCHAR
+  - name: iso_alpha3
+    description: Assigned ISO alpha-3 only; no fabricated ISO for residuals or Kosovo.
+    data_type: VARCHAR
+  - name: entity_type
+    description: Area classification controlling whether country/aggregate calculations
+      are meaningful.
+    data_type: VARCHAR
+  - name: mapping_status
+    description: Explicit reviewed ISO/alias/aggregate/residual mapping rule.
+    data_type: VARCHAR
+- name: material_families
+  description: Version-controlled reviewed reference mapping; native identifiers preserved.
+  data_tests:
+  - unique_combination:
+      arguments:
+        columns:
+        - family_id
+  columns:
+  - name: family_id
+    description: Contextual material-family identifier, not a physical quantity definition.
+    data_tests:
+    - not_null
+    data_type: VARCHAR
+  - name: material_family
+    description: Contextual material-family label.
+    data_type: VARCHAR
+  - name: definition_note
+    description: Scope and non-additivity restriction.
+    data_type: VARCHAR
+- name: iea_material_mapping
+  description: Version-controlled reviewed reference mapping; native identifiers preserved.
+  data_tests:
+  - unique_combination:
+      arguments:
+        columns:
+        - native_material
+  columns:
+  - name: native_material
+    description: Exact source material definition; graphite grades remain separate.
+    data_tests:
+    - not_null
+    data_type: VARCHAR
+  - name: family_id
+    description: Contextual material-family identifier, not a physical quantity definition.
+    data_type: VARCHAR
+  - name: definition_scope
+    description: Measurement/product boundary and compatibility restriction.
+    data_type: VARCHAR
+- name: trade_product_mapping
+  description: Version-controlled reviewed reference mapping; native identifiers preserved.
+  data_tests:
+  - unique_combination:
+      arguments:
+        columns:
+        - product_code
+  columns:
+  - name: product_code
+    description: Native inspected CN8 code; stored as text.
+    data_tests:
+    - not_null
+    data_type: VARCHAR
+  - name: family_id
+    description: Contextual material-family identifier, not a physical quantity definition.
+    data_type: VARCHAR
+  - name: product_form
+    description: Specific traded form; not a full material basket.
+    data_type: VARCHAR
+  - name: definition_scope
+    description: Measurement/product boundary and compatibility restriction.
+    data_type: VARCHAR
+  - name: basis
+    description: Traded-product mass basis rather than contained metal.
+    data_type: VARCHAR
+  - name: concordance_status
+    description: Historical annual correspondence remains unverified.
+    data_type: VARCHAR
+- name: supply_chain_stages
+  description: Version-controlled reviewed reference mapping; native identifiers preserved.
+  data_tests:
+  - unique_combination:
+      arguments:
+        columns:
+        - stage_code
+  columns:
+  - name: stage_code
+    description: Canonical mining/refining stage code.
+    data_tests:
+    - not_null
+    data_type: VARCHAR
+  - name: stage_name
+    description: Native stage label.
+    data_type: VARCHAR
+  - name: measure_kind
+    description: Expected output, not nameplate capacity.
+    data_type: VARCHAR
+- name: trade_flow_mapping
+  description: Version-controlled reviewed reference mapping; native identifiers preserved.
+  data_tests:
+  - unique_combination:
+      arguments:
+        columns:
+        - flow_code
+  columns:
+  - name: flow_code
+    description: Native import/export code stored as text.
+    data_tests:
+    - not_null
+    data_type: VARCHAR
+  - name: flow_name
+    description: Trade direction from the reporter perspective.
+    data_type: VARCHAR

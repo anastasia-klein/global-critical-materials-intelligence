@@ -1,0 +1,224 @@
+source,native_id,native_label,geography_id,canonical_name,iso_alpha2,iso_alpha3,entity_type,mapping_status
+comext,AD,Andorra,ISO:AND,Andorra,AD,AND,country_or_territory,iso_alpha2
+comext,AE,United Arab Emirates,ISO:ARE,United Arab Emirates,AE,ARE,country_or_territory,iso_alpha2
+comext,AF,Afghanistan,ISO:AFG,Afghanistan,AF,AFG,country_or_territory,iso_alpha2
+comext,AG,Antigua and Barbuda,ISO:ATG,Antigua and Barbuda,AG,ATG,country_or_territory,iso_alpha2
+comext,AL,Albania,ISO:ALB,Albania,AL,ALB,country_or_territory,iso_alpha2
+comext,AM,Armenia,ISO:ARM,Armenia,AM,ARM,country_or_territory,iso_alpha2
+comext,AO,Angola,ISO:AGO,Angola,AO,AGO,country_or_territory,iso_alpha2
+comext,AR,Argentina,ISO:ARG,Argentina,AR,ARG,country_or_territory,iso_alpha2
+comext,AT,Austria,ISO:AUT,Austria,AT,AUT,country_or_territory,iso_alpha2
+comext,AU,Australia,ISO:AUS,Australia,AU,AUS,country_or_territory,iso_alpha2
+comext,AW,Aruba,ISO:ABW,Aruba,AW,ABW,country_or_territory,iso_alpha2
+comext,AZ,Azerbaijan,ISO:AZE,Azerbaijan,AZ,AZE,country_or_territory,iso_alpha2
+comext,BA,Bosnia and Herzegovina,ISO:BIH,Bosnia and Herzegovina,BA,BIH,country_or_territory,iso_alpha2
+comext,BB,Barbados,ISO:BRB,Barbados,BB,BRB,country_or_territory,iso_alpha2
+comext,BD,Bangladesh,ISO:BGD,Bangladesh,BD,BGD,country_or_territory,iso_alpha2
+comext,BE,Belgium (incl. Luxembourg 'LU' -> 1998),ISO:BEL,Belgium,BE,BEL,country_or_territory,iso_alpha2
+comext,BF,Burkina Faso,ISO:BFA,Burkina Faso,BF,BFA,country_or_territory,iso_alpha2
+comext,BG,Bulgaria,ISO:BGR,Bulgaria,BG,BGR,country_or_territory,iso_alpha2
+comext,BH,Bahrain,ISO:BHR,Bahrain,BH,BHR,country_or_territory,iso_alpha2
+comext,BI,Burundi,ISO:BDI,Burundi,BI,BDI,country_or_territory,iso_alpha2
+comext,BJ,Benin,ISO:BEN,Benin,BJ,BEN,country_or_territory,iso_alpha2
+comext,BN,Brunei Darussalam,ISO:BRN,Brunei Darussalam,BN,BRN,country_or_territory,iso_alpha2
+comext,BO,"Bolivia, Plurinational State of",ISO:BOL,"Bolivia, Plurinational State of",BO,BOL,country_or_territory,iso_alpha2
+comext,BQ,"Bonaire, Sint Eustatius and Saba",ISO:BES,"Bonaire, Sint Eustatius and Saba",BQ,BES,country_or_territory,iso_alpha2
+comext,BR,Brazil,ISO:BRA,Brazil,BR,BRA,country_or_territory,iso_alpha2
+comext,BW,Botswana,ISO:BWA,Botswana,BW,BWA,country_or_territory,iso_alpha2
+comext,BY,Belarus (Belorussia),ISO:BLR,Belarus,BY,BLR,country_or_territory,iso_alpha2
+comext,CA,Canada,ISO:CAN,Canada,CA,CAN,country_or_territory,iso_alpha2
+comext,CD,"Congo, Democratic Republic of",ISO:COD,"Congo, The Democratic Republic of the",CD,COD,country_or_territory,iso_alpha2
+comext,CG,Congo,ISO:COG,Congo,CG,COG,country_or_territory,iso_alpha2
+comext,CH,Switzerland (incl. Liechtenstein 'LI' -> 1994),ISO:CHE,Switzerland,CH,CHE,country_or_territory,iso_alpha2
+comext,CI,Côte d’Ivoire (Ivory Coast),ISO:CIV,Côte d'Ivoire,CI,CIV,country_or_territory,iso_alpha2
+comext,CL,Chile,ISO:CHL,Chile,CL,CHL,country_or_territory,iso_alpha2
+comext,CM,Cameroon,ISO:CMR,Cameroon,CM,CMR,country_or_territory,iso_alpha2
+comext,CN,China,ISO:CHN,China,CN,CHN,country_or_territory,iso_alpha2
+comext,CO,Colombia,ISO:COL,Colombia,CO,COL,country_or_territory,iso_alpha2
+comext,CR,Costa Rica,ISO:CRI,Costa Rica,CR,CRI,country_or_territory,iso_alpha2
+comext,CU,Cuba,ISO:CUB,Cuba,CU,CUB,country_or_territory,iso_alpha2
+comext,CV,Cabo Verde,ISO:CPV,Cabo Verde,CV,CPV,country_or_territory,iso_alpha2
+comext,CW,Curaçao,ISO:CUW,Curaçao,CW,CUW,country_or_territory,iso_alpha2
+comext,CY,Cyprus,ISO:CYP,Cyprus,CY,CYP,country_or_territory,iso_alpha2
+comext,CZ,Czechia,ISO:CZE,Czechia,CZ,CZE,country_or_territory,iso_alpha2
+comext,DE,Germany (incl. German Democratic Republic 'DD' from 1991),ISO:DEU,Germany,DE,DEU,country_or_territory,iso_alpha2
+comext,DJ,Djibouti,ISO:DJI,Djibouti,DJ,DJI,country_or_territory,iso_alpha2
+comext,DK,Denmark,ISO:DNK,Denmark,DK,DNK,country_or_territory,iso_alpha2
+comext,DO,Dominican Republic,ISO:DOM,Dominican Republic,DO,DOM,country_or_territory,iso_alpha2
+comext,DZ,Algeria,ISO:DZA,Algeria,DZ,DZA,country_or_territory,iso_alpha2
+comext,EC,Ecuador,ISO:ECU,Ecuador,EC,ECU,country_or_territory,iso_alpha2
+comext,EE,Estonia,ISO:EST,Estonia,EE,EST,country_or_territory,iso_alpha2
+comext,EG,Egypt,ISO:EGY,Egypt,EG,EGY,country_or_territory,iso_alpha2
+comext,ER,Eritrea,ISO:ERI,Eritrea,ER,ERI,country_or_territory,iso_alpha2
+comext,ES,Spain (incl. Canary Islands 'XB' from 1997),ISO:ESP,Spain,ES,ESP,country_or_territory,iso_alpha2
+comext,ET,Ethiopia (incl. Eritrea 'ER' -> 1993),ISO:ETH,Ethiopia,ET,ETH,country_or_territory,iso_alpha2
+comext,EU27_2020,"European Union - 27 countries (AT, BE, BG, CY, CZ, DE, DK, EE, ES, FI, FR, GR, HR, HU, IE, IT, LT, LU, LV, MT, NL, PL, PT, RO, SE, SI, SK)",COMEXT:EU27_2020,"European Union (EU27, fixed 2020)",,,regional_aggregate,reviewed_fixed_EU27_2020_reporting_aggregate
+comext,EXT_EA,Extra-euro area,COMEXT:EXT_EA,Extra-euro area,,,regional_aggregate,source_aggregate
+comext,EXT_EA21,Extra-euro area - 21 countries (from 2026),COMEXT:EXT_EA21,Extra-euro area - 21 countries (from 2026),,,regional_aggregate,source_aggregate
+comext,EXT_EU,Extra-EU,COMEXT:EXT_EU,Extra-EU,,,regional_aggregate,source_aggregate
+comext,EXT_EU27_2020,Extra-EU27 (from 2020),COMEXT:EXT_EU27_2020,Extra-EU27 (from 2020),,,regional_aggregate,source_aggregate
+comext,FI,Finland,ISO:FIN,Finland,FI,FIN,country_or_territory,iso_alpha2
+comext,FO,Faroe Islands,ISO:FRO,Faroe Islands,FO,FRO,country_or_territory,iso_alpha2
+comext,FR,"France (incl. Saint Barthélemy 'BL' -> 2012; incl. French Guiana 'GF', Guadeloupe 'GP', Martinique 'MQ', Réunion 'RE' from 1997; incl. Mayotte 'YT' from 2014)",ISO:FRA,France,FR,FRA,country_or_territory,iso_alpha2
+comext,GA,Gabon,ISO:GAB,Gabon,GA,GAB,country_or_territory,iso_alpha2
+comext,GB,United Kingdom,ISO:GBR,United Kingdom,GB,GBR,country_or_territory,iso_alpha2
+comext,GE,Georgia,ISO:GEO,Georgia,GE,GEO,country_or_territory,iso_alpha2
+comext,GH,Ghana,ISO:GHA,Ghana,GH,GHA,country_or_territory,iso_alpha2
+comext,GI,Gibraltar,ISO:GIB,Gibraltar,GI,GIB,country_or_territory,iso_alpha2
+comext,GL,Greenland,ISO:GRL,Greenland,GL,GRL,country_or_territory,iso_alpha2
+comext,GM,Gambia,ISO:GMB,Gambia,GM,GMB,country_or_territory,iso_alpha2
+comext,GN,Guinea,ISO:GIN,Guinea,GN,GIN,country_or_territory,iso_alpha2
+comext,GQ,Equatorial Guinea,ISO:GNQ,Equatorial Guinea,GQ,GNQ,country_or_territory,iso_alpha2
+comext,GR,Greece,ISO:GRC,Greece,GR,GRC,country_or_territory,iso_alpha2
+comext,GT,Guatemala,ISO:GTM,Guatemala,GT,GTM,country_or_territory,iso_alpha2
+comext,GU,Guam,ISO:GUM,Guam,GU,GUM,country_or_territory,iso_alpha2
+comext,GY,Guyana,ISO:GUY,Guyana,GY,GUY,country_or_territory,iso_alpha2
+comext,HK,Hong Kong,ISO:HKG,Hong Kong,HK,HKG,country_or_territory,iso_alpha2
+comext,HN,Honduras,ISO:HND,Honduras,HN,HND,country_or_territory,iso_alpha2
+comext,HR,Croatia,ISO:HRV,Croatia,HR,HRV,country_or_territory,iso_alpha2
+comext,HU,Hungary,ISO:HUN,Hungary,HU,HUN,country_or_territory,iso_alpha2
+comext,ID,Indonesia (incl. East Timor 'TP' from 1977 -> 2000),ISO:IDN,Indonesia,ID,IDN,country_or_territory,iso_alpha2
+comext,IE,Ireland (Eire),ISO:IRL,Ireland,IE,IRL,country_or_territory,iso_alpha2
+comext,IL,Israel (incl. West Bank and Gaza Strip 'XP' -> 1994),ISO:ISR,Israel,IL,ISR,country_or_territory,iso_alpha2
+comext,IN,India,ISO:IND,India,IN,IND,country_or_territory,iso_alpha2
+comext,INT_EA,Intra-euro area,COMEXT:INT_EA,Intra-euro area,,,regional_aggregate,source_aggregate
+comext,INT_EA21,Intra-euro area - 21 countries (from 2026),COMEXT:INT_EA21,Intra-euro area - 21 countries (from 2026),,,regional_aggregate,source_aggregate
+comext,INT_EU,Intra-EU,COMEXT:INT_EU,Intra-EU,,,regional_aggregate,source_aggregate
+comext,INT_EU27_2020,Intra-EU27 (from 2020),COMEXT:INT_EU27_2020,Intra-EU27 (from 2020),,,regional_aggregate,source_aggregate
+comext,IQ,Iraq,ISO:IRQ,Iraq,IQ,IRQ,country_or_territory,iso_alpha2
+comext,IR,"Iran, Islamic Republic of",ISO:IRN,"Iran, Islamic Republic of",IR,IRN,country_or_territory,iso_alpha2
+comext,IS,Iceland,ISO:ISL,Iceland,IS,ISL,country_or_territory,iso_alpha2
+comext,IT,Italy (incl. San Marino 'SM' -> 1993),ISO:ITA,Italy,IT,ITA,country_or_territory,iso_alpha2
+comext,JO,Jordan,ISO:JOR,Jordan,JO,JOR,country_or_territory,iso_alpha2
+comext,JP,Japan,ISO:JPN,Japan,JP,JPN,country_or_territory,iso_alpha2
+comext,KE,Kenya,ISO:KEN,Kenya,KE,KEN,country_or_territory,iso_alpha2
+comext,KG,Kyrgyzstan,ISO:KGZ,Kyrgyzstan,KG,KGZ,country_or_territory,iso_alpha2
+comext,KH,Cambodia,ISO:KHM,Cambodia,KH,KHM,country_or_territory,iso_alpha2
+comext,KR,"Korea, Republic of (South Korea)",ISO:KOR,"Korea, Republic of",KR,KOR,country_or_territory,iso_alpha2
+comext,KW,Kuwait,ISO:KWT,Kuwait,KW,KWT,country_or_territory,iso_alpha2
+comext,KZ,Kazakhstan,ISO:KAZ,Kazakhstan,KZ,KAZ,country_or_territory,iso_alpha2
+comext,LA,Lao People’s Democratic Republic (Laos),ISO:LAO,Lao People's Democratic Republic,LA,LAO,country_or_territory,iso_alpha2
+comext,LB,Lebanon,ISO:LBN,Lebanon,LB,LBN,country_or_territory,iso_alpha2
+comext,LC,St Lucia,ISO:LCA,Saint Lucia,LC,LCA,country_or_territory,iso_alpha2
+comext,LI,Liechtenstein,ISO:LIE,Liechtenstein,LI,LIE,country_or_territory,iso_alpha2
+comext,LK,Sri Lanka,ISO:LKA,Sri Lanka,LK,LKA,country_or_territory,iso_alpha2
+comext,LR,Liberia,ISO:LBR,Liberia,LR,LBR,country_or_territory,iso_alpha2
+comext,LS,Lesotho,ISO:LSO,Lesotho,LS,LSO,country_or_territory,iso_alpha2
+comext,LT,Lithuania,ISO:LTU,Lithuania,LT,LTU,country_or_territory,iso_alpha2
+comext,LU,Luxembourg,ISO:LUX,Luxembourg,LU,LUX,country_or_territory,iso_alpha2
+comext,LV,Latvia,ISO:LVA,Latvia,LV,LVA,country_or_territory,iso_alpha2
+comext,LY,Libya,ISO:LBY,Libya,LY,LBY,country_or_territory,iso_alpha2
+comext,MA,Morocco,ISO:MAR,Morocco,MA,MAR,country_or_territory,iso_alpha2
+comext,MD,"Moldova, Republic of",ISO:MDA,"Moldova, Republic of",MD,MDA,country_or_territory,iso_alpha2
+comext,ME,Montenegro,ISO:MNE,Montenegro,ME,MNE,country_or_territory,iso_alpha2
+comext,MG,Madagascar,ISO:MDG,Madagascar,MG,MDG,country_or_territory,iso_alpha2
+comext,MH,Marshall Islands,ISO:MHL,Marshall Islands,MH,MHL,country_or_territory,iso_alpha2
+comext,MK,North Macedonia,ISO:MKD,North Macedonia,MK,MKD,country_or_territory,iso_alpha2
+comext,ML,Mali,ISO:MLI,Mali,ML,MLI,country_or_territory,iso_alpha2
+comext,MN,Mongolia,ISO:MNG,Mongolia,MN,MNG,country_or_territory,iso_alpha2
+comext,MO,Macao,ISO:MAC,Macao,MO,MAC,country_or_territory,iso_alpha2
+comext,MR,Mauritania (incl. Spanish Sahara from 1977),ISO:MRT,Mauritania,MR,MRT,country_or_territory,iso_alpha2
+comext,MT,Malta,ISO:MLT,Malta,MT,MLT,country_or_territory,iso_alpha2
+comext,MU,Mauritius,ISO:MUS,Mauritius,MU,MUS,country_or_territory,iso_alpha2
+comext,MV,Maldives,ISO:MDV,Maldives,MV,MDV,country_or_territory,iso_alpha2
+comext,MW,Malawi,ISO:MWI,Malawi,MW,MWI,country_or_territory,iso_alpha2
+comext,MX,Mexico,ISO:MEX,Mexico,MX,MEX,country_or_territory,iso_alpha2
+comext,MY,Malaysia,ISO:MYS,Malaysia,MY,MYS,country_or_territory,iso_alpha2
+comext,MZ,Mozambique,ISO:MOZ,Mozambique,MZ,MOZ,country_or_territory,iso_alpha2
+comext,NA,Namibia,ISO:NAM,Namibia,NA,NAM,country_or_territory,iso_alpha2
+comext,NC,New Caledonia,ISO:NCL,New Caledonia,NC,NCL,country_or_territory,iso_alpha2
+comext,NE,Niger,ISO:NER,Niger,NE,NER,country_or_territory,iso_alpha2
+comext,NG,Nigeria,ISO:NGA,Nigeria,NG,NGA,country_or_territory,iso_alpha2
+comext,NI,Nicaragua,ISO:NIC,Nicaragua,NI,NIC,country_or_territory,iso_alpha2
+comext,NL,Netherlands,ISO:NLD,Netherlands,NL,NLD,country_or_territory,iso_alpha2
+comext,NO,Norway (incl. Svalbard and Jan Mayen 'SJ' -> 1994 and again from 1997),ISO:NOR,Norway,NO,NOR,country_or_territory,iso_alpha2
+comext,NZ,New Zealand,ISO:NZL,New Zealand,NZ,NZL,country_or_territory,iso_alpha2
+comext,OM,Oman,ISO:OMN,Oman,OM,OMN,country_or_territory,iso_alpha2
+comext,PA,Panama (incl. Panama Canal Zone 'PZ' from 1981),ISO:PAN,Panama,PA,PAN,country_or_territory,iso_alpha2
+comext,PE,Peru,ISO:PER,Peru,PE,PER,country_or_territory,iso_alpha2
+comext,PF,French Polynesia,ISO:PYF,French Polynesia,PF,PYF,country_or_territory,iso_alpha2
+comext,PG,Papua New Guinea,ISO:PNG,Papua New Guinea,PG,PNG,country_or_territory,iso_alpha2
+comext,PH,Philippines,ISO:PHL,Philippines,PH,PHL,country_or_territory,iso_alpha2
+comext,PK,Pakistan,ISO:PAK,Pakistan,PK,PAK,country_or_territory,iso_alpha2
+comext,PL,Poland,ISO:POL,Poland,PL,POL,country_or_territory,iso_alpha2
+comext,PM,St Pierre and Miquelon,ISO:SPM,Saint Pierre and Miquelon,PM,SPM,country_or_territory,iso_alpha2
+comext,PS,Occupied Palestinian Territory (West Bank (incl. East Jerusalem) and Gaza Strip),ISO:PSE,"Palestine, State of",PS,PSE,country_or_territory,iso_alpha2
+comext,PT,Portugal,ISO:PRT,Portugal,PT,PRT,country_or_territory,iso_alpha2
+comext,PY,Paraguay,ISO:PRY,Paraguay,PY,PRY,country_or_territory,iso_alpha2
+comext,QA,Qatar,ISO:QAT,Qatar,QA,QAT,country_or_territory,iso_alpha2
+comext,QP,High seas,COMEXT:QP,High seas,,,special_trade_partner,source_special_category
+comext,QR,Stores and provisions within the framework of intra-Union trade,COMEXT:QR,Stores and provisions within the framework of intra-Union trade,,,special_trade_partner,source_special_category
+comext,QS,Stores and provisions within the framework of extra-Union trade,COMEXT:QS,Stores and provisions within the framework of extra-Union trade,,,special_trade_partner,source_special_category
+comext,QV,Countries and territories not specified within the framework of intra-Union trade,COMEXT:QV,Countries and territories not specified within the framework of intra-Union trade,,,special_trade_partner,source_special_category
+comext,QW,Countries and territories not specified within the framework of extra-Union trade,COMEXT:QW,Countries and territories not specified within the framework of extra-Union trade,,,special_trade_partner,source_special_category
+comext,QY,Countries and territories not specified for commercial or military reasons in the framework of intra-Union trade,COMEXT:QY,Countries and territories not specified for commercial or military reasons in the framework of intra-Union trade,,,special_trade_partner,source_special_category
+comext,QZ,Countries and territories not specified for commercial or military reasons in the framework of extra-Union trade,COMEXT:QZ,Countries and territories not specified for commercial or military reasons in the framework of extra-Union trade,,,special_trade_partner,source_special_category
+comext,RO,Romania,ISO:ROU,Romania,RO,ROU,country_or_territory,iso_alpha2
+comext,RU,Russian Federation (Russia),ISO:RUS,Russian Federation,RU,RUS,country_or_territory,iso_alpha2
+comext,SA,Saudi Arabia,ISO:SAU,Saudi Arabia,SA,SAU,country_or_territory,iso_alpha2
+comext,SC,Seychelles,ISO:SYC,Seychelles,SC,SYC,country_or_territory,iso_alpha2
+comext,SD,Sudan (incl. South Sudan 'SS' -> 2012),ISO:SDN,Sudan,SD,SDN,country_or_territory,iso_alpha2
+comext,SE,Sweden,ISO:SWE,Sweden,SE,SWE,country_or_territory,iso_alpha2
+comext,SG,Singapore,ISO:SGP,Singapore,SG,SGP,country_or_territory,iso_alpha2
+comext,SI,Slovenia,ISO:SVN,Slovenia,SI,SVN,country_or_territory,iso_alpha2
+comext,SK,Slovakia,ISO:SVK,Slovakia,SK,SVK,country_or_territory,iso_alpha2
+comext,SN,Senegal,ISO:SEN,Senegal,SN,SEN,country_or_territory,iso_alpha2
+comext,SO,Somalia,ISO:SOM,Somalia,SO,SOM,country_or_territory,iso_alpha2
+comext,SR,Suriname,ISO:SUR,Suriname,SR,SUR,country_or_territory,iso_alpha2
+comext,ST,Sao Tome and Principe,ISO:STP,Sao Tome and Principe,ST,STP,country_or_territory,iso_alpha2
+comext,SV,El Salvador,ISO:SLV,El Salvador,SV,SLV,country_or_territory,iso_alpha2
+comext,SX,Sint Maarten (Dutch part),ISO:SXM,Sint Maarten (Dutch part),SX,SXM,country_or_territory,iso_alpha2
+comext,SY,Syrian Arab Republic (Syria),ISO:SYR,Syrian Arab Republic,SY,SYR,country_or_territory,iso_alpha2
+comext,SZ,Eswatini (Ngwane),ISO:SWZ,Eswatini,SZ,SWZ,country_or_territory,iso_alpha2
+comext,TD,Chad,ISO:TCD,Chad,TD,TCD,country_or_territory,iso_alpha2
+comext,TG,Togo,ISO:TGO,Togo,TG,TGO,country_or_territory,iso_alpha2
+comext,TH,Thailand,ISO:THA,Thailand,TH,THA,country_or_territory,iso_alpha2
+comext,TJ,Tajikistan,ISO:TJK,Tajikistan,TJ,TJK,country_or_territory,iso_alpha2
+comext,TM,Turkmenistan,ISO:TKM,Turkmenistan,TM,TKM,country_or_territory,iso_alpha2
+comext,TN,Tunisia,ISO:TUN,Tunisia,TN,TUN,country_or_territory,iso_alpha2
+comext,TR,Türkiye,ISO:TUR,Türkiye,TR,TUR,country_or_territory,iso_alpha2
+comext,TT,Trinidad and Tobago,ISO:TTO,Trinidad and Tobago,TT,TTO,country_or_territory,iso_alpha2
+comext,TW,Taiwan,ISO:TWN,"Taiwan, Province of China",TW,TWN,country_or_territory,iso_alpha2
+comext,TZ,"Tanzania, United Republic of",ISO:TZA,"Tanzania, United Republic of",TZ,TZA,country_or_territory,iso_alpha2
+comext,UA,Ukraine,ISO:UKR,Ukraine,UA,UKR,country_or_territory,iso_alpha2
+comext,UG,Uganda,ISO:UGA,Uganda,UG,UGA,country_or_territory,iso_alpha2
+comext,US,United States (incl. Navassa Island (part of 'UM') from 1995 -> 2000),ISO:USA,United States,US,USA,country_or_territory,iso_alpha2
+comext,UY,Uruguay,ISO:URY,Uruguay,UY,URY,country_or_territory,iso_alpha2
+comext,UZ,Uzbekistan,ISO:UZB,Uzbekistan,UZ,UZB,country_or_territory,iso_alpha2
+comext,VE,"Venezuela, Bolivarian Republic of",ISO:VEN,"Venezuela, Bolivarian Republic of",VE,VEN,country_or_territory,iso_alpha2
+comext,VN,Viet Nam (incl. North Viet Nam 'VD' from 1977),ISO:VNM,Viet Nam,VN,VNM,country_or_territory,iso_alpha2
+comext,WF,Wallis and Futuna,ISO:WLF,Wallis and Futuna,WF,WLF,country_or_territory,iso_alpha2
+comext,WORLD,All countries of the world,WORLD,World,,,world,source_world
+comext,XC,Ceuta (incl. Melilla 'XL' -> 1998),COMEXT:XC,Ceuta,,,country_or_territory,reviewed_comext_customs_territory_no_ISO
+comext,XK,Kosovo,COMEXT:XK,Kosovo,,,geopolitical_area,source_area_no_official_iso_assigned
+comext,XL,Melilla,COMEXT:XL,Melilla,,,country_or_territory,reviewed_comext_customs_territory_no_ISO
+comext,XS,Serbia,ISO:SRB,Serbia,RS,SRB,country_or_territory,reviewed_comext_serbia_alias
+comext,ZA,South Africa (incl. Namibia 'NA' -> 1989),ISO:ZAF,South Africa,ZA,ZAF,country_or_territory,iso_alpha2
+comext,ZM,Zambia,ISO:ZMB,Zambia,ZM,ZMB,country_or_territory,iso_alpha2
+comext,ZW,Zimbabwe,ISO:ZWE,Zimbabwe,ZW,ZWE,country_or_territory,iso_alpha2
+iea,Argentina,Argentina,ISO:ARG,Argentina,AR,ARG,country_or_territory,reviewed_source_alias
+iea,Australia,Australia,ISO:AUS,Australia,AU,AUS,country_or_territory,reviewed_source_alias
+iea,Canada,Canada,ISO:CAN,Canada,CA,CAN,country_or_territory,reviewed_source_alias
+iea,Chile,Chile,ISO:CHL,Chile,CL,CHL,country_or_territory,reviewed_source_alias
+iea,China,China,ISO:CHN,China,CN,CHN,country_or_territory,reviewed_source_alias
+iea,Democratic Republic of Congo,Democratic Republic of Congo,ISO:COD,"Congo, The Democratic Republic of the",CD,COD,country_or_territory,reviewed_source_alias
+iea,Finland,Finland,ISO:FIN,Finland,FI,FIN,country_or_territory,reviewed_source_alias
+iea,Germany,Germany,ISO:DEU,Germany,DE,DEU,country_or_territory,reviewed_source_alias
+iea,India,India,ISO:IND,India,IN,IND,country_or_territory,reviewed_source_alias
+iea,Indonesia,Indonesia,ISO:IDN,Indonesia,ID,IDN,country_or_territory,reviewed_source_alias
+iea,Japan,Japan,ISO:JPN,Japan,JP,JPN,country_or_territory,reviewed_source_alias
+iea,Madagascar,Madagascar,ISO:MDG,Madagascar,MG,MDG,country_or_territory,reviewed_source_alias
+iea,Malaysia,Malaysia,ISO:MYS,Malaysia,MY,MYS,country_or_territory,reviewed_source_alias
+iea,Mozambique,Mozambique,ISO:MOZ,Mozambique,MZ,MOZ,country_or_territory,reviewed_source_alias
+iea,Myanmar,Myanmar,ISO:MMR,Myanmar,MM,MMR,country_or_territory,reviewed_source_alias
+iea,New Caledonia,New Caledonia,ISO:NCL,New Caledonia,NC,NCL,country_or_territory,reviewed_source_alias
+iea,Other countries,Other countries,IEA:OTHER_COUNTRIES,Other countries,,,residual,opaque_source_residual
+iea,Peru,Peru,ISO:PER,Peru,PE,PER,country_or_territory,reviewed_source_alias
+iea,Philippines,Philippines,ISO:PHL,Philippines,PH,PHL,country_or_territory,reviewed_source_alias
+iea,Russia,Russia,ISO:RUS,Russian Federation,RU,RUS,country_or_territory,reviewed_source_alias
+iea,Sweden,Sweden,ISO:SWE,Sweden,SE,SWE,country_or_territory,reviewed_source_alias
+iea,Tanzania,Tanzania,ISO:TZA,"Tanzania, United Republic of",TZ,TZA,country_or_territory,reviewed_source_alias
+iea,United States,United States,ISO:USA,United States,US,USA,country_or_territory,reviewed_source_alias
+iea,Viet Nam,Viet Nam,ISO:VNM,Viet Nam,VN,VNM,country_or_territory,reviewed_source_alias
+iea,World,World,WORLD,World,,,world,source_world
+iea,Zimbabwe,Zimbabwe,ISO:ZWE,Zimbabwe,ZW,ZWE,country_or_territory,reviewed_source_alias

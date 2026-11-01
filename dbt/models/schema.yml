@@ -1,0 +1,1455 @@
+version: 2
+models:
+- name: stg_iea_observations
+  description: One native IEA edition/scenario/case/end-use/geography/year record.
+    Scale conversion does not establish equivalent basis.
+  columns:
+  - name: record_id
+    description: Deterministic identity of a source observation within a selected
+      immutable snapshot.
+    data_tests:
+    - unique
+    - not_null
+    data_type: VARCHAR
+  - name: request_id
+    description: Stable source and canonical-query identity; not a source revision.
+    data_type: VARCHAR
+  - name: snapshot_id
+    description: Request plus original response-byte hash; all source revisions remain
+      separately addressable.
+    data_type: VARCHAR
+  - name: payload_sha256
+    description: SHA-256 of the unchanged original source response bytes.
+    data_type: VARCHAR
+  - name: source_locator
+    description: Original IEA array index or Comext JSON-stat value/status offset.
+    data_type: VARCHAR
+  - name: ingested_at_utc
+    description: First ingestion time of this request/payload; replays do not refresh
+      it.
+    data_type: TIMESTAMP WITH TIME ZONE
+  - name: source_release
+    description: Native IEA model edition or Comext published revision timestamp.
+    data_type: VARCHAR
+  - name: edition
+    description: Exact IEA model edition; scenarios from different editions must not
+      be merged.
+    data_type: VARCHAR
+  - name: material_definition
+    description: 'Exact native IEA definition, including separate Graphite and Graphite:
+      all grades.'
+    data_type: VARCHAR
+  - name: scenario_name
+    description: Exact source scenario name; no scenario substitution or cloning.
+    data_type: VARCHAR
+  - name: case_name
+    description: Exact technology/project case, distinct from the scenario.
+    data_tests:
+    - not_null
+    - accepted_values:
+        arguments:
+          values:
+          - Base Case
+    data_type: VARCHAR
+  - name: category
+    description: Native Material demand or Material supply category.
+    data_tests:
+    - not_null
+    - accepted_values:
+        arguments:
+          values:
+          - Material demand
+          - Material supply
+    data_type: VARCHAR
+  - name: native_flow
+    description: Native IDLE demand, Mining or Refining flow; not an inferred trade
+      direction.
+    data_type: VARCHAR
+  - name: geography_native
+    description: Unchanged IEA geography label, including World and Other countries.
+    data_type: VARCHAR
+  - name: end_use_native
+    description: Unchanged source product/end-use label; demand end uses must retain
+      scope.
+    data_type: VARCHAR
+  - name: reference_year
+    description: Native calendar reference year; forecasts are sparse model years,
+      not interpolated history.
+    data_type: INTEGER
+  - name: native_unit
+    description: Unchanged native unit; inspected IEA values are Thousand tonnes.
+    data_tests:
+    - not_null
+    - accepted_values:
+        arguments:
+          values:
+          - Thousand tonnes
+    data_type: VARCHAR
+  - name: native_value
+    description: Original source numeric observation, nullable; missing is never replaced
+      with zero.
+    data_type: DOUBLE
+  - name: native_scope_tonnes
+    description: IEA native value scaled by 1,000 only; the equivalent material basis
+      remains unverified.
+    data_type: DOUBLE
+  - name: quantity_basis
+    description: 'Measurement scope: unverified native IEA equivalent or Comext traded
+      product mass; never interchangeable.'
+    data_type: VARCHAR
+  - name: evidence_class
+    description: Explicit baseline-unverified, scenario-projection or historical-trade-status-unverified
+      class.
+    data_type: VARCHAR
+  - name: conversion_status
+    description: Applied physical scale conversion, separate from semantic equivalence.
+    data_type: VARCHAR
+- name: stg_comext_cells
+  description: One native Comext reporter/partner/product/flow/indicator/year cell;
+    sparse absence is not zero.
+  columns:
+  - name: record_id
+    description: Deterministic identity of a source observation within a selected
+      immutable snapshot.
+    data_tests:
+    - unique
+    - not_null
+    data_type: VARCHAR
+  - name: request_id
+    description: Stable source and canonical-query identity; not a source revision.
+    data_type: VARCHAR
+  - name: snapshot_id
+    description: Request plus original response-byte hash; all source revisions remain
+      separately addressable.
+    data_type: VARCHAR
+  - name: payload_sha256
+    description: SHA-256 of the unchanged original source response bytes.
+    data_type: VARCHAR
+  - name: source_locator
+    description: Original IEA array index or Comext JSON-stat value/status offset.
+    data_type: VARCHAR
+  - name: ingested_at_utc
+    description: First ingestion time of this request/payload; replays do not refresh
+      it.
+    data_type: TIMESTAMP WITH TIME ZONE
+  - name: source_release
+    description: Native IEA model edition or Comext published revision timestamp.
+    data_type: VARCHAR
+  - name: dataset_code
+    description: Native Eurostat dataset identifier DS-045409.
+    data_type: VARCHAR
+  - name: reporter_native
+    description: Unchanged source reporter code; approved reporters are DE, FR, IT, ES, PL, NL and EU27_2020
+      DE.
+    data_type: VARCHAR
+  - name: partner_native
+    description: Unchanged source partner code; can be a country, territory, special
+      code or aggregate.
+    data_type: VARCHAR
+  - name: reporter_label
+    description: Unchanged source reporter label including any historical scope notes.
+    data_type: VARCHAR
+  - name: partner_label
+    description: Unchanged source partner label; it does not establish upstream mine
+      origin.
+    data_type: VARCHAR
+  - name: product_code
+    description: Native CN8 commodity code; one selected product form rather than
+      a full material basket.
+    data_type: VARCHAR
+  - name: product_label
+    description: Native source product description; annual concordance is not asserted.
+    data_type: VARCHAR
+  - name: flow_code
+    description: 'Native reporting-area direction: 1 import, 2 export.'
+    data_tests:
+    - not_null
+    - accepted_values:
+        arguments:
+          values:
+          - '1'
+          - '2'
+    data_type: VARCHAR
+  - name: indicator
+    description: Native VALUE_IN_EUROS, QUANTITY_IN_100KG or SUPPLEMENTARY_QUANTITY
+      indicator.
+    data_tests:
+    - not_null
+    - accepted_values:
+        arguments:
+          values:
+          - VALUE_IN_EUROS
+          - QUANTITY_IN_100KG
+          - SUPPLEMENTARY_QUANTITY
+    data_type: VARCHAR
+  - name: frequency
+    description: Annual source frequency A; no annual/monthly summation.
+    data_tests:
+    - not_null
+    - accepted_values:
+        arguments:
+          values:
+          - A
+    data_type: VARCHAR
+  - name: reference_year
+    description: Native calendar reference year; forecasts are sparse model years,
+      not interpolated history.
+    data_type: INTEGER
+  - name: native_value
+    description: Original source numeric observation, nullable; missing is never replaced
+      with zero.
+    data_type: DOUBLE
+  - name: source_status
+    description: Unchanged observation status, nullable; absent flags do not certify
+      an actual measurement.
+    data_type: VARCHAR
+  - name: source_missingness
+    description: Explicit source null or status without value when present; sparse
+      absence is not manufactured.
+    data_type: VARCHAR
+  - name: native_classification
+    description: Native CN8 classification; reference-year product identities are
+      kept separately.
+    data_type: VARCHAR
+  - name: classification_status
+    description: Annual native product scope retained; longitudinal concordance remains
+      unverified.
+    data_type: VARCHAR
+  - name: evidence_class
+    description: Explicit baseline-unverified, scenario-projection or historical-trade-status-unverified
+      class.
+    data_type: VARCHAR
+- name: stg_source_snapshots
+  description: One immutable selected source payload including empty responses; original
+    timestamps and rights preserved.
+  columns:
+  - name: snapshot_id
+    description: Request plus original response-byte hash; all source revisions remain
+      separately addressable.
+    data_tests:
+    - unique
+    - not_null
+    data_type: VARCHAR
+  - name: source
+    description: Source contract name iea or comext.
+    data_type: VARCHAR
+  - name: request_id
+    description: Stable source and canonical-query identity; not a source revision.
+    data_type: VARCHAR
+  - name: payload_sha256
+    description: SHA-256 of the unchanged original source response bytes.
+    data_type: VARCHAR
+  - name: source_release
+    description: Native IEA model edition or Comext published revision timestamp.
+    data_type: VARCHAR
+  - name: source_release_timestamp
+    description: Native published dataset revision time; null when the source did
+      not supply one.
+    data_type: TIMESTAMP WITH TIME ZONE
+  - name: first_retrieved_at_utc
+    description: Original first acquisition timestamp from the accepted capture manifest.
+    data_type: TIMESTAMP WITH TIME ZONE
+  - name: run_id
+    description: Complete selected acquisition run; a partial refresh cannot replace
+      the warehouse selection.
+    data_type: VARCHAR
+  - name: validation_status
+    description: Accepted or accepted_empty source-contract result; empty does not
+      imply zero activity.
+    data_type: VARCHAR
+  - name: source_observations
+    description: Count of native observations returned for the snapshot, including
+      explicit null/status cells.
+    data_type: INTEGER
+  - name: licence_name
+    description: Source-specific reuse terms; project code licensing does not replace
+      these.
+    data_type: VARCHAR
+  - name: licence_url
+    description: Authoritative source rights/attribution notice URL.
+    data_type: VARCHAR
+  - name: publication_status
+    description: Publication conditions retained from the reviewed source contract.
+    data_type: VARCHAR
+  - name: request_url
+    description: Exact public bounded source request URL, without credentials.
+    data_type: VARCHAR
+- name: int_iea_observations
+  description: IEA records with reviewed source-qualified references and explicit
+    structural/semantic quality states.
+  columns:
+  - name: record_id
+    description: Deterministic identity of a source observation within a selected
+      immutable snapshot.
+    data_tests:
+    - unique
+    - not_null
+    data_type: VARCHAR
+  - name: request_id
+    description: Stable source and canonical-query identity; not a source revision.
+    data_type: VARCHAR
+  - name: snapshot_id
+    description: Request plus original response-byte hash; all source revisions remain
+      separately addressable.
+    data_type: VARCHAR
+  - name: payload_sha256
+    description: SHA-256 of the unchanged original source response bytes.
+    data_type: VARCHAR
+  - name: source_locator
+    description: Original IEA array index or Comext JSON-stat value/status offset.
+    data_type: VARCHAR
+  - name: ingested_at_utc
+    description: First ingestion time of this request/payload; replays do not refresh
+      it.
+    data_type: TIMESTAMP WITH TIME ZONE
+  - name: source_release
+    description: Native IEA model edition or Comext published revision timestamp.
+    data_type: VARCHAR
+  - name: edition
+    description: Exact IEA model edition; scenarios from different editions must not
+      be merged.
+    data_type: VARCHAR
+  - name: material_definition
+    description: 'Exact native IEA definition, including separate Graphite and Graphite:
+      all grades.'
+    data_type: VARCHAR
+  - name: scenario_name
+    description: Exact source scenario name; no scenario substitution or cloning.
+    data_type: VARCHAR
+  - name: case_name
+    description: Exact technology/project case, distinct from the scenario.
+    data_type: VARCHAR
+  - name: category
+    description: Native Material demand or Material supply category.
+    data_type: VARCHAR
+  - name: native_flow
+    description: Native IDLE demand, Mining or Refining flow; not an inferred trade
+      direction.
+    data_type: VARCHAR
+  - name: geography_native
+    description: Unchanged IEA geography label, including World and Other countries.
+    data_type: VARCHAR
+  - name: end_use_native
+    description: Unchanged source product/end-use label; demand end uses must retain
+      scope.
+    data_type: VARCHAR
+  - name: reference_year
+    description: Native calendar reference year; forecasts are sparse model years,
+      not interpolated history.
+    data_type: INTEGER
+  - name: native_unit
+    description: Unchanged native unit; inspected IEA values are Thousand tonnes.
+    data_type: VARCHAR
+  - name: native_value
+    description: Original source numeric observation, nullable; missing is never replaced
+      with zero.
+    data_type: DOUBLE
+  - name: native_scope_tonnes
+    description: IEA native value scaled by 1,000 only; the equivalent material basis
+      remains unverified.
+    data_type: DOUBLE
+  - name: quantity_basis
+    description: 'Measurement scope: unverified native IEA equivalent or Comext traded
+      product mass; never interchangeable.'
+    data_type: VARCHAR
+  - name: evidence_class
+    description: Explicit baseline-unverified, scenario-projection or historical-trade-status-unverified
+      class.
+    data_type: VARCHAR
+  - name: conversion_status
+    description: Applied physical scale conversion, separate from semantic equivalence.
+    data_type: VARCHAR
+  - name: family_id
+    description: Contextual material family identifier; not an additive physical quantity
+      definition.
+    data_type: VARCHAR
+  - name: geography_id
+    description: Canonical ISO area or source-qualified aggregate/residual/special-area
+      identifier.
+    data_type: VARCHAR
+  - name: geography_entity_type
+    description: Country/territory, World or opaque residual; residuals cannot be
+      treated as a single country.
+    data_type: VARCHAR
+  - name: geography_mapping_status
+    description: Reviewed mapping rule applied to the native source geography.
+    data_type: VARCHAR
+  - name: stage_code
+    description: Mining or refining expected-output stage; not nameplate capacity.
+    data_type: VARCHAR
+  - name: material_key
+    description: Contextual material-family key. This is not evidence that quantities
+      can be added across definitions.
+    data_type: VARCHAR
+  - name: material_definition_key
+    description: Exact native IEA definition key; graphite scopes remain distinct.
+    data_type: VARCHAR
+  - name: geography_key
+    description: Canonical ISO or source-qualified area key; entity_type controls
+      aggregation.
+    data_type: VARCHAR
+  - name: scenario_key
+    description: Composite source edition/scenario/case identity; never omit scenario
+      during aggregation.
+    data_type: VARCHAR
+  - name: period_key
+    description: Annual reference-period identity.
+    data_type: VARCHAR
+  - name: source_release_key
+    description: Source plus native compilation edition/revision identity.
+    data_type: VARCHAR
+  - name: end_use_key
+    description: Native demand end-use identity.
+    data_type: VARCHAR
+  - name: quality_state
+    description: Structural validation state; valid records may still have unresolved
+      semantic gates.
+    data_type: VARCHAR
+- name: int_trade_flows
+  description: One native product-year reporter/partner/flow snapshot with independently
+    preserved EUR and 100kg measurements.
+  columns:
+  - name: snapshot_id
+    description: Request plus original response-byte hash; all source revisions remain
+      separately addressable.
+    data_type: VARCHAR
+  - name: request_id
+    description: Stable source and canonical-query identity; not a source revision.
+    data_type: VARCHAR
+  - name: payload_sha256
+    description: SHA-256 of the unchanged original source response bytes.
+    data_type: VARCHAR
+  - name: source_release
+    description: Native IEA model edition or Comext published revision timestamp.
+    data_type: VARCHAR
+  - name: reporter_native
+    description: Unchanged source reporter code; approved reporters are DE, FR, IT, ES, PL, NL and EU27_2020
+      DE.
+    data_type: VARCHAR
+  - name: partner_native
+    description: Unchanged source partner code; can be a country, territory, special
+      code or aggregate.
+    data_type: VARCHAR
+  - name: reporter_id
+    description: Mapped reporter area identity; separate from source code.
+    data_type: VARCHAR
+  - name: partner_id
+    description: Mapped partner area identity; special and aggregate members retain
+      distinct identities.
+    data_type: VARCHAR
+  - name: partner_entity_type
+    description: Partner area category; exclude aggregates when summing components.
+    data_type: VARCHAR
+  - name: reporter_mapping_status
+    description: Reviewed source reporter-to-geography mapping rule.
+    data_type: VARCHAR
+  - name: partner_mapping_status
+    description: Reviewed source partner-to-geography mapping rule.
+    data_type: VARCHAR
+  - name: product_code
+    description: Native CN8 commodity code; one selected product form rather than
+      a full material basket.
+    data_type: VARCHAR
+  - name: product_label
+    description: Native source product description; annual concordance is not asserted.
+    data_type: VARCHAR
+  - name: native_classification
+    description: Native CN8 classification; reference-year product identities are
+      kept separately.
+    data_type: VARCHAR
+  - name: classification_status
+    description: Annual native product scope retained; longitudinal concordance remains
+      unverified.
+    data_type: VARCHAR
+  - name: reference_year
+    description: Native calendar reference year; forecasts are sparse model years,
+      not interpolated history.
+    data_type: INTEGER
+  - name: flow_code
+    description: 'Native reporting-area direction: 1 import, 2 export.'
+    data_type: VARCHAR
+  - name: family_id
+    description: Contextual material family identifier; not an additive physical quantity
+      definition.
+    data_type: VARCHAR
+  - name: product_form
+    description: Specific traded form such as ore/concentrate, carbonate, oxide or
+      finished magnet article.
+    data_type: VARCHAR
+  - name: definition_scope
+    description: Explicit native material/product boundaries and incompatibilities.
+    data_type: VARCHAR
+  - name: basis
+    description: Source-qualified traded-product quantity basis; not contained metal.
+    data_type: VARCHAR
+  - name: concordance_status
+    description: Annual classification correspondence remains unverified; no predecessor
+      product is spliced.
+    data_type: VARCHAR
+  - name: evidence_class
+    description: Explicit baseline-unverified, scenario-projection or historical-trade-status-unverified
+      class.
+    data_type: VARCHAR
+  - name: ingested_at_utc
+    description: First ingestion time of this request/payload; replays do not refresh
+      it.
+    data_type: TIMESTAMP WITH TIME ZONE
+  - name: trade_value_eur
+    description: Native trade value in EUR for the selected product/reporter/partner/period/direction.
+    data_type: DOUBLE
+  - name: native_quantity_100kg
+    description: Native Comext mass indicator; one unit represents 100 kg of the traded
+      product.
+    data_type: DOUBLE
+  - name: supplementary_quantity
+    description: Native supplementary observation when supplied; missing remains null
+      and no generic mass conversion is permitted.
+    data_type: DOUBLE
+  - name: value_record_id
+    description: Nullable original EUR-cell record ID; absence is not zero.
+    data_type: VARCHAR
+  - name: quantity_record_id
+    description: Nullable original 100kg-cell record ID; absence is not zero.
+    data_type: VARCHAR
+  - name: supplementary_record_id
+    description: Nullable original supplementary-cell record ID; absence is not zero.
+    data_type: VARCHAR
+  - name: value_source_status
+    description: Unchanged source status for the EUR cell, nullable.
+    data_type: VARCHAR
+  - name: quantity_source_status
+    description: Unchanged source status for the 100kg quantity cell, nullable.
+    data_type: VARCHAR
+  - name: supplementary_source_status
+    description: Unchanged supplementary-cell source status; no generic mass unit
+      inferred.
+    data_type: VARCHAR
+  - name: source_cell_count
+    description: Number of native indicator cells retained in this trade-flow pivot;
+      duplicates are independently tested.
+    data_type: BIGINT
+  - name: product_mass_tonnes
+    description: Comext native 100kg quantity multiplied by 0.1; not contained metal
+      mass.
+    data_type: DOUBLE
+  - name: quantity_basis
+    description: 'Measurement scope: unverified native IEA equivalent or Comext traded
+      product mass; never interchangeable.'
+    data_type: VARCHAR
+  - name: conversion_status
+    description: Applied physical scale conversion, separate from semantic equivalence.
+    data_type: VARCHAR
+  - name: trade_flow_key
+    description: Snapshot/reporter/partner/product/reference-year/flow identity; independent
+      indicator cells are preserved.
+    data_tests:
+    - unique
+    - not_null
+    data_type: VARCHAR
+  - name: material_key
+    description: Contextual material-family key. This is not evidence that quantities
+      can be added across definitions.
+    data_type: VARCHAR
+  - name: product_key
+    description: CN8 plus native product code plus reference-year identity.
+    data_type: VARCHAR
+  - name: reporter_key
+    description: Reporting geography role key.
+    data_type: VARCHAR
+  - name: partner_key
+    description: Trade partner geography role key, including flagged aggregates/special
+      categories.
+    data_type: VARCHAR
+  - name: period_key
+    description: Annual reference-period identity.
+    data_type: VARCHAR
+  - name: source_release_key
+    description: Source plus native compilation edition/revision identity.
+    data_type: VARCHAR
+  - name: quality_state
+    description: Structural validation state; valid records may still have unresolved
+      semantic gates.
+    data_type: VARCHAR
+- name: dim_material
+  description: Contextual material families; a common family never authorises adding
+    incompatible quantities.
+  columns:
+  - name: material_key
+    description: Contextual material-family key. This is not evidence that quantities
+      can be added across definitions.
+    data_tests:
+    - unique
+    - not_null
+    data_type: VARCHAR
+  - name: family_id
+    description: Contextual material family identifier; not an additive physical quantity
+      definition.
+    data_type: VARCHAR
+  - name: material_family
+    description: Contextual material family label; compatible native definitions/products
+      remain separate.
+    data_type: VARCHAR
+  - name: definition_note
+    description: Non-additivity and scope note for the contextual family.
+    data_type: VARCHAR
+  config:
+    contract:
+      enforced: true
+- name: dim_material_definition
+  description: Seven distinct native IEA definitions, including separate graphite
+    scopes.
+  columns:
+  - name: material_definition_key
+    description: Exact native IEA definition key; graphite scopes remain distinct.
+    data_tests:
+    - unique
+    - not_null
+    data_type: VARCHAR
+  - name: material_key
+    description: Contextual material-family key. This is not evidence that quantities
+      can be added across definitions.
+    data_tests:
+    - not_null
+    - relationships:
+        arguments:
+          to: ref('dim_material')
+          field: material_key
+    data_type: VARCHAR
+  - name: native_material
+    description: Exact IEA material definition, not a harmonised all-forms material
+      total.
+    data_type: VARCHAR
+  - name: definition_scope
+    description: Explicit native material/product boundaries and incompatibilities.
+    data_type: VARCHAR
+  - name: quantity_basis
+    description: 'Measurement scope: unverified native IEA equivalent or Comext traded
+      product mass; never interchangeable.'
+    data_type: VARCHAR
+  config:
+    contract:
+      enforced: true
+- name: dim_geography
+  description: Canonical ISO country/territory areas and distinct source aggregates,
+    residuals and special trade categories.
+  columns:
+  - name: geography_key
+    description: Canonical ISO or source-qualified area key; entity_type controls
+      aggregation.
+    data_tests:
+    - unique
+    - not_null
+    data_type: VARCHAR
+  - name: geography_id
+    description: Canonical ISO area or source-qualified aggregate/residual/special-area
+      identifier.
+    data_type: VARCHAR
+  - name: canonical_name
+    description: Reference geography name; native source labels remain in mapping/staging.
+    data_type: VARCHAR
+  - name: iso_alpha2
+    description: ISO 3166 alpha-2 when assigned; Namibia NA is preserved, special/residual
+      categories remain null.
+    data_type: VARCHAR
+  - name: iso_alpha3
+    description: ISO 3166 alpha-3 when assigned; no invented code for Kosovo, World
+      or residuals.
+    data_type: VARCHAR
+  - name: entity_type
+    description: Country_or_territory, world, residual, regional aggregate, special
+      partner or source geopolitical area.
+    data_tests:
+    - not_null
+    - accepted_values:
+        arguments:
+          values:
+          - country_or_territory
+          - world
+          - residual
+          - regional_aggregate
+          - special_trade_partner
+          - geopolitical_area
+    data_type: VARCHAR
+  config:
+    contract:
+      enforced: true
+- name: dim_period
+  description: Annual reference periods derived from native source years, including
+    sparse future model years.
+  columns:
+  - name: period_key
+    description: Annual reference-period identity.
+    data_tests:
+    - unique
+    - not_null
+    data_type: VARCHAR
+  - name: reference_year
+    description: Native calendar reference year; forecasts are sparse model years,
+      not interpolated history.
+    data_type: INTEGER
+  - name: period_start
+    description: Derived January 1 boundary of an annual reference period; not an
+      observation timestamp.
+    data_type: DATE
+  - name: period_end
+    description: Derived December 31 boundary of an annual reference period; not an
+      observation timestamp.
+    data_type: DATE
+  - name: frequency
+    description: Annual source frequency A; no annual/monthly summation.
+    data_type: VARCHAR
+  config:
+    contract:
+      enforced: true
+- name: dim_scenario
+  description: IEA edition plus exact scenario plus case, with an explicit not-applicable
+    member.
+  columns:
+  - name: scenario_key
+    description: Composite source edition/scenario/case identity; never omit scenario
+      during aggregation.
+    data_tests:
+    - unique
+    - not_null
+    data_type: VARCHAR
+  - name: edition
+    description: Exact IEA model edition; scenarios from different editions must not
+      be merged.
+    data_type: VARCHAR
+  - name: scenario_name
+    description: Exact source scenario name; no scenario substitution or cloning.
+    data_type: VARCHAR
+  - name: case_name
+    description: Exact technology/project case, distinct from the scenario.
+    data_type: VARCHAR
+  - name: scenario_kind
+    description: Scenario model member or explicit not_applicable member.
+    data_type: VARCHAR
+  config:
+    contract:
+      enforced: true
+- name: dim_end_use
+  description: Native demand end-use categories; not geographic consumption segments.
+  columns:
+  - name: end_use_key
+    description: Native demand end-use identity.
+    data_tests:
+    - unique
+    - not_null
+    data_type: VARCHAR
+  - name: end_use_name
+    description: Native IEA demand end-use category.
+    data_type: VARCHAR
+  config:
+    contract:
+      enforced: true
+- name: dim_supply_chain_stage
+  description: Mining and refining expected-output stages; not capacity measures.
+  columns:
+  - name: stage_key
+    description: Mining/refining output-stage identity.
+    data_tests:
+    - unique
+    - not_null
+    data_type: VARCHAR
+  - name: stage_code
+    description: Mining or refining expected-output stage; not nameplate capacity.
+    data_type: VARCHAR
+  - name: stage_name
+    description: Mining or Refining source stage label.
+    data_type: VARCHAR
+  - name: measure_kind
+    description: Expected output rather than nameplate capacity.
+    data_type: VARCHAR
+  config:
+    contract:
+      enforced: true
+- name: dim_trade_flow
+  description: Native import/export direction from the selected reporting-area perspective.
+  columns:
+  - name: flow_key
+    description: Native import/export direction identity.
+    data_tests:
+    - unique
+    - not_null
+    data_type: VARCHAR
+  - name: flow_code
+    description: 'Native reporting-area direction: 1 import, 2 export.'
+    data_type: VARCHAR
+  - name: flow_name
+    description: Import or Export from the reporter perspective.
+    data_type: VARCHAR
+  config:
+    contract:
+      enforced: true
+- name: dim_product
+  description: Native CN8 product and reference-year scope; annual concordance is
+    not asserted.
+  columns:
+  - name: product_key
+    description: CN8 plus native product code plus reference-year identity.
+    data_tests:
+    - unique
+    - not_null
+    data_type: VARCHAR
+  - name: material_key
+    description: Contextual material-family key. This is not evidence that quantities
+      can be added across definitions.
+    data_tests:
+    - not_null
+    - relationships:
+        arguments:
+          to: ref('dim_material')
+          field: material_key
+    data_type: VARCHAR
+  - name: product_code
+    description: Native CN8 commodity code; one selected product form rather than
+      a full material basket.
+    data_type: VARCHAR
+  - name: product_label
+    description: Native source product description; annual concordance is not asserted.
+    data_type: VARCHAR
+  - name: classification_reference_year
+    description: Native product reference year included in the product key; no assumed
+      historical concordance.
+    data_type: INTEGER
+  - name: native_classification
+    description: Native CN8 classification; reference-year product identities are
+      kept separately.
+    data_type: VARCHAR
+  - name: product_form
+    description: Specific traded form such as ore/concentrate, carbonate, oxide or
+      finished magnet article.
+    data_type: VARCHAR
+  - name: definition_scope
+    description: Explicit native material/product boundaries and incompatibilities.
+    data_type: VARCHAR
+  - name: quantity_basis
+    description: 'Measurement scope: unverified native IEA equivalent or Comext traded
+      product mass; never interchangeable.'
+    data_type: VARCHAR
+  - name: classification_status
+    description: Annual native product scope retained; longitudinal concordance remains
+      unverified.
+    data_type: VARCHAR
+  config:
+    contract:
+      enforced: true
+- name: dim_source_release
+  description: Source compilation edition or published dataset revision; original
+    source publication time can be missing.
+  columns:
+  - name: source_release_key
+    description: Source plus native compilation edition/revision identity.
+    data_tests:
+    - unique
+    - not_null
+    data_type: VARCHAR
+  - name: source
+    description: Source contract name iea or comext.
+    data_type: VARCHAR
+  - name: source_release
+    description: Native IEA model edition or Comext published revision timestamp.
+    data_type: VARCHAR
+  - name: source_release_timestamp
+    description: Native published dataset revision time; null when the source did
+      not supply one.
+    data_type: TIMESTAMP WITH TIME ZONE
+  - name: licence_name
+    description: Source-specific reuse terms; project code licensing does not replace
+      these.
+    data_type: VARCHAR
+  - name: licence_url
+    description: Authoritative source rights/attribution notice URL.
+    data_type: VARCHAR
+  - name: publication_status
+    description: Publication conditions retained from the reviewed source contract.
+    data_type: VARCHAR
+  - name: source_timestamp_status
+    description: Whether a native source publication timestamp was supplied; local
+      load freshness is separate.
+    data_type: VARCHAR
+  config:
+    contract:
+      enforced: true
+- name: dim_snapshot
+  description: Original object and query lineage for every selected payload, including
+    empty data.
+  columns:
+  - name: snapshot_key
+    description: Request plus original-byte-hash lineage key, including empty responses.
+    data_tests:
+    - unique
+    - not_null
+    data_type: VARCHAR
+  - name: source_release_key
+    description: Source plus native compilation edition/revision identity.
+    data_tests:
+    - not_null
+    - relationships:
+        arguments:
+          to: ref('dim_source_release')
+          field: source_release_key
+    data_type: VARCHAR
+  - name: source
+    description: Source contract name iea or comext.
+    data_type: VARCHAR
+  - name: request_id
+    description: Stable source and canonical-query identity; not a source revision.
+    data_type: VARCHAR
+  - name: payload_sha256
+    description: SHA-256 of the unchanged original source response bytes.
+    data_type: VARCHAR
+  - name: first_retrieved_at_utc
+    description: Original first acquisition timestamp from the accepted capture manifest.
+    data_type: TIMESTAMP WITH TIME ZONE
+  - name: request_url
+    description: Exact public bounded source request URL, without credentials.
+    data_type: VARCHAR
+  - name: validation_status
+    description: Accepted or accepted_empty source-contract result; empty does not
+      imply zero activity.
+    data_type: VARCHAR
+  - name: source_observations
+    description: Count of native observations returned for the snapshot, including
+      explicit null/status cells.
+    data_type: INTEGER
+  config:
+    contract:
+      enforced: true
+- name: fct_material_demand
+  description: One native material definition/end use/geography/year/edition/scenario/case/unit/basis
+    source record.
+  columns:
+  - name: demand_key
+    description: Native source-record identity at the complete demand grain.
+    data_tests:
+    - unique
+    - not_null
+    data_type: VARCHAR
+  - name: material_key
+    description: Contextual material-family key. This is not evidence that quantities
+      can be added across definitions.
+    data_tests:
+    - not_null
+    - relationships:
+        arguments:
+          to: ref('dim_material')
+          field: material_key
+    data_type: VARCHAR
+  - name: material_definition_key
+    description: Exact native IEA definition key; graphite scopes remain distinct.
+    data_tests:
+    - not_null
+    - relationships:
+        arguments:
+          to: ref('dim_material_definition')
+          field: material_definition_key
+    data_type: VARCHAR
+  - name: geography_key
+    description: Canonical ISO or source-qualified area key; entity_type controls
+      aggregation.
+    data_tests:
+    - not_null
+    - relationships:
+        arguments:
+          to: ref('dim_geography')
+          field: geography_key
+    data_type: VARCHAR
+  - name: period_key
+    description: Annual reference-period identity.
+    data_tests:
+    - not_null
+    - relationships:
+        arguments:
+          to: ref('dim_period')
+          field: period_key
+    data_type: VARCHAR
+  - name: scenario_key
+    description: Composite source edition/scenario/case identity; never omit scenario
+      during aggregation.
+    data_tests:
+    - not_null
+    - relationships:
+        arguments:
+          to: ref('dim_scenario')
+          field: scenario_key
+    data_type: VARCHAR
+  - name: end_use_key
+    description: Native demand end-use identity.
+    data_tests:
+    - not_null
+    - relationships:
+        arguments:
+          to: ref('dim_end_use')
+          field: end_use_key
+    data_type: VARCHAR
+  - name: source_release_key
+    description: Source plus native compilation edition/revision identity.
+    data_tests:
+    - not_null
+    - relationships:
+        arguments:
+          to: ref('dim_source_release')
+          field: source_release_key
+    data_type: VARCHAR
+  - name: snapshot_key
+    description: Request plus original-byte-hash lineage key, including empty responses.
+    data_tests:
+    - not_null
+    - relationships:
+        arguments:
+          to: ref('dim_snapshot')
+          field: snapshot_key
+    data_type: VARCHAR
+  - name: source_record_id
+    description: Deterministic original record identity retained for native lineage.
+    data_tests:
+    - not_null
+    - relationships:
+        arguments:
+          to: ref('stg_iea_observations')
+          field: record_id
+    data_type: VARCHAR
+  - name: native_demand
+    description: Demand in the unchanged IEA native unit and equivalent scope.
+    data_type: DOUBLE
+  - name: native_unit
+    description: Unchanged native unit; inspected IEA values are Thousand tonnes.
+    data_type: VARCHAR
+  - name: demand_native_scope_tonnes
+    description: Demand scaled from Thousand tonnes to tonnes within its native definition;
+      basis remains unverified.
+    data_type: DOUBLE
+  - name: quantity_basis
+    description: 'Measurement scope: unverified native IEA equivalent or Comext traded
+      product mass; never interchangeable.'
+    data_tests:
+    - not_null
+    - accepted_values:
+        arguments:
+          values:
+          - unverified_native_equivalent
+    data_type: VARCHAR
+  - name: evidence_class
+    description: Explicit baseline-unverified, scenario-projection or historical-trade-status-unverified
+      class.
+    data_tests:
+    - not_null
+    - accepted_values:
+        arguments:
+          values:
+          - baseline_status_unverified
+          - scenario_projection
+    data_type: VARCHAR
+  - name: conversion_status
+    description: Applied physical scale conversion, separate from semantic equivalence.
+    data_type: VARCHAR
+  - name: reference_year
+    description: Native calendar reference year; forecasts are sparse model years,
+      not interpolated history.
+    data_type: INTEGER
+  - name: quality_state
+    description: Structural validation state; valid records may still have unresolved
+      semantic gates.
+    data_type: VARCHAR
+  config:
+    contract:
+      enforced: true
+- name: fct_material_supply
+  description: One native material definition/geography/year/stage/edition/scenario/case/unit/basis
+    source record.
+  columns:
+  - name: supply_key
+    description: Native source-record identity at the complete supply grain.
+    data_tests:
+    - unique
+    - not_null
+    data_type: VARCHAR
+  - name: material_key
+    description: Contextual material-family key. This is not evidence that quantities
+      can be added across definitions.
+    data_tests:
+    - not_null
+    - relationships:
+        arguments:
+          to: ref('dim_material')
+          field: material_key
+    data_type: VARCHAR
+  - name: material_definition_key
+    description: Exact native IEA definition key; graphite scopes remain distinct.
+    data_tests:
+    - not_null
+    - relationships:
+        arguments:
+          to: ref('dim_material_definition')
+          field: material_definition_key
+    data_type: VARCHAR
+  - name: geography_key
+    description: Canonical ISO or source-qualified area key; entity_type controls
+      aggregation.
+    data_tests:
+    - not_null
+    - relationships:
+        arguments:
+          to: ref('dim_geography')
+          field: geography_key
+    data_type: VARCHAR
+  - name: period_key
+    description: Annual reference-period identity.
+    data_tests:
+    - not_null
+    - relationships:
+        arguments:
+          to: ref('dim_period')
+          field: period_key
+    data_type: VARCHAR
+  - name: scenario_key
+    description: Composite source edition/scenario/case identity; never omit scenario
+      during aggregation.
+    data_tests:
+    - not_null
+    - relationships:
+        arguments:
+          to: ref('dim_scenario')
+          field: scenario_key
+    data_type: VARCHAR
+  - name: stage_key
+    description: Mining/refining output-stage identity.
+    data_tests:
+    - not_null
+    - relationships:
+        arguments:
+          to: ref('dim_supply_chain_stage')
+          field: stage_key
+    data_type: VARCHAR
+  - name: source_release_key
+    description: Source plus native compilation edition/revision identity.
+    data_tests:
+    - not_null
+    - relationships:
+        arguments:
+          to: ref('dim_source_release')
+          field: source_release_key
+    data_type: VARCHAR
+  - name: snapshot_key
+    description: Request plus original-byte-hash lineage key, including empty responses.
+    data_tests:
+    - not_null
+    - relationships:
+        arguments:
+          to: ref('dim_snapshot')
+          field: snapshot_key
+    data_type: VARCHAR
+  - name: source_record_id
+    description: Deterministic original record identity retained for native lineage.
+    data_tests:
+    - not_null
+    - relationships:
+        arguments:
+          to: ref('stg_iea_observations')
+          field: record_id
+    data_type: VARCHAR
+  - name: native_supply
+    description: Expected supply output in the unchanged native IEA unit, not capacity.
+    data_type: DOUBLE
+  - name: native_unit
+    description: Unchanged native unit; inspected IEA values are Thousand tonnes.
+    data_type: VARCHAR
+  - name: supply_native_scope_tonnes
+    description: Expected output scaled by 1,000 within its native stage/definition;
+      not additive across stages.
+    data_type: DOUBLE
+  - name: quantity_basis
+    description: 'Measurement scope: unverified native IEA equivalent or Comext traded
+      product mass; never interchangeable.'
+    data_tests:
+    - not_null
+    - accepted_values:
+        arguments:
+          values:
+          - unverified_native_equivalent
+    data_type: VARCHAR
+  - name: evidence_class
+    description: Explicit baseline-unverified, scenario-projection or historical-trade-status-unverified
+      class.
+    data_tests:
+    - not_null
+    - accepted_values:
+        arguments:
+          values:
+          - baseline_status_unverified
+          - scenario_projection
+    data_type: VARCHAR
+  - name: conversion_status
+    description: Applied physical scale conversion, separate from semantic equivalence.
+    data_type: VARCHAR
+  - name: reference_year
+    description: Native calendar reference year; forecasts are sparse model years,
+      not interpolated history.
+    data_type: INTEGER
+  - name: geography_entity_type
+    description: Country/territory, World or opaque residual; residuals cannot be
+      treated as a single country.
+    data_type: VARCHAR
+  - name: quality_state
+    description: Structural validation state; valid records may still have unresolved
+      semantic gates.
+    data_type: VARCHAR
+  - name: supply_measure_kind
+    description: Explicit expected_output_not_capacity classification.
+    data_type: VARCHAR
+  config:
+    contract:
+      enforced: true
+- name: fct_trade_flows
+  description: One snapshot/reporter/partner/CN8 product-year/import-export native
+    flow; aggregate partner rows remain flagged.
+  columns:
+  - name: trade_flow_key
+    description: Snapshot/reporter/partner/product/reference-year/flow identity; independent
+      indicator cells are preserved.
+    data_tests:
+    - unique
+    - not_null
+    data_type: VARCHAR
+  - name: material_key
+    description: Contextual material-family key. This is not evidence that quantities
+      can be added across definitions.
+    data_tests:
+    - not_null
+    - relationships:
+        arguments:
+          to: ref('dim_material')
+          field: material_key
+    data_type: VARCHAR
+  - name: product_key
+    description: CN8 plus native product code plus reference-year identity.
+    data_tests:
+    - not_null
+    - relationships:
+        arguments:
+          to: ref('dim_product')
+          field: product_key
+    data_type: VARCHAR
+  - name: reporter_key
+    description: Reporting geography role key.
+    data_tests:
+    - not_null
+    - relationships:
+        arguments:
+          to: ref('dim_geography')
+          field: geography_key
+    data_type: VARCHAR
+  - name: partner_key
+    description: Trade partner geography role key, including flagged aggregates/special
+      categories.
+    data_tests:
+    - not_null
+    - relationships:
+        arguments:
+          to: ref('dim_geography')
+          field: geography_key
+    data_type: VARCHAR
+  - name: period_key
+    description: Annual reference-period identity.
+    data_tests:
+    - not_null
+    - relationships:
+        arguments:
+          to: ref('dim_period')
+          field: period_key
+    data_type: VARCHAR
+  - name: flow_key
+    description: Native import/export direction identity.
+    data_tests:
+    - not_null
+    - relationships:
+        arguments:
+          to: ref('dim_trade_flow')
+          field: flow_key
+    data_type: VARCHAR
+  - name: source_release_key
+    description: Source plus native compilation edition/revision identity.
+    data_tests:
+    - not_null
+    - relationships:
+        arguments:
+          to: ref('dim_source_release')
+          field: source_release_key
+    data_type: VARCHAR
+  - name: snapshot_key
+    description: Request plus original-byte-hash lineage key, including empty responses.
+    data_tests:
+    - not_null
+    - relationships:
+        arguments:
+          to: ref('dim_snapshot')
+          field: snapshot_key
+    data_type: VARCHAR
+  - name: value_record_id
+    description: Nullable original EUR-cell record ID; absence is not zero.
+    data_tests:
+    - relationships:
+        arguments:
+          to: ref('stg_comext_cells')
+          field: record_id
+    data_type: VARCHAR
+  - name: quantity_record_id
+    description: Nullable original 100kg-cell record ID; absence is not zero.
+    data_tests:
+    - relationships:
+        arguments:
+          to: ref('stg_comext_cells')
+          field: record_id
+    data_type: VARCHAR
+  - name: supplementary_record_id
+    description: Nullable original supplementary-cell record ID; absence is not zero.
+    data_tests:
+    - relationships:
+        arguments:
+          to: ref('stg_comext_cells')
+          field: record_id
+    data_type: VARCHAR
+  - name: trade_value_eur
+    description: Native trade value in EUR for the selected product/reporter/partner/period/direction.
+    data_type: DOUBLE
+  - name: native_quantity_100kg
+    description: Native Comext mass indicator; one unit represents 100 kg of the traded
+      product.
+    data_type: DOUBLE
+  - name: product_mass_tonnes
+    description: Comext native 100kg quantity multiplied by 0.1; not contained metal
+      mass.
+    data_type: DOUBLE
+  - name: supplementary_quantity
+    description: Native supplementary observation when supplied; missing remains null
+      and no generic mass conversion is permitted.
+    data_type: DOUBLE
+  - name: value_source_status
+    description: Unchanged source status for the EUR cell, nullable.
+    data_type: VARCHAR
+  - name: quantity_source_status
+    description: Unchanged source status for the 100kg quantity cell, nullable.
+    data_type: VARCHAR
+  - name: supplementary_source_status
+    description: Unchanged supplementary-cell source status; no generic mass unit
+      inferred.
+    data_type: VARCHAR
+  - name: quantity_basis
+    description: 'Measurement scope: unverified native IEA equivalent or Comext traded
+      product mass; never interchangeable.'
+    data_tests:
+    - not_null
+    - accepted_values:
+        arguments:
+          values:
+          - traded_product_mass
+    data_type: VARCHAR
+  - name: conversion_status
+    description: Applied physical scale conversion, separate from semantic equivalence.
+    data_type: VARCHAR
+  - name: classification_status
+    description: Annual native product scope retained; longitudinal concordance remains
+      unverified.
+    data_type: VARCHAR
+  - name: evidence_class
+    description: Explicit baseline-unverified, scenario-projection or historical-trade-status-unverified
+      class.
+    data_type: VARCHAR
+  - name: reference_year
+    description: Native calendar reference year; forecasts are sparse model years,
+      not interpolated history.
+    data_type: INTEGER
+  - name: partner_entity_type
+    description: Partner area category; exclude aggregates when summing components.
+    data_type: VARCHAR
+  - name: source_cell_count
+    description: Number of native indicator cells retained in this trade-flow pivot;
+      duplicates are independently tested.
+    data_type: BIGINT
+  - name: quality_state
+    description: Structural validation state; valid records may still have unresolved
+      semantic gates.
+    data_type: VARCHAR
+  - name: supplementary_unit_status
+    description: Product-specific supplementary unit is not yet documented.
+    data_type: VARCHAR
+  config:
+    contract:
+      enforced: true
+- name: fct_ingestion_coverage
+  description: One selected request snapshot; zero observations means absent source
+    data, not zero market activity.
+  columns:
+  - name: coverage_key
+    description: Selected source snapshot identity, including empty requests.
+    data_tests:
+    - unique
+    - not_null
+    data_type: VARCHAR
+  - name: run_id
+    description: Complete selected acquisition run; a partial refresh cannot replace
+      the warehouse selection.
+    data_type: VARCHAR
+  - name: source
+    description: Source contract name iea or comext.
+    data_type: VARCHAR
+  - name: request_id
+    description: Stable source and canonical-query identity; not a source revision.
+    data_type: VARCHAR
+  - name: source_release
+    description: Native IEA model edition or Comext published revision timestamp.
+    data_type: VARCHAR
+  - name: source_observations
+    description: Count of native observations returned for the snapshot, including
+      explicit null/status cells.
+    data_type: INTEGER
+  - name: validation_status
+    description: Accepted or accepted_empty source-contract result; empty does not
+      imply zero activity.
+    data_type: VARCHAR
+  - name: first_retrieved_at_utc
+    description: Original first acquisition timestamp from the accepted capture manifest.
+    data_type: TIMESTAMP WITH TIME ZONE
+  - name: source_release_timestamp
+    description: Native published dataset revision time; null when the source did
+      not supply one.
+    data_type: TIMESTAMP WITH TIME ZONE
+  - name: empty_source_response
+    description: True for a validated empty source response, not an estimated zero.
+    data_type: BOOLEAN
+  - name: coverage_state
+    description: Native observations available or no observations returned; never
+      zero-market-activity inference.
+    data_type: VARCHAR
+- name: dq_observation_issues
+  description: Blocking structural anomalies requiring reference or source review;
+    expected to contain zero rows.
+  columns:
+  - name: source_record_id
+    description: Deterministic original record identity retained for native lineage.
+    data_type: VARCHAR
+  - name: source
+    description: Source contract name iea or comext.
+    data_type: VARCHAR
+  - name: issue_code
+    description: Blocking structural reference, unit or sign anomaly requiring review.
+    data_type: VARCHAR
+- name: dq_semantic_gates
+  description: Visible unresolved interpretation gates; populated counts are limitations,
+    not data-quality pass scores.
+  columns:
+  - name: source
+    description: Source contract name iea or comext.
+    data_type: VARCHAR
+  - name: gate
+    description: Unresolved measurement/interpretation limitation; not a composite
+      risk score.
+    data_type: VARCHAR
+  - name: affected_records
+    description: Number of source/fact records subject to this specific semantic gate.
+    data_type: BIGINT
+  - name: required_policy
+    description: Restriction to retain when consuming the affected records.
+    data_type: VARCHAR

@@ -1,0 +1,125 @@
+/// Reviewed DuckDB business-layer export. See export_manifest.json for exact source SQL and snapshot selection.
+table Supply
+	lineageTag: 0080fd0f-db46-50db-b684-8738edd0368a
+
+	column RowKey
+		dataType: string
+		lineageTag: 134d8011-9391-5d9e-92f5-cfee34726173
+		summarizeBy: none
+		sourceColumn: RowKey
+		isHidden
+
+	column SelectionKey
+		dataType: string
+		lineageTag: d396291c-a68f-5059-8186-01ce84f6ef01
+		summarizeBy: none
+		sourceColumn: SelectionKey
+		isHidden
+
+	column DefinitionKey
+		dataType: string
+		lineageTag: 26033e59-d21a-5b75-b381-d88f25cf3890
+		summarizeBy: none
+		sourceColumn: DefinitionKey
+		isHidden
+
+	column Year
+		dataType: int64
+		lineageTag: 3c361444-2beb-5b19-96a3-2d947a54075c
+		summarizeBy: none
+		sourceColumn: Year
+		formatString: 0
+
+	column Stage
+		dataType: string
+		lineageTag: 716f0947-bbd9-5e67-97d1-598fd94a72d0
+		summarizeBy: none
+		sourceColumn: Stage
+
+	column Country
+		dataType: string
+		lineageTag: 8fbfda73-2a45-5019-a443-6b5cc8435dfe
+		summarizeBy: none
+		sourceColumn: Country
+
+	column CountryISO3
+		dataType: string
+		lineageTag: 76215fc0-f016-5894-a73f-23782b859763
+		summarizeBy: none
+		sourceColumn: CountryISO3
+		dataCategory: Country
+
+	column EntityType
+		dataType: string
+		lineageTag: f486ccbe-cb0f-5d03-8dd6-f5a24ee7f083
+		summarizeBy: none
+		sourceColumn: EntityType
+
+	column QuantityTonnes
+		dataType: double
+		lineageTag: cb260d8b-cd1c-56f0-9e3d-162679dfbbe9
+		summarizeBy: none
+		sourceColumn: QuantityTonnes
+
+	column Share
+		dataType: double
+		lineageTag: 30572a13-c342-5401-8483-9353ed8a8f3f
+		summarizeBy: none
+		sourceColumn: Share
+
+	column PanelTonnes
+		dataType: double
+		lineageTag: c8623f8b-5482-500e-8516-38797025e73c
+		summarizeBy: none
+		sourceColumn: PanelTonnes
+
+	column Evidence
+		dataType: string
+		lineageTag: c42c2d35-d11f-5d20-8386-0d7325c001ff
+		summarizeBy: none
+		sourceColumn: Evidence
+
+	column SnapshotKey
+		dataType: string
+		lineageTag: 0e9c98c1-5a58-5ba0-b1c9-8f002b997e16
+		summarizeBy: none
+		sourceColumn: SnapshotKey
+		isHidden
+
+	column SourceRecordKey
+		dataType: string
+		lineageTag: 43c64712-09b7-5ec4-bd89-f73ec6890bcc
+		summarizeBy: none
+		sourceColumn: SourceRecordKey
+		isHidden
+
+	column QuantityBasis
+		dataType: string
+		lineageTag: 54eeb4db-8fec-5d97-9359-b888f0623070
+		summarizeBy: none
+		sourceColumn: QuantityBasis
+		isHidden
+
+	column DisplayLatitude
+		dataType: double
+		lineageTag: 825f1e17-97d2-5bb9-bf84-4bbb6bc5153a
+		summarizeBy: none
+		sourceColumn: DisplayLatitude
+		dataCategory: Latitude
+
+	column DisplayLongitude
+		dataType: double
+		lineageTag: d6aa6a63-8e64-5e13-b8af-e32be7354c5c
+		summarizeBy: none
+		sourceColumn: DisplayLongitude
+		dataCategory: Longitude
+
+	partition Supply = m
+		mode: import
+		source =
+			let
+				Source = Csv.Document(File.Contents(DataFolder & "/Supply.csv"),[Delimiter=",", Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+				Headers = Table.PromoteHeaders(Source,[PromoteAllScalars=true]),
+				Typed = Table.TransformColumnTypes(Headers,{{"RowKey", type text}, {"SelectionKey", type text}, {"DefinitionKey", type text}, {"Year", Int64.Type}, {"Stage", type text}, {"Country", type text}, {"CountryISO3", type text}, {"EntityType", type text}, {"QuantityTonnes", type number}, {"Share", type number}, {"PanelTonnes", type number}, {"Evidence", type text}, {"SnapshotKey", type text}, {"SourceRecordKey", type text}, {"QuantityBasis", type text}, {"DisplayLatitude", type number}, {"DisplayLongitude", type number}},"en-US")
+			in
+				Typed

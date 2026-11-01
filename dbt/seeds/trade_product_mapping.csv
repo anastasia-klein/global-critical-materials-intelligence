@@ -1,0 +1,7 @@
+product_code,family_id,product_form,definition_scope,basis,concordance_status
+28369100,lithium,carbonate,Lithium carbonate product mass; not lithium metal content or all lithium products,traded_product_mass,annual_concordance_unverified
+28220000,cobalt,oxide_hydroxide,Cobalt oxides/hydroxides product mass; G04 cross-source quantity discrepancy unresolved,traded_product_mass,annual_concordance_unverified
+26030000,copper,ore_concentrate,Ore/concentrate gross product mass; not contained copper or refined copper,traded_product_mass,annual_concordance_unverified
+26040000,nickel,ore_concentrate,Ore/concentrate product mass; not contained nickel or refining output,traded_product_mass,annual_concordance_unverified
+25041000,graphite,natural_powder_flakes,Natural graphite powder/flakes; not synthetic or all-grades IEA graphite,traded_product_mass,annual_concordance_unverified
+85051110,magnet_rare_earths,finished_magnet_article,Finished magnet articles including Nd/Pr/Dy/Sm; not equivalent to IEA magnet-REE demand or contained REE mass,traded_product_mass,annual_concordance_unverified

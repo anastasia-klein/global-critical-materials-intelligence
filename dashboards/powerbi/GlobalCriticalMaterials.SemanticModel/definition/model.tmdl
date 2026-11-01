@@ -1,0 +1,32 @@
+model Model
+	culture: en-US
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	discourageImplicitMeasures
+	sourceQueryCulture: en-US
+	annotation __PBI_TimeIntelligenceEnabled = 0
+
+ref table BasisChoice
+ref table Composition
+ref table Concentration
+ref table DefinitionChoice
+ref table Definitions
+ref table EndUses
+ref table Exposure
+ref table FutureYears
+ref table Materials
+ref table Outlook
+ref table OutlookRisk
+ref table PartnerDisplay
+ref table Partners
+ref table Products
+ref table Reporters
+ref table ScenarioChoice
+ref table Sensitivity
+ref table Stages
+ref table Supply
+ref table SupplyRisk
+ref table SupplyYears
+ref table Trade
+ref table TradeRisk
+ref table TradeYears
+ref table ReportMeasures

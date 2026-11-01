@@ -1,0 +1,8 @@
+ReporterKey,Reporter,ReporterLabel,ReporterCode,TradeScope,ReporterType
+14d52e861ff6f0654054d097b7ebf626,Netherlands,Netherlands,NL,All partners · including intra-EU,country_or_territory
+2361b3d4f055b32f12370d1532c29863,Germany,Germany,DE,All partners · including intra-EU,country_or_territory
+3c8c15f36b6789d18c985c11c3cf1259,Poland,Poland,PL,All partners · including intra-EU,country_or_territory
+43e074657cda33bace366a1b49f6dd28,Spain,Spain,ES,All partners · including intra-EU,country_or_territory
+7d18be3ec2f25961c5da2e64be03d620,France,France,FR,All partners · including intra-EU,country_or_territory
+c723a26248ab8d1c42790bccd5e8bd55,"European Union (EU27, fixed 2020)",EU27 · Extra-EU,EU27_2020,Extra-EU27 only · fixed 2020 membership,regional_aggregate
+dbb243a393f6ef59c55900086c046139,Italy,Italy,IT,All partners · including intra-EU,country_or_territory

@@ -1,0 +1,116 @@
+/// Reviewed DuckDB business-layer export. See export_manifest.json for exact source SQL and snapshot selection.
+table Composition
+	lineageTag: 9cbe32dd-8e96-5f6d-9a3e-266779ce5d64
+
+	column RowKey
+		dataType: string
+		lineageTag: a3dc84e2-b0e9-5db3-ab3e-adc7376b6473
+		summarizeBy: none
+		sourceColumn: RowKey
+		isHidden
+
+	column SelectionKey
+		dataType: string
+		lineageTag: f9f43c81-2bfb-5054-bfd7-e4b7f582aa9c
+		summarizeBy: none
+		sourceColumn: SelectionKey
+		isHidden
+
+	column ProductCode
+		dataType: string
+		lineageTag: 991985b3-f778-5d7f-8f81-2d051e6a8998
+		summarizeBy: none
+		sourceColumn: ProductCode
+
+	column ReporterKey
+		dataType: string
+		lineageTag: 105a3362-1782-585a-a78c-a9e1a68e8ca3
+		summarizeBy: none
+		sourceColumn: ReporterKey
+		isHidden
+
+	column BaseYear
+		dataType: int64
+		lineageTag: 5903784f-9af9-58b7-bdfe-694f8821db0e
+		summarizeBy: none
+		sourceColumn: BaseYear
+		formatString: 0
+
+	column EndYear
+		dataType: int64
+		lineageTag: 30ab54f1-4eca-5c1d-b11f-f86f6bd9e647
+		summarizeBy: none
+		sourceColumn: EndYear
+		formatString: 0
+
+	column Partner
+		dataType: string
+		lineageTag: cf62741f-a2c6-5dda-8001-d3bfbf41a54f
+		summarizeBy: none
+		sourceColumn: Partner
+
+	column Basis
+		dataType: string
+		lineageTag: d0c6bf47-1fe4-54df-9b3f-400b0d1328e7
+		summarizeBy: none
+		sourceColumn: Basis
+
+	column BaseShare
+		dataType: double
+		lineageTag: 8d7f79ea-2945-50a8-94da-6864ce4642a0
+		summarizeBy: none
+		sourceColumn: BaseShare
+
+	column EndShare
+		dataType: double
+		lineageTag: e7da53a3-d251-585d-b73f-313a4478a32b
+		summarizeBy: none
+		sourceColumn: EndShare
+
+	column ConditionalChangePP
+		dataType: double
+		lineageTag: 87329be2-d905-5502-85a5-d7ebeff74e09
+		summarizeBy: none
+		sourceColumn: ConditionalChangePP
+
+	column VerifiedChangePP
+		dataType: double
+		lineageTag: 5c9a7a10-91bb-505b-96a0-f2fa46dbd4cf
+		summarizeBy: none
+		sourceColumn: VerifiedChangePP
+
+	column PresencePattern
+		dataType: string
+		lineageTag: a1f9e1f3-5d72-514d-941e-57ac0f969f0c
+		summarizeBy: none
+		sourceColumn: PresencePattern
+
+	column ComparisonStatus
+		dataType: string
+		lineageTag: caf2bd8e-8aff-5a74-bcaa-e6de95cd7605
+		summarizeBy: none
+		sourceColumn: ComparisonStatus
+
+	column BaseSnapshotKey
+		dataType: string
+		lineageTag: 5a88aaae-a247-593c-b683-42dfd9c47232
+		summarizeBy: none
+		sourceColumn: BaseSnapshotKey
+		isHidden
+
+	column EndSnapshotKey
+		dataType: string
+		lineageTag: 5cbb7862-ef06-509c-9a4b-5618386a4873
+		summarizeBy: none
+		sourceColumn: EndSnapshotKey
+		isHidden
+
+	partition Composition = m
+		mode: import
+		source =
+			let
+				Source = Csv.Document(File.Contents(DataFolder & "/Composition.csv"),[Delimiter=",", Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+				Headers = Table.PromoteHeaders(Source,[PromoteAllScalars=true]),
+				Typed = Table.TransformColumnTypes(Headers,{{"RowKey", type text}, {"SelectionKey", type text}, {"ProductCode", type text}, {"ReporterKey", type text}, {"BaseYear", Int64.Type}, {"EndYear", Int64.Type}, {"Partner", type text}, {"Basis", type text}, {"BaseShare", type number}, {"EndShare", type number}, {"ConditionalChangePP", type number}, {"VerifiedChangePP", type number}, {"PresencePattern", type text}, {"ComparisonStatus", type text}, {"BaseSnapshotKey", type text}, {"EndSnapshotKey", type text}},"en-US")
+			in
+				Typed

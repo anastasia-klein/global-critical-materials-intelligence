@@ -1,0 +1,19 @@
+/// Reviewed DuckDB business-layer export. See export_manifest.json for exact source SQL and snapshot selection.
+table DefinitionChoice
+	lineageTag: 0a2ff4db-8c7e-5576-8f41-9ab3f2fb7a18
+
+	column GraphiteScope
+		dataType: string
+		lineageTag: 1deb093a-4636-539d-bd20-f837ddae50cd
+		summarizeBy: none
+		sourceColumn: GraphiteScope
+
+	partition DefinitionChoice = m
+		mode: import
+		source =
+			let
+				Source = Csv.Document(File.Contents(DataFolder & "/DefinitionChoice.csv"),[Delimiter=",", Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+				Headers = Table.PromoteHeaders(Source,[PromoteAllScalars=true]),
+				Typed = Table.TransformColumnTypes(Headers,{{"GraphiteScope", type text}},"en-US")
+			in
+				Typed

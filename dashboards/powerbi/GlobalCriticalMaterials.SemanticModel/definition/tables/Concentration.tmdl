@@ -1,0 +1,108 @@
+/// Reviewed DuckDB business-layer export. See export_manifest.json for exact source SQL and snapshot selection.
+table Concentration
+	lineageTag: 8d7f6237-f265-5c39-b0f8-64eee2c1f8c2
+
+	column RowKey
+		dataType: string
+		lineageTag: 81fee635-7131-5bc4-b61b-3e56fdf13308
+		summarizeBy: none
+		sourceColumn: RowKey
+		isHidden
+
+	column SelectionKey
+		dataType: string
+		lineageTag: 59c1befc-39d4-5937-a131-9b508dfaba2e
+		summarizeBy: none
+		sourceColumn: SelectionKey
+		isHidden
+
+	column DefinitionKey
+		dataType: string
+		lineageTag: de16e3ef-65ad-59a3-a30c-b9cf7935b525
+		summarizeBy: none
+		sourceColumn: DefinitionKey
+		isHidden
+
+	column Year
+		dataType: int64
+		lineageTag: 5195425a-e864-5bcb-bdd7-80f3c28844ed
+		summarizeBy: none
+		sourceColumn: Year
+		formatString: 0
+
+	column Stage
+		dataType: string
+		lineageTag: 57ed5749-0785-5084-875f-f3746f4d4a9f
+		summarizeBy: none
+		sourceColumn: Stage
+
+	column HHILower
+		dataType: double
+		lineageTag: 24748e6c-eb06-57dc-86a0-70af1df0db40
+		summarizeBy: none
+		sourceColumn: HHILower
+
+	column HHIUpper
+		dataType: double
+		lineageTag: bc4dad55-be34-5d69-a187-c04f19c0fb1f
+		summarizeBy: none
+		sourceColumn: HHIUpper
+
+	column Top3Lower
+		dataType: double
+		lineageTag: 2420e5d1-a6d1-509d-89d4-fc01ffdc216a
+		summarizeBy: none
+		sourceColumn: Top3Lower
+
+	column Top3Upper
+		dataType: double
+		lineageTag: 9833c85e-7a7e-542b-9e00-f049d2965dda
+		summarizeBy: none
+		sourceColumn: Top3Upper
+
+	column Top5Lower
+		dataType: double
+		lineageTag: 7215e768-3c76-5c43-958a-f8813a625183
+		summarizeBy: none
+		sourceColumn: Top5Lower
+
+	column Top5Upper
+		dataType: double
+		lineageTag: 478907b0-6ef7-594d-a0d0-c636db0a2218
+		summarizeBy: none
+		sourceColumn: Top5Upper
+
+	column ResidualShare
+		dataType: double
+		lineageTag: ad97527d-e1f3-50f8-8977-67ba61e409e3
+		summarizeBy: none
+		sourceColumn: ResidualShare
+
+	column MetricStatus
+		dataType: string
+		lineageTag: a637d4ba-a01d-5c86-8ae5-cd1bc6db3486
+		summarizeBy: none
+		sourceColumn: MetricStatus
+
+	column Evidence
+		dataType: string
+		lineageTag: 38c4ab0c-5d03-5961-b59c-8473b08a1331
+		summarizeBy: none
+		sourceColumn: Evidence
+
+	column SnapshotKey
+		dataType: string
+		lineageTag: b43493fb-6274-548e-a033-ebb07b4ccad6
+		summarizeBy: none
+		sourceColumn: SnapshotKey
+		isHidden
+
+	partition Concentration = m
+		mode: import
+		source =
+			let
+				Source = Csv.Document(File.Contents(DataFolder & "/Concentration.csv"),[Delimiter=",", Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+				Headers = Table.PromoteHeaders(Source,[PromoteAllScalars=true]),
+				Typed = Table.TransformColumnTypes(Headers,{{"RowKey", type text}, {"SelectionKey", type text}, {"DefinitionKey", type text}, {"Year", Int64.Type}, {"Stage", type text}, {"HHILower", type number}, {"HHIUpper", type number}, {"Top3Lower", type number}, {"Top3Upper", type number}, {"Top5Lower", type number}, {"Top5Upper", type number}, {"ResidualShare", type number}, {"MetricStatus", type text}, {"Evidence", type text}, {"SnapshotKey", type text}},"en-US")
+			in
+				Typed

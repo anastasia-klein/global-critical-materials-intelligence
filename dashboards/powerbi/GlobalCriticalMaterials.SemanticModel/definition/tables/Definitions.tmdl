@@ -1,0 +1,52 @@
+/// Reviewed DuckDB business-layer export. See export_manifest.json for exact source SQL and snapshot selection.
+table Definitions
+	lineageTag: c3a0a7dc-cc4b-5e6a-ada2-88b7bf39ff9b
+
+	column DefinitionKey
+		dataType: string
+		lineageTag: b1ed5b79-dee3-59af-aad0-de55d4115cf3
+		summarizeBy: none
+		sourceColumn: DefinitionKey
+		isHidden
+
+	column Material
+		dataType: string
+		lineageTag: 9ee3b576-eb43-58f2-9c60-ba50a177ab12
+		summarizeBy: none
+		sourceColumn: Material
+
+	column MaterialButton
+		dataType: string
+		lineageTag: 86243565-9aa1-5c29-b975-1a1fbdbb9135
+		summarizeBy: none
+		sourceColumn: MaterialButton
+
+	column Family
+		dataType: string
+		lineageTag: edb2fd79-4152-5f41-b628-1c36b746ab0f
+		summarizeBy: none
+		sourceColumn: Family
+
+	column DefinitionScope
+		dataType: string
+		lineageTag: a047d0e0-f777-53a4-99ed-c47820851fed
+		summarizeBy: none
+		sourceColumn: DefinitionScope
+		isHidden
+
+	column QuantityBasis
+		dataType: string
+		lineageTag: a1b02e3f-520e-5e40-a691-69724285680a
+		summarizeBy: none
+		sourceColumn: QuantityBasis
+		isHidden
+
+	partition Definitions = m
+		mode: import
+		source =
+			let
+				Source = Csv.Document(File.Contents(DataFolder & "/Definitions.csv"),[Delimiter=",", Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+				Headers = Table.PromoteHeaders(Source,[PromoteAllScalars=true]),
+				Typed = Table.TransformColumnTypes(Headers,{{"DefinitionKey", type text}, {"Material", type text}, {"MaterialButton", type text}, {"Family", type text}, {"DefinitionScope", type text}, {"QuantityBasis", type text}},"en-US")
+			in
+				Typed

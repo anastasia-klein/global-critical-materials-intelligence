@@ -1,0 +1,1576 @@
+version: 2
+models:
+- name: int_analysis_context
+  description: One complete selected snapshot-set fingerprint, including empty snapshots; acquisition run identifiers
+    are not used as data-version identities.
+  columns:
+  - name: source_selection_key
+    description: Deterministic surrogate identity of the full documented model grain.
+    data_type: VARCHAR
+    data_tests:
+    - unique
+    - not_null
+  - name: selected_snapshot_count
+    description: Number of selected request snapshots, including empty responses.
+    data_type: INTEGER
+- name: int_trade_measures
+  description: One trade fact × value/mass basis. Keeps aggregate partner rows for explicit World denominators and
+    separate native indicator lineage.
+  columns:
+  - name: trade_flow_key
+    description: Snapshot/reporter/partner/product/reference-year/flow identity; independent indicator cells are
+      preserved.
+    data_type: VARCHAR
+  - name: material_key
+    description: Contextual material-family key. This is not evidence that quantities can be added across definitions.
+    data_type: VARCHAR
+  - name: product_key
+    description: CN8 plus native product code plus reference-year identity.
+    data_type: VARCHAR
+  - name: reporter_key
+    description: Reporting geography role key.
+    data_type: VARCHAR
+  - name: partner_key
+    description: Trade partner geography role key, including flagged aggregates/special categories.
+    data_type: VARCHAR
+  - name: period_key
+    description: Annual reference-period identity.
+    data_type: VARCHAR
+  - name: flow_key
+    description: Native import/export direction identity.
+    data_type: VARCHAR
+  - name: source_release_key
+    description: Source plus native compilation edition/revision identity.
+    data_type: VARCHAR
+  - name: snapshot_key
+    description: Request plus original-byte-hash lineage key, including empty responses.
+    data_type: VARCHAR
+  - name: reference_year
+    description: Native calendar reference year; forecasts are sparse model years, not interpolated history.
+    data_type: INTEGER
+  - name: partner_entity_type
+    description: Partner area category; exclude aggregates when summing components.
+    data_type: VARCHAR
+  - name: evidence_class
+    description: Explicit baseline-unverified, scenario-projection or historical-trade-status-unverified class.
+    data_type: VARCHAR
+  - name: product_code
+    description: Native CN8 commodity code; one selected product form rather than a full material basket.
+    data_type: VARCHAR
+  - name: classification_status
+    description: Annual native product scope retained; longitudinal concordance remains unverified.
+    data_type: VARCHAR
+  - name: partner_name
+    description: Canonical display name for the source-qualified reported partner.
+    data_type: VARCHAR
+  - name: partner_iso_alpha2
+    description: Reviewed ISO alpha-2 where assigned; geopolitical areas can remain null.
+    data_type: VARCHAR
+  - name: flow_name
+    description: Reporting-perspective import or export direction.
+    data_type: VARCHAR
+  - name: measure_basis
+    description: 'Separate measure family: trade_value in EUR, product_mass in product tonnes, or explicitly labelled
+      native scenario output; never sum across bases.'
+    data_type: VARCHAR
+  - name: measure_unit
+    description: Unit matching the measure basis; native scenario tonnes retain unverified equivalent basis.
+    data_type: VARCHAR
+  - name: measure_value
+    description: Native trade indicator after documented scale conversion, without inferring missing values.
+    data_type: DOUBLE
+  - name: source_status
+    description: Original source status for this indicator; null means no supplied status, not certified observed
+      actual.
+    data_type: VARCHAR
+  - name: source_record_id
+    description: Deterministic original record identity retained for native lineage.
+    data_type: VARCHAR
+  - name: reporter_id
+    data_type: VARCHAR
+    description: Source-mapped reporting country or fixed EU27_2020 aggregate.
+  - name: partner_geography_id
+    data_type: VARCHAR
+    description: Source-qualified partner identity; aggregates remain separate from countries.
+  - name: trade_scope
+    data_type: VARCHAR
+    description: National all partners versus EU27_2020 external partners only.
+  - name: denominator_partner_id
+    data_type: VARCHAR
+    description: WORLD for national reporters; COMEXT:EXT_EU27_2020 for the EU bloc.
+  - name: partner_scope_eligible
+    data_type: BOOLEAN
+    description: EU27_2020 member partners excluded from bloc external metrics; raw records retained.
+- name: int_trade_denominators
+  description: Reporter × annual product × flow × snapshot × measure. Selects native World and reconciles eligible
+    bilateral amounts; no aggregate double counting.
+  columns:
+  - name: material_key
+    description: Contextual material-family key. This is not evidence that quantities can be added across definitions.
+    data_type: VARCHAR
+  - name: product_key
+    description: CN8 plus native product code plus reference-year identity.
+    data_type: VARCHAR
+  - name: reporter_key
+    description: Reporting geography role key.
+    data_type: VARCHAR
+  - name: period_key
+    description: Annual reference-period identity.
+    data_type: VARCHAR
+  - name: flow_key
+    description: Native import/export direction identity.
+    data_type: VARCHAR
+  - name: source_release_key
+    description: Source plus native compilation edition/revision identity.
+    data_type: VARCHAR
+  - name: snapshot_key
+    description: Request plus original-byte-hash lineage key, including empty responses.
+    data_type: VARCHAR
+  - name: reference_year
+    description: Native calendar reference year; forecasts are sparse model years, not interpolated history.
+    data_type: INTEGER
+  - name: product_code
+    description: Native CN8 commodity code; one selected product form rather than a full material basket.
+    data_type: VARCHAR
+  - name: classification_status
+    description: Annual native product scope retained; longitudinal concordance remains unverified.
+    data_type: VARCHAR
+  - name: flow_name
+    description: Reporting-perspective import or export direction.
+    data_type: VARCHAR
+  - name: measure_basis
+    description: 'Separate measure family: trade_value in EUR, product_mass in product tonnes, or explicitly labelled
+      native scenario output; never sum across bases.'
+    data_type: VARCHAR
+  - name: measure_unit
+    description: Unit matching the measure basis; native scenario tonnes retain unverified equivalent basis.
+    data_type: VARCHAR
+  - name: denominator_row_count
+    description: Count of native total rows matching the scoped denominator; exactly one required for eligible metrics.
+    data_type: INTEGER
+  - name: reference_total
+    description: 'Native scoped denominator: World for national reporters, Extra EU27_2020 for the EU bloc. Never
+      relabel Extra-EU as World.'
+    data_type: DOUBLE
+  - name: named_partner_total
+    description: Sum of reported country/territory and explicitly typed geopolitical partner values; World and regional/special
+      aggregates excluded.
+    data_type: DOUBLE
+  - name: reported_special_partner_total
+    description: Reported special trade partner amount, separately disclosed; it is not assigned to a named supplier.
+    data_type: DOUBLE
+  - name: missing_named_measure_count
+    description: Reported named-partner rows lacking this measure; never converted to zero.
+    data_type: INTEGER
+  - name: flagged_measure_count
+    description: Number of source measure rows with a non-null source status; not a quality certification.
+    data_type: INTEGER
+  - name: negative_measure_count
+    description: Source measure rows below zero; invalidate this denominator rather than dropping the offending
+      rows.
+    data_type: INTEGER
+  - name: native_reconciliation_delta
+    description: Native World minus named partner sum, retaining floating-point discrepancies before tolerance handling.
+    data_type: DOUBLE
+  - name: numeric_tolerance
+    description: 'Engineering-only tolerance: max(0.01 EUR or 0.000001 product tonnes, absolute World times 1e-9).
+      No economic materiality threshold is inferred.'
+    data_type: DOUBLE
+  - name: denominator_status
+    description: Availability reason after checking one positive World row, nonnegative detail and reconciliation
+      within numeric tolerance.
+    data_type: VARCHAR
+  - name: unallocated_amount
+    description: World less known partner amounts, with numerical noise within tolerance represented as zero. Unknown/residual
+      shares remain unassigned.
+    data_type: DOUBLE
+  - name: denominator_scope
+    description: Explicit denominator population or aggregate scope. Scenario panel sums and reported-end-use sums
+      do not certify independent World totals.
+    data_type: VARCHAR
+  - name: trade_scope
+    data_type: VARCHAR
+    description: Country versus bloc external trade population.
+  - name: denominator_partner_id
+    data_type: VARCHAR
+    description: 'Native total used: World or Extra EU27_2020; not a sum of overlapping aggregates.'
+- name: int_outlook_series
+  description: Definition × geography × edition/scenario/case × year × series kind × optional stage/end use × source
+    snapshot/basis. Returned end-use sums and supply panel totals are labelled explicitly.
+  columns:
+  - name: material_key
+    description: Contextual material-family key. This is not evidence that quantities can be added across definitions.
+    data_type: VARCHAR
+  - name: material_definition_key
+    description: Exact native IEA definition key; graphite scopes remain distinct.
+    data_type: VARCHAR
+  - name: geography_key
+    description: Canonical ISO or source-qualified area key; entity_type controls aggregation.
+    data_type: VARCHAR
+  - name: scenario_key
+    description: Composite source edition/scenario/case identity; never omit scenario during aggregation.
+    data_type: VARCHAR
+  - name: stage_key
+    description: Mining/refining output-stage identity.
+    data_type: VARCHAR
+  - name: end_use_key
+    description: Native demand end-use identity.
+    data_type: VARCHAR
+  - name: source_release_key
+    description: Source plus native compilation edition/revision identity.
+    data_type: VARCHAR
+  - name: snapshot_key
+    description: Request plus original-byte-hash lineage key, including empty responses.
+    data_type: VARCHAR
+  - name: reference_year
+    description: Native calendar reference year; forecasts are sparse model years, not interpolated history.
+    data_type: INTEGER
+  - name: quantity_basis
+    description: 'Measurement scope: unverified native IEA equivalent or Comext traded product mass; never interchangeable.'
+    data_type: VARCHAR
+  - name: evidence_class
+    description: Explicit baseline-unverified, scenario-projection or historical-trade-status-unverified class.
+    data_type: VARCHAR
+  - name: series_kind
+    description: Native end-use demand, sum of returned demand end uses, or expected supply panel output. These
+      series are not interchangeable.
+    data_type: VARCHAR
+  - name: denominator_scope
+    description: Explicit denominator population or aggregate scope. Scenario panel sums and reported-end-use sums
+      do not certify independent World totals.
+    data_type: VARCHAR
+  - name: native_scope_tonnes
+    description: Native quantity scaled to tonnes within the exact definition. Unverified equivalent basis remains
+      attached.
+    data_type: DOUBLE
+  - name: source_observation_count
+    description: Count of native observations contributing to this point; no missing end uses or countries fabricated.
+    data_type: INTEGER
+  - name: missing_value_count
+    description: Count of source observations without a value; blocks aggregate growth if nonzero.
+    data_type: INTEGER
+  - name: category_set_key
+    description: Exact end-use membership fingerprint; supply aggregate uses a declared country-plus-residual scope
+      whose internal membership may change.
+    data_type: VARCHAR
+- name: mart_trade_partner_shares
+  description: One eligible reported partner × annual product × reporter × flow × snapshot × measure × source selection;
+    denominator is source World including intra-EU trade.
+  columns:
+  - name: partner_share_key
+    description: Deterministic surrogate identity of the full documented model grain.
+    data_type: VARCHAR
+    data_tests:
+    - unique
+    - not_null
+  - name: source_selection_key
+    description: MD5 of the ordered complete selected snapshot-ID set. Changes when any selected source snapshot
+      changes; replay of identical snapshots retains identity.
+    data_type: VARCHAR
+    data_tests:
+    - relationships:
+        arguments:
+          to: ref('int_analysis_context')
+          field: source_selection_key
+  - name: material_key
+    description: Contextual material-family key. This is not evidence that quantities can be added across definitions.
+    data_type: VARCHAR
+    data_tests:
+    - relationships:
+        arguments:
+          to: ref('dim_material')
+          field: material_key
+  - name: product_key
+    description: CN8 plus native product code plus reference-year identity.
+    data_type: VARCHAR
+    data_tests:
+    - relationships:
+        arguments:
+          to: ref('dim_product')
+          field: product_key
+  - name: reporter_key
+    description: Reporting geography role key.
+    data_type: VARCHAR
+    data_tests:
+    - relationships:
+        arguments:
+          to: ref('dim_geography')
+          field: geography_key
+  - name: partner_key
+    description: Trade partner geography role key, including flagged aggregates/special categories.
+    data_type: VARCHAR
+    data_tests:
+    - relationships:
+        arguments:
+          to: ref('dim_geography')
+          field: geography_key
+  - name: period_key
+    description: Annual reference-period identity.
+    data_type: VARCHAR
+    data_tests:
+    - relationships:
+        arguments:
+          to: ref('dim_period')
+          field: period_key
+  - name: flow_key
+    description: Native import/export direction identity.
+    data_type: VARCHAR
+  - name: source_release_key
+    description: Source plus native compilation edition/revision identity.
+    data_type: VARCHAR
+    data_tests:
+    - relationships:
+        arguments:
+          to: ref('dim_source_release')
+          field: source_release_key
+  - name: snapshot_key
+    description: Request plus original-byte-hash lineage key, including empty responses.
+    data_type: VARCHAR
+    data_tests:
+    - relationships:
+        arguments:
+          to: ref('dim_snapshot')
+          field: snapshot_key
+  - name: reference_year
+    description: Native calendar reference year; forecasts are sparse model years, not interpolated history.
+    data_type: INTEGER
+  - name: product_code
+    description: Native CN8 commodity code; one selected product form rather than a full material basket.
+    data_type: VARCHAR
+  - name: flow_name
+    description: Reporting-perspective import or export direction.
+    data_type: VARCHAR
+  - name: partner_name
+    description: Canonical display name for the source-qualified reported partner.
+    data_type: VARCHAR
+  - name: partner_iso_alpha2
+    description: Reviewed ISO alpha-2 where assigned; geopolitical areas can remain null.
+    data_type: VARCHAR
+  - name: partner_entity_type
+    description: Partner area category; exclude aggregates when summing components.
+    data_type: VARCHAR
+  - name: measure_basis
+    description: 'Separate measure family: trade_value in EUR, product_mass in product tonnes, or explicitly labelled
+      native scenario output; never sum across bases.'
+    data_type: VARCHAR
+  - name: measure_unit
+    description: Unit matching the measure basis; native scenario tonnes retain unverified equivalent basis.
+    data_type: VARCHAR
+  - name: measure_value
+    description: Native trade indicator after documented scale conversion, without inferring missing values.
+    data_type: DOUBLE
+  - name: source_status
+    description: Original source status for this indicator; null means no supplied status, not certified observed
+      actual.
+    data_type: VARCHAR
+  - name: source_record_id
+    description: Deterministic original record identity retained for native lineage.
+    data_type: VARCHAR
+  - name: evidence_class
+    description: Explicit baseline-unverified, scenario-projection or historical-trade-status-unverified class.
+    data_type: VARCHAR
+  - name: reference_total
+    description: 'Native scoped denominator: World for national reporters, Extra EU27_2020 for the EU bloc. Never
+      relabel Extra-EU as World.'
+    data_type: DOUBLE
+  - name: unallocated_amount
+    description: World less known partner amounts, with numerical noise within tolerance represented as zero. Unknown/residual
+      shares remain unassigned.
+    data_type: DOUBLE
+  - name: denominator_scope
+    description: Explicit denominator population or aggregate scope. Scenario panel sums and reported-end-use sums
+      do not certify independent World totals.
+    data_type: VARCHAR
+  - name: denominator_status
+    description: Availability reason after checking one positive World row, nonnegative detail and reconciliation
+      within numeric tolerance.
+    data_type: VARCHAR
+  - name: classification_status
+    description: Annual native product scope retained; longitudinal concordance remains unverified.
+    data_type: VARCHAR
+  - name: partner_share
+    description: Reported bilateral partner amount divided by native World, separately by measure. Null when unavailable.
+    data_type: DOUBLE
+  - name: reported_partner_rank
+    description: Deterministic amount rank among reported named partners, descending with key tie break; null for
+      a missing measure. Not a claim of unique economic leadership.
+    data_type: INTEGER
+  config:
+    contract:
+      enforced: true
+- name: mart_country_material_dependency
+  description: Reporter × annual product × import snapshot × measure × source selection. Contains supplier-exposure
+    bounds; consumption-based import dependency stays unavailable.
+  columns:
+  - name: dependency_key
+    description: Deterministic surrogate identity of the full documented model grain.
+    data_type: VARCHAR
+    data_tests:
+    - unique
+    - not_null
+  - name: source_selection_key
+    description: MD5 of the ordered complete selected snapshot-ID set. Changes when any selected source snapshot
+      changes; replay of identical snapshots retains identity.
+    data_type: VARCHAR
+    data_tests:
+    - relationships:
+        arguments:
+          to: ref('int_analysis_context')
+          field: source_selection_key
+  - name: material_key
+    description: Contextual material-family key. This is not evidence that quantities can be added across definitions.
+    data_type: VARCHAR
+    data_tests:
+    - relationships:
+        arguments:
+          to: ref('dim_material')
+          field: material_key
+  - name: product_key
+    description: CN8 plus native product code plus reference-year identity.
+    data_type: VARCHAR
+    data_tests:
+    - relationships:
+        arguments:
+          to: ref('dim_product')
+          field: product_key
+  - name: reporter_key
+    description: Reporting geography role key.
+    data_type: VARCHAR
+    data_tests:
+    - relationships:
+        arguments:
+          to: ref('dim_geography')
+          field: geography_key
+  - name: period_key
+    description: Annual reference-period identity.
+    data_type: VARCHAR
+    data_tests:
+    - relationships:
+        arguments:
+          to: ref('dim_period')
+          field: period_key
+  - name: source_release_key
+    description: Source plus native compilation edition/revision identity.
+    data_type: VARCHAR
+    data_tests:
+    - relationships:
+        arguments:
+          to: ref('dim_source_release')
+          field: source_release_key
+  - name: snapshot_key
+    description: Request plus original-byte-hash lineage key, including empty responses.
+    data_type: VARCHAR
+    data_tests:
+    - relationships:
+        arguments:
+          to: ref('dim_snapshot')
+          field: snapshot_key
+  - name: reference_year
+    description: Native calendar reference year; forecasts are sparse model years, not interpolated history.
+    data_type: INTEGER
+  - name: product_code
+    description: Native CN8 commodity code; one selected product form rather than a full material basket.
+    data_type: VARCHAR
+  - name: measure_basis
+    description: 'Separate measure family: trade_value in EUR, product_mass in product tonnes, or explicitly labelled
+      native scenario output; never sum across bases.'
+    data_type: VARCHAR
+  - name: measure_unit
+    description: Unit matching the measure basis; native scenario tonnes retain unverified equivalent basis.
+    data_type: VARCHAR
+  - name: reference_total
+    description: 'Native scoped denominator: World for national reporters, Extra EU27_2020 for the EU bloc. Never
+      relabel Extra-EU as World.'
+    data_type: DOUBLE
+  - name: named_partner_total
+    description: Sum of reported country/territory and explicitly typed geopolitical partner values; World and regional/special
+      aggregates excluded.
+    data_type: DOUBLE
+  - name: reported_special_partner_total
+    description: Reported special trade partner amount, separately disclosed; it is not assigned to a named supplier.
+    data_type: DOUBLE
+  - name: unallocated_amount
+    description: World less known partner amounts, with numerical noise within tolerance represented as zero. Unknown/residual
+      shares remain unassigned.
+    data_type: DOUBLE
+  - name: native_reconciliation_delta
+    description: Native World minus named partner sum, retaining floating-point discrepancies before tolerance handling.
+    data_type: DOUBLE
+  - name: numeric_tolerance
+    description: 'Engineering-only tolerance: max(0.01 EUR or 0.000001 product tonnes, absolute World times 1e-9).
+      No economic materiality threshold is inferred.'
+    data_type: DOUBLE
+  - name: missing_named_measure_count
+    description: Reported named-partner rows lacking this measure; never converted to zero.
+    data_type: INTEGER
+  - name: flagged_measure_count
+    description: Number of source measure rows with a non-null source status; not a quality certification.
+    data_type: INTEGER
+  - name: reported_named_partner_count
+    description: Count of returned named partner rows, not a claim that absent partners have zero trade.
+    data_type: INTEGER
+  - name: denominator_scope
+    description: Explicit denominator population or aggregate scope. Scenario panel sums and reported-end-use sums
+      do not certify independent World totals.
+    data_type: VARCHAR
+  - name: denominator_status
+    description: Availability reason after checking one positive World row, nonnegative detail and reconciliation
+      within numeric tolerance.
+    data_type: VARCHAR
+  - name: classification_status
+    description: Annual native product scope retained; longitudinal concordance remains unverified.
+    data_type: VARCHAR
+  - name: largest_named_partner_key
+    description: A maximum-amount reported named partner; deterministic key tie break. Does not assign unknown residual
+      to a country.
+    data_type: VARCHAR
+  - name: unallocated_share
+    description: Unallocated amount divided by native World. Kept outside named supplier ranks.
+    data_type: DOUBLE
+  - name: hhi_lower
+    description: 'Conservative HHI lower bound on the 0–1 scale: sum of squared known shares; unresolved residual
+      is infinitely dispersed.'
+    data_type: DOUBLE
+  - name: hhi_upper
+    description: Conservative HHI upper bound on the 0–1 scale. Supply Other countries is additional to named countries;
+      unallocated trade may augment the largest known supplier, adding 2*largest_share*residual_share as well as
+      residual_share squared.
+    data_type: DOUBLE
+  - name: top_supplier_share_lower
+    description: Conservative top-1 share lower bound, on the 0–1 scale. Lower uses largest known shares. Supply
+      upper permits one additional residual country; trade upper adds unresolved mass to the leading known suppliers,
+      capped at one.
+    data_type: DOUBLE
+  - name: top_supplier_share_upper
+    description: Conservative top-1 share upper bound, on the 0–1 scale. Lower uses largest known shares. Supply
+      upper permits one additional residual country; trade upper adds unresolved mass to the leading known suppliers,
+      capped at one.
+    data_type: DOUBLE
+  - name: top3_share_lower
+    description: Conservative top-3 share lower bound, on the 0–1 scale. Lower uses largest known shares. Supply
+      upper permits one additional residual country; trade upper adds unresolved mass to the leading known suppliers,
+      capped at one.
+    data_type: DOUBLE
+  - name: top3_share_upper
+    description: Conservative top-3 share upper bound, on the 0–1 scale. Lower uses largest known shares. Supply
+      upper permits one additional residual country; trade upper adds unresolved mass to the leading known suppliers,
+      capped at one.
+    data_type: DOUBLE
+  - name: top5_share_lower
+    description: Conservative top-5 share lower bound, on the 0–1 scale. Lower uses largest known shares. Supply
+      upper permits one additional residual country; trade upper adds unresolved mass to the leading known suppliers,
+      capped at one.
+    data_type: DOUBLE
+  - name: top5_share_upper
+    description: Conservative top-5 share upper bound, on the 0–1 scale. Lower uses largest known shares. Supply
+      upper permits one additional residual country; trade upper adds unresolved mass to the leading known suppliers,
+      capped at one.
+    data_type: DOUBLE
+  - name: named_leader_guaranteed
+    description: Whether the largest known amount is at least second-largest known plus the entire unallocated amount.
+      Unknown trade can augment an existing supplier; ties are permitted.
+    data_type: BOOLEAN
+  - name: evidence_class
+    description: Explicit baseline-unverified, scenario-projection or historical-trade-status-unverified class.
+    data_type: VARCHAR
+  - name: import_dependency
+    description: Unavailable consumption-based import dependency. Always null until compatible domestic output and
+      consumption exist.
+    data_type: DOUBLE
+  - name: import_dependency_status
+    description: Explicit missing-input reason; supplier concentration must never substitute for import dependency.
+    data_type: VARCHAR
+  config:
+    contract:
+      enforced: true
+- name: mart_european_trade_analysis
+  description: Reporter × annual product × snapshot × measure × source selection. Native World import/export balance;
+    current acquired reporters are DE, FR, IT, ES, PL, NL and EU27_2020.
+  columns:
+  - name: trade_analysis_key
+    description: Deterministic surrogate identity of the full documented model grain.
+    data_type: VARCHAR
+    data_tests:
+    - unique
+    - not_null
+  - name: source_selection_key
+    description: MD5 of the ordered complete selected snapshot-ID set. Changes when any selected source snapshot
+      changes; replay of identical snapshots retains identity.
+    data_type: VARCHAR
+    data_tests:
+    - relationships:
+        arguments:
+          to: ref('int_analysis_context')
+          field: source_selection_key
+  - name: material_key
+    description: Contextual material-family key. This is not evidence that quantities can be added across definitions.
+    data_type: VARCHAR
+    data_tests:
+    - relationships:
+        arguments:
+          to: ref('dim_material')
+          field: material_key
+  - name: product_key
+    description: CN8 plus native product code plus reference-year identity.
+    data_type: VARCHAR
+    data_tests:
+    - relationships:
+        arguments:
+          to: ref('dim_product')
+          field: product_key
+  - name: reporter_key
+    description: Reporting geography role key.
+    data_type: VARCHAR
+    data_tests:
+    - relationships:
+        arguments:
+          to: ref('dim_geography')
+          field: geography_key
+  - name: period_key
+    description: Annual reference-period identity.
+    data_type: VARCHAR
+    data_tests:
+    - relationships:
+        arguments:
+          to: ref('dim_period')
+          field: period_key
+  - name: source_release_key
+    description: Source plus native compilation edition/revision identity.
+    data_type: VARCHAR
+    data_tests:
+    - relationships:
+        arguments:
+          to: ref('dim_source_release')
+          field: source_release_key
+  - name: snapshot_key
+    description: Request plus original-byte-hash lineage key, including empty responses.
+    data_type: VARCHAR
+    data_tests:
+    - relationships:
+        arguments:
+          to: ref('dim_snapshot')
+          field: snapshot_key
+  - name: reference_year
+    description: Native calendar reference year; forecasts are sparse model years, not interpolated history.
+    data_type: INTEGER
+  - name: product_code
+    description: Native CN8 commodity code; one selected product form rather than a full material basket.
+    data_type: VARCHAR
+  - name: measure_basis
+    description: 'Separate measure family: trade_value in EUR, product_mass in product tonnes, or explicitly labelled
+      native scenario output; never sum across bases.'
+    data_type: VARCHAR
+  - name: measure_unit
+    description: Unit matching the measure basis; native scenario tonnes retain unverified equivalent basis.
+    data_type: VARCHAR
+  - name: classification_status
+    description: Annual native product scope retained; longitudinal concordance remains unverified.
+    data_type: VARCHAR
+  - name: imports
+    description: Source World imports for a valid measure denominator, in the selected basis and annual product
+      scope.
+    data_type: DOUBLE
+  - name: exports
+    description: Source World exports for a valid measure denominator, in the selected basis and annual product
+      scope.
+    data_type: DOUBLE
+  - name: import_unallocated_amount
+    description: Unallocated import amount relative to the source World row.
+    data_type: DOUBLE
+  - name: export_unallocated_amount
+    description: Unallocated export amount relative to the source World row.
+    data_type: DOUBLE
+  - name: flagged_measure_count
+    description: Number of source measure rows with a non-null source status; not a quality certification.
+    data_type: INTEGER
+  - name: valid_flow_count
+    description: Count of valid import/export denominators; both are required for trade balance.
+    data_type: INTEGER
+  - name: trade_balance
+    description: Source World exports minus imports, within one annual product and measure scope. CIF/FOB and re-export
+      limitations remain.
+    data_type: DOUBLE
+  - name: balance_status
+    description: Availability of the reporting-perspective trade balance at the same annual product and measure
+      scope.
+    data_type: VARCHAR
+  - name: denominator_scope
+    description: Explicit denominator population or aggregate scope. Scenario panel sums and reported-end-use sums
+      do not certify independent World totals.
+    data_type: VARCHAR
+  - name: interpretation_status
+    description: CIF/FOB and origin/consumption limitations attached to the reported balance.
+    data_type: VARCHAR
+  - name: evidence_class
+    description: Explicit baseline-unverified, scenario-projection or historical-trade-status-unverified class.
+    data_type: VARCHAR
+  config:
+    contract:
+      enforced: true
+- name: mart_supply_country_shares
+  description: Native supply fact × selected source set. Named countries and opaque residual retain separate shares;
+    expected output never becomes nameplate capacity.
+  columns:
+  - name: supply_share_key
+    description: Deterministic surrogate identity of the full documented model grain.
+    data_type: VARCHAR
+    data_tests:
+    - unique
+    - not_null
+  - name: source_selection_key
+    description: MD5 of the ordered complete selected snapshot-ID set. Changes when any selected source snapshot
+      changes; replay of identical snapshots retains identity.
+    data_type: VARCHAR
+    data_tests:
+    - relationships:
+        arguments:
+          to: ref('int_analysis_context')
+          field: source_selection_key
+  - name: material_key
+    description: Contextual material-family key. This is not evidence that quantities can be added across definitions.
+    data_type: VARCHAR
+    data_tests:
+    - relationships:
+        arguments:
+          to: ref('dim_material')
+          field: material_key
+  - name: material_definition_key
+    description: Exact native IEA definition key; graphite scopes remain distinct.
+    data_type: VARCHAR
+    data_tests:
+    - relationships:
+        arguments:
+          to: ref('dim_material_definition')
+          field: material_definition_key
+  - name: geography_key
+    description: Canonical ISO or source-qualified area key; entity_type controls aggregation.
+    data_type: VARCHAR
+    data_tests:
+    - relationships:
+        arguments:
+          to: ref('dim_geography')
+          field: geography_key
+  - name: period_key
+    description: Annual reference-period identity.
+    data_type: VARCHAR
+    data_tests:
+    - relationships:
+        arguments:
+          to: ref('dim_period')
+          field: period_key
+  - name: scenario_key
+    description: Composite source edition/scenario/case identity; never omit scenario during aggregation.
+    data_type: VARCHAR
+    data_tests:
+    - relationships:
+        arguments:
+          to: ref('dim_scenario')
+          field: scenario_key
+  - name: stage_key
+    description: Mining/refining output-stage identity.
+    data_type: VARCHAR
+    data_tests:
+    - relationships:
+        arguments:
+          to: ref('dim_supply_chain_stage')
+          field: stage_key
+  - name: source_release_key
+    description: Source plus native compilation edition/revision identity.
+    data_type: VARCHAR
+    data_tests:
+    - relationships:
+        arguments:
+          to: ref('dim_source_release')
+          field: source_release_key
+  - name: snapshot_key
+    description: Request plus original-byte-hash lineage key, including empty responses.
+    data_type: VARCHAR
+    data_tests:
+    - relationships:
+        arguments:
+          to: ref('dim_snapshot')
+          field: snapshot_key
+  - name: source_record_id
+    description: Deterministic original record identity retained for native lineage.
+    data_type: VARCHAR
+  - name: reference_year
+    description: Native calendar reference year; forecasts are sparse model years, not interpolated history.
+    data_type: INTEGER
+  - name: geography_entity_type
+    description: Country/territory, World or opaque residual; residuals cannot be treated as a single country.
+    data_type: VARCHAR
+  - name: supply_native_scope_tonnes
+    description: Expected output scaled by 1,000 within its native stage/definition; not additive across stages.
+    data_type: DOUBLE
+  - name: quantity_basis
+    description: 'Measurement scope: unverified native IEA equivalent or Comext traded product mass; never interchangeable.'
+    data_type: VARCHAR
+  - name: evidence_class
+    description: Explicit baseline-unverified, scenario-projection or historical-trade-status-unverified class.
+    data_type: VARCHAR
+  - name: panel_output_tonnes
+    description: Sum of captured country output plus the opaque Other countries residual for one definition/scenario/stage/year;
+      not nameplate capacity.
+    data_type: DOUBLE
+  - name: invalid_panel_observations
+    description: Panel records with missing or negative expected output; invalidate shares rather than silently
+      dropping them.
+    data_type: INTEGER
+  - name: supply_share
+    description: Native expected output divided by the captured named-country-plus-residual panel. The residual
+      remains a non-country component.
+    data_type: DOUBLE
+  - name: denominator_scope
+    description: Explicit denominator population or aggregate scope. Scenario panel sums and reported-end-use sums
+      do not certify independent World totals.
+    data_type: VARCHAR
+  - name: supply_measure_kind
+    description: Explicit expected_output_not_capacity classification.
+    data_type: VARCHAR
+  config:
+    contract:
+      enforced: true
+- name: mart_global_supply_concentration
+  description: Definition × edition/scenario/case × stage × year × snapshot × selected source set. HHI/top-k bounds
+    for the captured named-plus-residual panel.
+  columns:
+  - name: concentration_key
+    description: Deterministic surrogate identity of the full documented model grain.
+    data_type: VARCHAR
+    data_tests:
+    - unique
+    - not_null
+  - name: source_selection_key
+    description: MD5 of the ordered complete selected snapshot-ID set. Changes when any selected source snapshot
+      changes; replay of identical snapshots retains identity.
+    data_type: VARCHAR
+    data_tests:
+    - relationships:
+        arguments:
+          to: ref('int_analysis_context')
+          field: source_selection_key
+  - name: material_key
+    description: Contextual material-family key. This is not evidence that quantities can be added across definitions.
+    data_type: VARCHAR
+    data_tests:
+    - relationships:
+        arguments:
+          to: ref('dim_material')
+          field: material_key
+  - name: material_definition_key
+    description: Exact native IEA definition key; graphite scopes remain distinct.
+    data_type: VARCHAR
+    data_tests:
+    - relationships:
+        arguments:
+          to: ref('dim_material_definition')
+          field: material_definition_key
+  - name: period_key
+    description: Annual reference-period identity.
+    data_type: VARCHAR
+    data_tests:
+    - relationships:
+        arguments:
+          to: ref('dim_period')
+          field: period_key
+  - name: scenario_key
+    description: Composite source edition/scenario/case identity; never omit scenario during aggregation.
+    data_type: VARCHAR
+    data_tests:
+    - relationships:
+        arguments:
+          to: ref('dim_scenario')
+          field: scenario_key
+  - name: stage_key
+    description: Mining/refining output-stage identity.
+    data_type: VARCHAR
+    data_tests:
+    - relationships:
+        arguments:
+          to: ref('dim_supply_chain_stage')
+          field: stage_key
+  - name: source_release_key
+    description: Source plus native compilation edition/revision identity.
+    data_type: VARCHAR
+    data_tests:
+    - relationships:
+        arguments:
+          to: ref('dim_source_release')
+          field: source_release_key
+  - name: snapshot_key
+    description: Request plus original-byte-hash lineage key, including empty responses.
+    data_type: VARCHAR
+    data_tests:
+    - relationships:
+        arguments:
+          to: ref('dim_snapshot')
+          field: snapshot_key
+  - name: reference_year
+    description: Native calendar reference year; forecasts are sparse model years, not interpolated history.
+    data_type: INTEGER
+  - name: quantity_basis
+    description: 'Measurement scope: unverified native IEA equivalent or Comext traded product mass; never interchangeable.'
+    data_type: VARCHAR
+  - name: evidence_class
+    description: Explicit baseline-unverified, scenario-projection or historical-trade-status-unverified class.
+    data_type: VARCHAR
+  - name: denominator_scope
+    description: Explicit denominator population or aggregate scope. Scenario panel sums and reported-end-use sums
+      do not certify independent World totals.
+    data_type: VARCHAR
+  - name: panel_output_tonnes
+    description: Sum of captured country output plus the opaque Other countries residual for one definition/scenario/stage/year;
+      not nameplate capacity.
+    data_type: DOUBLE
+  - name: invalid_panel_observations
+    description: Panel records with missing or negative expected output; invalidate shares rather than silently
+      dropping them.
+    data_type: INTEGER
+  - name: residual_share
+    description: Other countries share; membership is unresolved and may change over time. Never rank it as one
+      producer.
+    data_type: DOUBLE
+  - name: named_country_count
+    description: Count of captured named country/territory output records, including reported zeroes.
+    data_type: INTEGER
+  - name: largest_named_share
+    description: Maximum named-country share within the captured panel; residual may conceal another large producer.
+    data_type: DOUBLE
+  - name: hhi_lower
+    description: 'Conservative HHI lower bound on the 0–1 scale: sum of squared known shares; unresolved residual
+      is infinitely dispersed.'
+    data_type: DOUBLE
+  - name: hhi_upper
+    description: Conservative HHI upper bound on the 0–1 scale. Supply Other countries is additional to named countries;
+      unallocated trade may augment the largest known supplier, adding 2*largest_share*residual_share as well as
+      residual_share squared.
+    data_type: DOUBLE
+  - name: top3_share_lower
+    description: Conservative top-3 share lower bound, on the 0–1 scale. Lower uses largest known shares. Supply
+      upper permits one additional residual country; trade upper adds unresolved mass to the leading known suppliers,
+      capped at one.
+    data_type: DOUBLE
+  - name: top3_share_upper
+    description: Conservative top-3 share upper bound, on the 0–1 scale. Lower uses largest known shares. Supply
+      upper permits one additional residual country; trade upper adds unresolved mass to the leading known suppliers,
+      capped at one.
+    data_type: DOUBLE
+  - name: top5_share_lower
+    description: Conservative top-5 share lower bound, on the 0–1 scale. Lower uses largest known shares. Supply
+      upper permits one additional residual country; trade upper adds unresolved mass to the leading known suppliers,
+      capped at one.
+    data_type: DOUBLE
+  - name: top5_share_upper
+    description: Conservative top-5 share upper bound, on the 0–1 scale. Lower uses largest known shares. Supply
+      upper permits one additional residual country; trade upper adds unresolved mass to the leading known suppliers,
+      capped at one.
+    data_type: DOUBLE
+  - name: metric_status
+    description: Exact captured panel, residual-bounded estimate or unavailable panel. Does not certify observed
+      production.
+    data_type: VARCHAR
+  - name: hhi_unit
+    description: HHI uses the 0–1 scale. A 10,000-scale value requires an explicitly separate conversion.
+    data_type: VARCHAR
+  - name: supply_measure_kind
+    description: Explicit expected_output_not_capacity classification.
+    data_type: VARCHAR
+  config:
+    contract:
+      enforced: true
+- name: mart_supplier_composition_changes
+  description: Reporter × adjacent base/end annual product keys × partner × measure × both snapshots × source selection.
+    Diagnostic same-code share changes require unverified continuity; absent partners stay missing.
+  columns:
+  - name: composition_change_key
+    description: Deterministic surrogate identity of the full documented model grain.
+    data_type: VARCHAR
+    data_tests:
+    - unique
+    - not_null
+  - name: product_code
+    description: Native CN8 commodity code; one selected product form rather than a full material basket.
+    data_type: VARCHAR
+  - name: reporter_key
+    description: Reporting geography role key.
+    data_type: VARCHAR
+    data_tests:
+    - relationships:
+        arguments:
+          to: ref('dim_geography')
+          field: geography_key
+  - name: measure_basis
+    description: 'Separate measure family: trade_value in EUR, product_mass in product tonnes, or explicitly labelled
+      native scenario output; never sum across bases.'
+    data_type: VARCHAR
+  - name: base_year
+    description: Explicit comparison baseline year; growth uses the native 2025 baseline whose observed/estimated
+      status remains unverified.
+    data_type: INTEGER
+  - name: end_year
+    description: Explicit comparison endpoint year; composition comparisons require adjacent calendar years.
+    data_type: INTEGER
+  - name: base_product_key
+    description: Native CN8 and reference-year product key on the base side; continuity across years is unverified.
+    data_type: VARCHAR
+  - name: end_product_key
+    description: Native CN8 and reference-year product key on the end side; continuity across years is unverified.
+    data_type: VARCHAR
+  - name: base_snapshot_key
+    description: Immutable source snapshot for the base side of this comparison.
+    data_type: VARCHAR
+  - name: end_snapshot_key
+    description: Immutable source snapshot for the end side of this comparison.
+    data_type: VARCHAR
+  - name: source_selection_key
+    description: MD5 of the ordered complete selected snapshot-ID set. Changes when any selected source snapshot
+      changes; replay of identical snapshots retains identity.
+    data_type: VARCHAR
+    data_tests:
+    - relationships:
+        arguments:
+          to: ref('int_analysis_context')
+          field: source_selection_key
+  - name: base_reference_total
+    description: Base-year native World total for the same product code and measure.
+    data_type: DOUBLE
+  - name: end_reference_total
+    description: End-year native World total for the same product code and measure.
+    data_type: DOUBLE
+  - name: partner_key
+    description: Trade partner geography role key, including flagged aggregates/special categories.
+    data_type: VARCHAR
+    data_tests:
+    - relationships:
+        arguments:
+          to: ref('dim_geography')
+          field: geography_key
+  - name: base_share
+    description: Reported partner share in the base-year product scope; null if partner or measure is absent.
+    data_type: DOUBLE
+  - name: end_share
+    description: Reported partner share in the end-year product scope; null if partner or measure is absent.
+    data_type: DOUBLE
+  - name: base_amount
+    description: Reported comparison-base partner amount or scenario amount in the explicit measure unit.
+    data_type: DOUBLE
+  - name: end_amount
+    description: Reported comparison-end partner amount in the same declared measure basis.
+    data_type: DOUBLE
+  - name: conditional_share_change_pp
+    description: 100 times end share minus base share only when both are reported. Diagnostic conditional on unverified
+      same-CN8 continuity; not a verified trend.
+    data_type: DOUBLE
+  - name: presence_pattern
+    description: Both reported, base-only reported or end-only reported. Query absence is not market entry or exit.
+    data_type: VARCHAR
+  - name: comparison_status
+    description: Explicit availability/comparability condition for this comparison, including unverified annual
+      classification continuity.
+    data_type: VARCHAR
+  - name: verified_share_change_pp
+    description: Always null while annual CN concordance is unverified; conditional diagnostics are kept separately.
+    data_type: DOUBLE
+  - name: entry_exit_status
+    description: Market entry/exit is not established from source-query presence alone.
+    data_type: VARCHAR
+  config:
+    contract:
+      enforced: true
+- name: mart_material_outlook
+  description: Definition × geography × scenario/case/edition × endpoint year × series kind × optional stage/end
+    use × snapshot × source selection. Matched native 2025 baseline; no physical gap/capacity inference.
+  columns:
+  - name: outlook_key
+    description: Deterministic surrogate identity of the full documented model grain.
+    data_type: VARCHAR
+    data_tests:
+    - unique
+    - not_null
+  - name: source_selection_key
+    description: MD5 of the ordered complete selected snapshot-ID set. Changes when any selected source snapshot
+      changes; replay of identical snapshots retains identity.
+    data_type: VARCHAR
+    data_tests:
+    - relationships:
+        arguments:
+          to: ref('int_analysis_context')
+          field: source_selection_key
+  - name: material_key
+    description: Contextual material-family key. This is not evidence that quantities can be added across definitions.
+    data_type: VARCHAR
+    data_tests:
+    - relationships:
+        arguments:
+          to: ref('dim_material')
+          field: material_key
+  - name: material_definition_key
+    description: Exact native IEA definition key; graphite scopes remain distinct.
+    data_type: VARCHAR
+    data_tests:
+    - relationships:
+        arguments:
+          to: ref('dim_material_definition')
+          field: material_definition_key
+  - name: geography_key
+    description: Canonical ISO or source-qualified area key; entity_type controls aggregation.
+    data_type: VARCHAR
+    data_tests:
+    - relationships:
+        arguments:
+          to: ref('dim_geography')
+          field: geography_key
+  - name: scenario_key
+    description: Composite source edition/scenario/case identity; never omit scenario during aggregation.
+    data_type: VARCHAR
+    data_tests:
+    - relationships:
+        arguments:
+          to: ref('dim_scenario')
+          field: scenario_key
+  - name: stage_key
+    description: Mining/refining output-stage identity.
+    data_type: VARCHAR
+    data_tests:
+    - relationships:
+        arguments:
+          to: ref('dim_supply_chain_stage')
+          field: stage_key
+  - name: end_use_key
+    description: Native demand end-use identity.
+    data_type: VARCHAR
+    data_tests:
+    - relationships:
+        arguments:
+          to: ref('dim_end_use')
+          field: end_use_key
+  - name: source_release_key
+    description: Source plus native compilation edition/revision identity.
+    data_type: VARCHAR
+    data_tests:
+    - relationships:
+        arguments:
+          to: ref('dim_source_release')
+          field: source_release_key
+  - name: snapshot_key
+    description: Request plus original-byte-hash lineage key, including empty responses.
+    data_type: VARCHAR
+    data_tests:
+    - relationships:
+        arguments:
+          to: ref('dim_snapshot')
+          field: snapshot_key
+  - name: reference_year
+    description: Native calendar reference year; forecasts are sparse model years, not interpolated history.
+    data_type: INTEGER
+  - name: quantity_basis
+    description: 'Measurement scope: unverified native IEA equivalent or Comext traded product mass; never interchangeable.'
+    data_type: VARCHAR
+  - name: evidence_class
+    description: Explicit baseline-unverified, scenario-projection or historical-trade-status-unverified class.
+    data_type: VARCHAR
+  - name: series_kind
+    description: Native end-use demand, sum of returned demand end uses, or expected supply panel output. These
+      series are not interchangeable.
+    data_type: VARCHAR
+  - name: denominator_scope
+    description: Explicit denominator population or aggregate scope. Scenario panel sums and reported-end-use sums
+      do not certify independent World totals.
+    data_type: VARCHAR
+  - name: native_scope_tonnes
+    description: Native quantity scaled to tonnes within the exact definition. Unverified equivalent basis remains
+      attached.
+    data_type: DOUBLE
+  - name: source_observation_count
+    description: Count of native observations contributing to this point; no missing end uses or countries fabricated.
+    data_type: INTEGER
+  - name: missing_value_count
+    description: Count of source observations without a value; blocks aggregate growth if nonzero.
+    data_type: INTEGER
+  - name: category_set_key
+    description: Exact end-use membership fingerprint; supply aggregate uses a declared country-plus-residual scope
+      whose internal membership may change.
+    data_type: VARCHAR
+  - name: base_year
+    description: Explicit comparison baseline year; growth uses the native 2025 baseline whose observed/estimated
+      status remains unverified.
+    data_type: INTEGER
+  - name: base_native_scope_tonnes
+    description: Matched native 2025 baseline value for the same edition/scenario/case/definition/stage/end-use/basis/snapshot.
+    data_type: DOUBLE
+  - name: base_evidence_class
+    description: Evidence class of the comparison baseline, retained separately from the endpoint.
+    data_type: VARCHAR
+  - name: base_category_set_key
+    description: Baseline end-use membership fingerprint used to block changed-category aggregate growth.
+    data_type: VARCHAR
+  - name: base_missing_value_count
+    description: Baseline missing source-component count; a nonzero value blocks growth.
+    data_type: INTEGER
+  - name: base_observation_count
+    description: Number of source observations contributing to the baseline point.
+    data_type: INTEGER
+  - name: growth_status
+    description: Availability of native-scope growth after baseline, horizon, positive-base, missingness and category-set
+      checks.
+    data_type: VARCHAR
+  - name: comparison_contract_key
+    description: Deterministic identity of comparison kind, base/end years, stage, measure/basis and denominator
+      scope; retained in risk grain.
+    data_type: VARCHAR
+  - name: growth_fraction
+    description: Endpoint divided by matched positive 2025 baseline minus one. Fraction, not percentage points;
+      unavailable on baseline rows.
+    data_type: DOUBLE
+  - name: cagr_fraction
+    description: 'Annualised native-scope growth: (end/base)^(1/(end year-base year))-1; sparse reference years
+      are not interpolated.'
+    data_type: DOUBLE
+  - name: measure_unit
+    description: Unit matching the measure basis; native scenario tonnes retain unverified equivalent basis.
+    data_type: VARCHAR
+  - name: physical_supply_demand_gap
+    description: Always null because matched primary requirements and verified equivalent basis are not available.
+    data_type: DOUBLE
+  - name: physical_gap_status
+    description: Reason physical shortage/surplus is unavailable; total demand is not substituted for primary requirements.
+    data_type: VARCHAR
+  - name: nameplate_capacity
+    description: Always null; source expected output is not a capacity series.
+    data_type: DOUBLE
+  - name: capacity_status
+    description: Reason nameplate-capacity level/growth is unavailable.
+    data_type: VARCHAR
+  config:
+    contract:
+      enforced: true
+- name: mart_scenario_comparison
+  description: Matched native demand series × reference year × CPS/alternative scenario pair × source selection.
+    Includes end-use and reported-end-use sums separately; supply is not extrapolated to absent scenarios.
+  columns:
+  - name: scenario_comparison_key
+    description: Deterministic surrogate identity of the full documented model grain.
+    data_type: VARCHAR
+    data_tests:
+    - unique
+    - not_null
+  - name: source_selection_key
+    description: MD5 of the ordered complete selected snapshot-ID set. Changes when any selected source snapshot
+      changes; replay of identical snapshots retains identity.
+    data_type: VARCHAR
+    data_tests:
+    - relationships:
+        arguments:
+          to: ref('int_analysis_context')
+          field: source_selection_key
+  - name: material_key
+    description: Contextual material-family key. This is not evidence that quantities can be added across definitions.
+    data_type: VARCHAR
+    data_tests:
+    - relationships:
+        arguments:
+          to: ref('dim_material')
+          field: material_key
+  - name: material_definition_key
+    description: Exact native IEA definition key; graphite scopes remain distinct.
+    data_type: VARCHAR
+    data_tests:
+    - relationships:
+        arguments:
+          to: ref('dim_material_definition')
+          field: material_definition_key
+  - name: geography_key
+    description: Canonical ISO or source-qualified area key; entity_type controls aggregation.
+    data_type: VARCHAR
+    data_tests:
+    - relationships:
+        arguments:
+          to: ref('dim_geography')
+          field: geography_key
+  - name: reference_year
+    description: Native calendar reference year; forecasts are sparse model years, not interpolated history.
+    data_type: INTEGER
+  - name: series_kind
+    description: Native end-use demand, sum of returned demand end uses, or expected supply panel output. These
+      series are not interchangeable.
+    data_type: VARCHAR
+  - name: end_use_key
+    description: Native demand end-use identity.
+    data_type: VARCHAR
+    data_tests:
+    - relationships:
+        arguments:
+          to: ref('dim_end_use')
+          field: end_use_key
+  - name: quantity_basis
+    description: 'Measurement scope: unverified native IEA equivalent or Comext traded product mass; never interchangeable.'
+    data_type: VARCHAR
+  - name: measure_unit
+    description: Unit matching the measure basis; native scenario tonnes retain unverified equivalent basis.
+    data_type: VARCHAR
+  - name: reference_scenario_key
+    description: Edition/scenario/case dimension key for the reference side; never collapse scenario contexts.
+    data_type: VARCHAR
+  - name: alternative_scenario_key
+    description: Edition/scenario/case dimension key for the alternative side; never collapse scenario contexts.
+    data_type: VARCHAR
+  - name: reference_snapshot_key
+    description: Immutable source snapshot for the reference side of this comparison.
+    data_type: VARCHAR
+  - name: alternative_snapshot_key
+    description: Immutable source snapshot for the alternative side of this comparison.
+    data_type: VARCHAR
+  - name: reference_amount
+    description: CPS amount at the same edition/case/definition/end-use/year/basis used for scenario comparison.
+    data_type: DOUBLE
+  - name: alternative_amount
+    description: Alternative demand scenario amount at matched native scope; no supply scenario is cloned.
+    data_type: DOUBLE
+  - name: relative_difference_fraction
+    description: Alternative amount / positive CPS reference amount - 1, only for matching end-use sets and complete
+      values.
+    data_type: DOUBLE
+  - name: comparison_status
+    description: Explicit availability/comparability condition for this comparison, including unverified annual
+      classification continuity.
+    data_type: VARCHAR
+  - name: evidence_class
+    description: Explicit baseline-unverified, scenario-projection or historical-trade-status-unverified class.
+    data_type: VARCHAR
+  config:
+    contract:
+      enforced: true
+- name: mart_material_supply_risk
+  description: Source selection × scope kind/key × geography × edition/scenario/case × reference period × component
+    × comparison contract × lineage snapshot. Individual point/bounded/unavailable components; no composite.
+  columns:
+  - name: risk_component_key
+    description: Deterministic surrogate identity of the full documented model grain.
+    data_type: VARCHAR
+    data_tests:
+    - unique
+    - not_null
+  - name: source_selection_key
+    description: MD5 of the ordered complete selected snapshot-ID set. Changes when any selected source snapshot
+      changes; replay of identical snapshots retains identity.
+    data_type: VARCHAR
+    data_tests:
+    - relationships:
+        arguments:
+          to: ref('int_analysis_context')
+          field: source_selection_key
+  - name: material_key
+    description: Contextual material-family key. This is not evidence that quantities can be added across definitions.
+    data_type: VARCHAR
+    data_tests:
+    - relationships:
+        arguments:
+          to: ref('dim_material')
+          field: material_key
+  - name: scope_kind
+    description: 'Polymorphic scope discriminator: native material definition or annual traded product. Family context
+      alone never merges forms.'
+    data_type: VARCHAR
+  - name: scope_key
+    description: Key into the dimension identified by scope_kind; native definition and annual product keys remain
+      distinct.
+    data_type: VARCHAR
+  - name: geography_key
+    description: Canonical ISO or source-qualified area key; entity_type controls aggregation.
+    data_type: VARCHAR
+    data_tests:
+    - relationships:
+        arguments:
+          to: ref('dim_geography')
+          field: geography_key
+  - name: scenario_key
+    description: Composite source edition/scenario/case identity; never omit scenario during aggregation.
+    data_type: VARCHAR
+    data_tests:
+    - relationships:
+        arguments:
+          to: ref('dim_scenario')
+          field: scenario_key
+  - name: reference_year
+    description: Native calendar reference year; forecasts are sparse model years, not interpolated history.
+    data_type: INTEGER
+  - name: base_year
+    description: Explicit comparison baseline year; growth uses the native 2025 baseline whose observed/estimated
+      status remains unverified.
+    data_type: INTEGER
+  - name: end_year
+    description: Explicit comparison endpoint year; composition comparisons require adjacent calendar years.
+    data_type: INTEGER
+  - name: stage_key
+    description: Mining/refining output-stage identity.
+    data_type: VARCHAR
+    data_tests:
+    - relationships:
+        arguments:
+          to: ref('dim_supply_chain_stage')
+          field: stage_key
+  - name: measure_basis
+    description: 'Separate measure family: trade_value in EUR, product_mass in product tonnes, or explicitly labelled
+      native scenario output; never sum across bases.'
+    data_type: VARCHAR
+  - name: quantity_basis
+    description: 'Measurement scope: unverified native IEA equivalent or Comext traded product mass; never interchangeable.'
+    data_type: VARCHAR
+  - name: denominator_scope
+    description: Explicit denominator population or aggregate scope. Scenario panel sums and reported-end-use sums
+      do not certify independent World totals.
+    data_type: VARCHAR
+  - name: component_name
+    description: Individually inspectable concentration, growth or unavailable dependency/gap/capacity component;
+      no composite weighting.
+    data_type: VARCHAR
+  - name: component_unit
+    description: HHI on 0–1 scale, fraction, or explicitly labelled native-scope tonnes. Values across components
+      are not additive.
+    data_type: VARCHAR
+  - name: component_value
+    description: Exact native-scope metric when available; null for a residual-bounded metric or unavailable component.
+    data_type: DOUBLE
+  - name: component_lower
+    description: Conservative lower bound, or point value for an available exact native-scope calculation; null
+      when unavailable.
+    data_type: DOUBLE
+  - name: component_upper
+    description: Conservative upper bound, or point value for an available exact native-scope calculation; null
+      when unavailable.
+    data_type: DOUBLE
+  - name: availability
+    description: available, bounded or unavailable; bounded is not a fabricated point estimate.
+    data_type: VARCHAR
+    data_tests:
+    - accepted_values:
+        arguments:
+          values:
+          - available
+          - bounded
+          - unavailable
+  - name: availability_reason
+    description: Machine-readable reason describing the applicable measurement contract or unavailable inputs.
+    data_type: VARCHAR
+  - name: evidence_class
+    description: Explicit baseline-unverified, scenario-projection or historical-trade-status-unverified class.
+    data_type: VARCHAR
+  - name: lineage_snapshot_key
+    description: Immutable source snapshot supporting this risk component, including unavailable-input context.
+    data_type: VARCHAR
+  - name: comparison_kind
+    description: Level component with no growth horizon, or growth from native 2025 baseline; different horizons
+      remain separate risk records.
+    data_type: VARCHAR
+  - name: comparison_contract_key
+    description: Deterministic identity of comparison kind, base/end years, stage, measure/basis and denominator
+      scope; retained in risk grain.
+    data_type: VARCHAR
+  - name: composite_risk_score
+    description: Always null. No arbitrary weighting, normalisation or risk thresholds are introduced.
+    data_type: DOUBLE
+  - name: risk_policy
+    description: Components remain unweighted and separately inspectable; no composite or unsupported high/medium/low
+      bands.
+    data_type: VARCHAR
+  config:
+    contract:
+      enforced: true
+- name: mart_supplier_basis_sensitivity
+  description: Reporter × annual product × snapshot × source selection; compares mass/value HHI intervals and leading
+    named suppliers without mixing units.
+  columns:
+  - name: sensitivity_key
+    description: Deterministic surrogate identity of the full documented model grain.
+    data_type: VARCHAR
+    data_tests:
+    - unique
+    - not_null
+  - name: source_selection_key
+    description: MD5 of the ordered complete selected snapshot-ID set. Changes when any selected source snapshot
+      changes; replay of identical snapshots retains identity.
+    data_type: VARCHAR
+    data_tests:
+    - relationships:
+        arguments:
+          to: ref('int_analysis_context')
+          field: source_selection_key
+  - name: material_key
+    description: Contextual material-family key. This is not evidence that quantities can be added across definitions.
+    data_type: VARCHAR
+    data_tests:
+    - relationships:
+        arguments:
+          to: ref('dim_material')
+          field: material_key
+  - name: product_key
+    description: CN8 plus native product code plus reference-year identity.
+    data_type: VARCHAR
+    data_tests:
+    - relationships:
+        arguments:
+          to: ref('dim_product')
+          field: product_key
+  - name: reporter_key
+    description: Reporting geography role key.
+    data_type: VARCHAR
+    data_tests:
+    - relationships:
+        arguments:
+          to: ref('dim_geography')
+          field: geography_key
+  - name: reference_year
+    description: Native calendar reference year; forecasts are sparse model years, not interpolated history.
+    data_type: INTEGER
+  - name: snapshot_key
+    description: Request plus original-byte-hash lineage key, including empty responses.
+    data_type: VARCHAR
+    data_tests:
+    - relationships:
+        arguments:
+          to: ref('dim_snapshot')
+          field: snapshot_key
+  - name: value_hhi_lower
+    description: EUR supplier HHI lower bound for the same annual product and reporter.
+    data_type: DOUBLE
+  - name: value_hhi_upper
+    description: EUR supplier HHI upper bound including unresolved residual concentration.
+    data_type: DOUBLE
+  - name: mass_hhi_lower
+    description: Product-mass supplier HHI lower bound for the same annual product and reporter.
+    data_type: DOUBLE
+  - name: mass_hhi_upper
+    description: Product-mass supplier HHI upper bound including unresolved residual concentration.
+    data_type: DOUBLE
+  - name: mass_minus_value_hhi_lower
+    description: 'Mass HHI lower bound minus value HHI upper bound: conservative lower bound of basis sensitivity.'
+    data_type: DOUBLE
+  - name: mass_minus_value_hhi_upper
+    description: 'Mass HHI upper bound minus value HHI lower bound: conservative upper bound of basis sensitivity.'
+    data_type: DOUBLE
+  - name: value_largest_named_partner_key
+    description: Largest known supplier key under the labelled measure basis, with deterministic tie break; not
+      an origin or ownership claim.
+    data_type: VARCHAR
+  - name: mass_largest_named_partner_key
+    description: Largest known supplier key under the labelled measure basis, with deterministic tie break; not
+      an origin or ownership claim.
+    data_type: VARCHAR
+  - name: sensitivity_result
+    description: Whether mass or value HHI is higher under every residual allocation, or ordering remains unresolved/unavailable.
+    data_type: VARCHAR
+  - name: same_guaranteed_leading_partner
+    description: Known leading partner matches across bases when each leader is guaranteed against its residual;
+      null otherwise. Ties are not excluded.
+    data_type: BOOLEAN
+  - name: sensitivity_scope
+    description: Sensitivity compares value and mass within one product/year, with all trade partners included in
+      the World denominator.
+    data_type: VARCHAR
+  - name: external_reconciliation_caveat
+    description: Explicit unresolved G04 cobalt external-quantity discrepancy; this caveat does not assert all products
+      have the same discrepancy.
+    data_type: VARCHAR
+  config:
+    contract:
+      enforced: true

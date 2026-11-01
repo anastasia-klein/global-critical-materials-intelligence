@@ -1,0 +1,27 @@
+/// Reviewed DuckDB business-layer export. See export_manifest.json for exact source SQL and snapshot selection.
+table PartnerDisplay
+	lineageTag: ffb40158-03f4-58b1-a42e-98d6545dc513
+
+	column PartnerDisplay
+		dataType: string
+		lineageTag: d742ec58-be65-5b68-b428-3c4f7ef89565
+		summarizeBy: none
+		sourceColumn: PartnerDisplay
+		sortByColumn: SortOrder
+
+	column SortOrder
+		dataType: int64
+		lineageTag: 9b85057f-47bd-516c-ba22-09b58617ab74
+		summarizeBy: none
+		sourceColumn: SortOrder
+		formatString: 0
+
+	partition PartnerDisplay = m
+		mode: import
+		source =
+			let
+				Source = Csv.Document(File.Contents(DataFolder & "/PartnerDisplay.csv"),[Delimiter=",", Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+				Headers = Table.PromoteHeaders(Source,[PromoteAllScalars=true]),
+				Typed = Table.TransformColumnTypes(Headers,{{"PartnerDisplay", type text}, {"SortOrder", Int64.Type}},"en-US")
+			in
+				Typed

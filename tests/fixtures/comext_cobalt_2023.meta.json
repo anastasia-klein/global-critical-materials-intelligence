@@ -1,0 +1,11 @@
+{
+  "requested_url": "https://ec.europa.eu/eurostat/api/comext/dissemination/statistics/1.0/data/DS-045409?freq=A&lang=en&product=28220000&reporter=DE&time=2023",
+  "payload_sha256": "7042145d3c1a9821efa1fe336e1231ad2b3cf8995b60db97cec9b52ab0bba6c9",
+  "first_retrieved_at_utc": "2026-10-30T17:49:40.552371+00:00",
+  "licensing": {
+    "attribution": "Source: Eurostat, DS-045409; cite extraction and source-update dates; derived results are not the responsibility of Eurostat.",
+    "licence": "Eurostat attributed statistical reuse with exceptions",
+    "licence_url": "https://ec.europa.eu/eurostat/help/copyright-notice",
+    "publication_status": "DE_reporter_only; other_reporters_require_separate_review"
+  }
+}

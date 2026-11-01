@@ -1,0 +1,50 @@
+/// Reviewed DuckDB business-layer export. See export_manifest.json for exact source SQL and snapshot selection.
+table Reporters
+	lineageTag: c625ab3d-ce84-52ac-b2e6-b7f75df674b4
+
+	column ReporterKey
+		dataType: string
+		lineageTag: 91cb20b4-8e54-5aae-a55c-faf96f0a6eb8
+		summarizeBy: none
+		sourceColumn: ReporterKey
+		isHidden
+
+	column Reporter
+		dataType: string
+		lineageTag: 0fa89862-acf9-58a5-b3b4-885942c137a1
+		summarizeBy: none
+		sourceColumn: Reporter
+
+	column ReporterLabel
+		dataType: string
+		lineageTag: 3a723595-2f83-57fe-8fa4-1a921013fa30
+		summarizeBy: none
+		sourceColumn: ReporterLabel
+
+	column ReporterCode
+		dataType: string
+		lineageTag: 9a359abe-f34c-5b41-a5c9-64c0094fb922
+		summarizeBy: none
+		sourceColumn: ReporterCode
+
+	column TradeScope
+		dataType: string
+		lineageTag: 9b72cb60-9c31-5575-97a8-8cc20b303795
+		summarizeBy: none
+		sourceColumn: TradeScope
+
+	column ReporterType
+		dataType: string
+		lineageTag: 884e5e21-04ee-5e87-ac90-5885fb867555
+		summarizeBy: none
+		sourceColumn: ReporterType
+
+	partition Reporters = m
+		mode: import
+		source =
+			let
+				Source = Csv.Document(File.Contents(DataFolder & "/Reporters.csv"),[Delimiter=",", Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+				Headers = Table.PromoteHeaders(Source,[PromoteAllScalars=true]),
+				Typed = Table.TransformColumnTypes(Headers,{{"ReporterKey", type text}, {"Reporter", type text}, {"ReporterLabel", type text}, {"ReporterCode", type text}, {"TradeScope", type text}, {"ReporterType", type text}},"en-US")
+			in
+				Typed

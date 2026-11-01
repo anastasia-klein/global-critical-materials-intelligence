@@ -1,0 +1,37 @@
+/// Reviewed DuckDB business-layer export. See export_manifest.json for exact source SQL and snapshot selection.
+table ScenarioChoice
+	lineageTag: fd20d28c-126d-5e7c-bb24-1ec30c83bc91
+
+	column Scenario
+		dataType: string
+		lineageTag: c29ba0d7-4e03-58bc-9d21-c44c670b9b26
+		summarizeBy: none
+		sourceColumn: Scenario
+
+	column Edition
+		dataType: string
+		lineageTag: 2275919f-840a-5a1b-93f0-68065d3f4c77
+		summarizeBy: none
+		sourceColumn: Edition
+
+	column ScenarioCase
+		dataType: string
+		lineageTag: 3ac1f17a-69d4-5833-93ea-d1703428e0c4
+		summarizeBy: none
+		sourceColumn: ScenarioCase
+
+	column ScenarioShort
+		dataType: string
+		lineageTag: 5f8b35fe-a931-5b9f-8e28-431f4ea3ee63
+		summarizeBy: none
+		sourceColumn: ScenarioShort
+
+	partition ScenarioChoice = m
+		mode: import
+		source =
+			let
+				Source = Csv.Document(File.Contents(DataFolder & "/ScenarioChoice.csv"),[Delimiter=",", Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+				Headers = Table.PromoteHeaders(Source,[PromoteAllScalars=true]),
+				Typed = Table.TransformColumnTypes(Headers,{{"Scenario", type text}, {"Edition", type text}, {"ScenarioCase", type text}, {"ScenarioShort", type text}},"en-US")
+			in
+				Typed

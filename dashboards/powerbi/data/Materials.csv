@@ -1,0 +1,7 @@
+Family,Symbol,MaterialName,AtomicNumber,Category,CategoryColor,SortOrder
+Cobalt,Co,Cobalt,27,Transition metal,#DDEBDD,2
+Copper,Cu,Copper,29,Transition metal,#DDEBDD,1
+Graphite,C,Graphite,6,Nonmetal,#E1E8ED,5
+Lithium,Li,Lithium,3,Alkali metal,#F2E5CD,3
+Magnet rare earth context,REE,Rare earths,,Element group,#E9E1EF,6
+Nickel,Ni,Nickel,28,Transition metal,#DDEBDD,4

@@ -1,0 +1,39 @@
+{
+  "name": "Critical Materials · Sage",
+  "dataColors": [
+    "#183323",
+    "#479A67",
+    "#96712E",
+    "#7D8261",
+    "#9CBDA0",
+    "#BDAD89"
+  ],
+  "background": "#EDF4E9",
+  "foreground": "#18271D",
+  "tableAccent": "#183323",
+  "good": "#183323",
+  "neutral": "#479A67",
+  "bad": "#96712E",
+  "textClasses": {
+    "callout": {
+      "fontFace": "Avenir Next",
+      "fontSize": 28,
+      "color": "#18271D"
+    },
+    "title": {
+      "fontFace": "Avenir Next",
+      "fontSize": 14,
+      "color": "#18271D"
+    },
+    "header": {
+      "fontFace": "Avenir Next",
+      "fontSize": 12,
+      "color": "#18271D"
+    },
+    "label": {
+      "fontFace": "Avenir Next",
+      "fontSize": 10,
+      "color": "#59695D"
+    }
+  }
+}

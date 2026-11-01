@@ -1,0 +1,3 @@
+expression DataFolder = "C:/GlobalCriticalMaterials/data" meta [IsParameterQuery=true, Type="Text", IsParameterQueryRequired=true]
+	lineageTag: d458892b-2ade-5a77-b5c7-7921259e9154
+	annotation PBI_ResultType = Text

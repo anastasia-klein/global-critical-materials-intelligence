@@ -1,0 +1,20 @@
+[build-system]
+requires = ["setuptools>=68,<81"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "global-critical-materials-intelligence"
+version = "1.0.0"
+description = "DuckDB and dbt analytics warehouse for critical-material trade and scenario evidence"
+requires-python = ">=3.11"
+dependencies = []
+
+[project.optional-dependencies]
+preview = ["reportlab==4.4.9", "pillow==12.3.0"]
+warehouse = ["duckdb==2.0.0", "dbt-core==1.12.6", "dbt-duckdb==1.11.1", "pycountry==26.2.16"]
+
+[project.scripts]
+gcm-ingest = "ingestion.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["ingestion*", "warehouse*"]

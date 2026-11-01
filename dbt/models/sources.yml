@@ -1,0 +1,205 @@
+version: 2
+sources:
+- name: bronze
+  schema: bronze
+  description: Audited immutable captures selected as one complete acquisition run;
+    versions remain in physical Bronze history.
+  tables:
+  - name: active_records
+    description: One native IEA record or decoded Comext source cell per selected
+      snapshot and original locator.
+    config:
+      freshness: null
+    columns:
+    - name: record_id
+      description: Deterministic original snapshot and source-locator identity.
+      data_tests:
+      - unique
+      - not_null
+      data_type: VARCHAR
+    - name: source
+      description: Source contract name iea/comext.
+      data_tests:
+      - not_null
+      - accepted_values:
+          arguments:
+            values:
+            - iea
+            - comext
+      data_type: VARCHAR
+    - name: request_id
+      description: Stable source and canonical-query identity.
+      data_type: VARCHAR
+    - name: snapshot_id
+      description: Stable request and original response-byte-hash identity.
+      data_type: VARCHAR
+    - name: source_locator
+      description: Native source array index or JSON-stat cell offset.
+      data_type: VARCHAR
+    - name: payload_sha256
+      description: SHA-256 of original unmodified source bytes.
+      data_type: VARCHAR
+    - name: source_object_path
+      description: Relative immutable object location in the source archive.
+      data_type: VARCHAR
+    - name: ingested_at_utc
+      description: First ingestion time for this original record; replay does not
+        refresh it.
+      data_type: TIMESTAMP WITH TIME ZONE
+    - name: source_record
+      description: Exact native source record/cell JSON; original full response bytes
+        are linked by checksum.
+      data_tests:
+      - not_null
+      data_type: JSON
+    - name: source_release
+      description: Exact source model edition or published dataset revision.
+      data_type: VARCHAR
+    - name: source_release_timestamp
+      description: Native publication/update timestamp when supplied; IEA leaves it
+        null.
+      data_type: TIMESTAMP WITH TIME ZONE
+  - name: active_snapshots
+    description: One selected request/payload snapshot, including valid empty responses.
+    config:
+      freshness: null
+    columns:
+    - name: snapshot_id
+      description: Stable request and original response-byte-hash identity.
+      data_tests:
+      - unique
+      - not_null
+      data_type: VARCHAR
+    - name: source
+      description: Source contract name iea/comext.
+      data_type: VARCHAR
+    - name: request_id
+      description: Stable source and canonical-query identity.
+      data_type: VARCHAR
+    - name: payload_sha256
+      description: SHA-256 of original unmodified source bytes.
+      data_type: VARCHAR
+    - name: source_release
+      description: Exact source model edition or published dataset revision.
+      data_type: VARCHAR
+    - name: source_release_timestamp
+      description: Native publication/update timestamp when supplied; IEA leaves it
+        null.
+      data_type: TIMESTAMP WITH TIME ZONE
+    - name: first_retrieved_at_utc
+      description: First source acquisition time, not warehouse build time.
+      data_type: TIMESTAMP WITH TIME ZONE
+    - name: manifest
+      description: Original source query/validation/rights metadata retained as JSON.
+      data_type: JSON
+    - name: run_id
+      description: Selected complete accepted acquisition run.
+      data_type: VARCHAR
+  - name: iea_records
+    description: Source-specific selected native records; freshness is the oldest
+      first ingestion across all selected requests for this source.
+    config:
+      loaded_at_field: oldest_selected_source_ingestion_at
+      freshness:
+        warn_after:
+          count: 24
+          period: hour
+        error_after:
+          count: 168
+          period: hour
+    columns:
+    - name: record_id
+      description: Deterministic original snapshot and source-locator identity.
+      data_type: VARCHAR
+    - name: source
+      description: Source contract name iea/comext.
+      data_type: VARCHAR
+    - name: request_id
+      description: Stable source and canonical-query identity.
+      data_type: VARCHAR
+    - name: snapshot_id
+      description: Stable request and original response-byte-hash identity.
+      data_type: VARCHAR
+    - name: source_locator
+      description: Native source array index or JSON-stat cell offset.
+      data_type: VARCHAR
+    - name: payload_sha256
+      description: SHA-256 of original unmodified source bytes.
+      data_type: VARCHAR
+    - name: source_object_path
+      description: Relative immutable object location in the source archive.
+      data_type: VARCHAR
+    - name: ingested_at_utc
+      description: First ingestion time for this original record; replay does not
+        refresh it.
+      data_type: TIMESTAMP WITH TIME ZONE
+    - name: source_record
+      description: Exact native source record/cell JSON; original full response bytes
+        are linked by checksum.
+      data_type: JSON
+    - name: source_release
+      description: Exact source model edition or published dataset revision.
+      data_type: VARCHAR
+    - name: source_release_timestamp
+      description: Native publication/update timestamp when supplied; IEA leaves it
+        null.
+      data_type: TIMESTAMP WITH TIME ZONE
+    - name: oldest_selected_source_ingestion_at
+      description: Oldest first source ingestion among all selected source requests,
+        including empty responses; a newer query cannot hide an older slice. Not a
+        publication timestamp.
+      data_type: TIMESTAMP WITH TIME ZONE
+  - name: comext_cells
+    description: Source-specific selected native records; freshness is the oldest
+      first ingestion across all selected requests for this source.
+    config:
+      loaded_at_field: oldest_selected_source_ingestion_at
+      freshness:
+        warn_after:
+          count: 24
+          period: hour
+        error_after:
+          count: 168
+          period: hour
+    columns:
+    - name: record_id
+      description: Deterministic original snapshot and source-locator identity.
+      data_type: VARCHAR
+    - name: source
+      description: Source contract name iea/comext.
+      data_type: VARCHAR
+    - name: request_id
+      description: Stable source and canonical-query identity.
+      data_type: VARCHAR
+    - name: snapshot_id
+      description: Stable request and original response-byte-hash identity.
+      data_type: VARCHAR
+    - name: source_locator
+      description: Native source array index or JSON-stat cell offset.
+      data_type: VARCHAR
+    - name: payload_sha256
+      description: SHA-256 of original unmodified source bytes.
+      data_type: VARCHAR
+    - name: source_object_path
+      description: Relative immutable object location in the source archive.
+      data_type: VARCHAR
+    - name: ingested_at_utc
+      description: First ingestion time for this original record; replay does not
+        refresh it.
+      data_type: TIMESTAMP WITH TIME ZONE
+    - name: source_record
+      description: Exact native source record/cell JSON; original full response bytes
+        are linked by checksum.
+      data_type: JSON
+    - name: source_release
+      description: Exact source model edition or published dataset revision.
+      data_type: VARCHAR
+    - name: source_release_timestamp
+      description: Native publication/update timestamp when supplied; IEA leaves it
+        null.
+      data_type: TIMESTAMP WITH TIME ZONE
+    - name: oldest_selected_source_ingestion_at
+      description: Oldest first source ingestion among all selected source requests,
+        including empty responses; a newer query cannot hide an older slice. Not a
+        publication timestamp.
+      data_type: TIMESTAMP WITH TIME ZONE

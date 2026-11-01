@@ -1,0 +1,59 @@
+/// Reviewed DuckDB business-layer export. See export_manifest.json for exact source SQL and snapshot selection.
+table Materials
+	lineageTag: d0b564c9-abde-53a8-8816-f3ccf17d775a
+
+	column Family
+		dataType: string
+		lineageTag: 9530c5fb-c348-50cd-be8a-1fefd6559baa
+		summarizeBy: none
+		sourceColumn: Family
+
+	column Symbol
+		dataType: string
+		lineageTag: 51ec6ac1-19f1-5f39-881f-15ea2fb81cd7
+		summarizeBy: none
+		sourceColumn: Symbol
+		sortByColumn: SortOrder
+
+	column MaterialName
+		dataType: string
+		lineageTag: 558d84f2-7aac-5113-a553-ea1414370315
+		summarizeBy: none
+		sourceColumn: MaterialName
+		sortByColumn: SortOrder
+
+	column AtomicNumber
+		dataType: int64
+		lineageTag: e161a3ab-f0c9-5fb8-bf3e-b5e531face65
+		summarizeBy: none
+		sourceColumn: AtomicNumber
+		formatString: 0
+
+	column Category
+		dataType: string
+		lineageTag: 70fee699-6b73-5368-96d0-70bbb478fbfd
+		summarizeBy: none
+		sourceColumn: Category
+
+	column CategoryColor
+		dataType: string
+		lineageTag: b26fdee5-7b1d-5123-b354-f21cbe899dd5
+		summarizeBy: none
+		sourceColumn: CategoryColor
+
+	column SortOrder
+		dataType: int64
+		lineageTag: efaf22a6-7478-5871-8dc2-bc288959a542
+		summarizeBy: none
+		sourceColumn: SortOrder
+		formatString: 0
+
+	partition Materials = m
+		mode: import
+		source =
+			let
+				Source = Csv.Document(File.Contents(DataFolder & "/Materials.csv"),[Delimiter=",", Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+				Headers = Table.PromoteHeaders(Source,[PromoteAllScalars=true]),
+				Typed = Table.TransformColumnTypes(Headers,{{"Family", type text}, {"Symbol", type text}, {"MaterialName", type text}, {"AtomicNumber", Int64.Type}, {"Category", type text}, {"CategoryColor", type text}, {"SortOrder", Int64.Type}},"en-US")
+			in
+				Typed

@@ -1,0 +1,69 @@
+/// Reviewed DuckDB business-layer export. See export_manifest.json for exact source SQL and snapshot selection.
+table Products
+	lineageTag: cf24c869-4f03-53b0-8c9a-cd49ffa4a192
+
+	column ProductCode
+		dataType: string
+		lineageTag: 0d042534-e4a7-54df-b7b4-4d4447f59a40
+		summarizeBy: none
+		sourceColumn: ProductCode
+
+	column Product
+		dataType: string
+		lineageTag: 3cc02014-04c2-5ef9-a9e0-f6c6a739ff80
+		summarizeBy: none
+		sourceColumn: Product
+
+	column ProductLabel
+		dataType: string
+		lineageTag: 38d48ee4-5588-578a-86e7-f9cd83152bd3
+		summarizeBy: none
+		sourceColumn: ProductLabel
+
+	column ProductShort
+		dataType: string
+		lineageTag: c948d293-cb2c-5acf-bf17-7ac1ea749944
+		summarizeBy: none
+		sourceColumn: ProductShort
+
+	column ProductButton
+		dataType: string
+		lineageTag: f04ed45d-7832-5d94-a481-e1a9e211a2a5
+		summarizeBy: none
+		sourceColumn: ProductButton
+
+	column ProductForm
+		dataType: string
+		lineageTag: 4badd2da-5e59-5e6b-9991-85c1616e72f2
+		summarizeBy: none
+		sourceColumn: ProductForm
+
+	column DefinitionScope
+		dataType: string
+		lineageTag: 309d5c0c-d4b5-55b6-90d8-b560792d8a94
+		summarizeBy: none
+		sourceColumn: DefinitionScope
+		isHidden
+
+	column QuantityBasis
+		dataType: string
+		lineageTag: 927683a8-170e-55fd-8e9a-ab75b318fb98
+		summarizeBy: none
+		sourceColumn: QuantityBasis
+		isHidden
+
+	column Family
+		dataType: string
+		lineageTag: a9e70c85-b529-5005-9324-11dfb7f0fa8d
+		summarizeBy: none
+		sourceColumn: Family
+
+	partition Products = m
+		mode: import
+		source =
+			let
+				Source = Csv.Document(File.Contents(DataFolder & "/Products.csv"),[Delimiter=",", Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+				Headers = Table.PromoteHeaders(Source,[PromoteAllScalars=true]),
+				Typed = Table.TransformColumnTypes(Headers,{{"ProductCode", type text}, {"Product", type text}, {"ProductLabel", type text}, {"ProductShort", type text}, {"ProductButton", type text}, {"ProductForm", type text}, {"DefinitionScope", type text}, {"QuantityBasis", type text}, {"Family", type text}},"en-US")
+			in
+				Typed

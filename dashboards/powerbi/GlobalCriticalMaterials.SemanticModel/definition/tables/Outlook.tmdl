@@ -1,0 +1,171 @@
+/// Reviewed DuckDB business-layer export. See export_manifest.json for exact source SQL and snapshot selection.
+table Outlook
+	lineageTag: 6c38f19d-6e3b-5c8d-b667-1805ba5fc902
+
+	column RowKey
+		dataType: string
+		lineageTag: 907b6fd5-25d4-5689-a918-3baba665dfb0
+		summarizeBy: none
+		sourceColumn: RowKey
+		isHidden
+
+	column SelectionKey
+		dataType: string
+		lineageTag: 4a49db39-05e2-58cb-8d0a-2bce7634ab3a
+		summarizeBy: none
+		sourceColumn: SelectionKey
+		isHidden
+
+	column DefinitionKey
+		dataType: string
+		lineageTag: 1bcfa56c-b64f-5e34-b35b-a713e6f6ce9a
+		summarizeBy: none
+		sourceColumn: DefinitionKey
+		isHidden
+
+	column Year
+		dataType: int64
+		lineageTag: e2d4375d-768d-5b5a-8c8d-1e586b48a9e1
+		summarizeBy: none
+		sourceColumn: Year
+		formatString: 0
+
+	column BaseYear
+		dataType: int64
+		lineageTag: 89318f47-0b2c-50e3-8c98-dfb27e01696f
+		summarizeBy: none
+		sourceColumn: BaseYear
+		formatString: 0
+
+	column Stage
+		dataType: string
+		lineageTag: 9358b2cd-bf3a-5b8b-a0a7-a28d99a6c6d3
+		summarizeBy: none
+		sourceColumn: Stage
+
+	column Scenario
+		dataType: string
+		lineageTag: 5a0874a4-13b0-5398-85d4-808e0a18d023
+		summarizeBy: none
+		sourceColumn: Scenario
+
+	column Edition
+		dataType: string
+		lineageTag: b8077e75-cc98-5463-8358-bae4edbcce53
+		summarizeBy: none
+		sourceColumn: Edition
+
+	column ScenarioCase
+		dataType: string
+		lineageTag: 2c395a8c-b7af-543e-b75b-5ed35c3e07c0
+		summarizeBy: none
+		sourceColumn: ScenarioCase
+
+	column ScenarioShort
+		dataType: string
+		lineageTag: 4a004b1a-b4a7-5ff3-beb9-bea0e63a1f5a
+		summarizeBy: none
+		sourceColumn: ScenarioShort
+
+	column SeriesKind
+		dataType: string
+		lineageTag: 262bcb6a-d45c-588e-8ade-aba341b49e08
+		summarizeBy: none
+		sourceColumn: SeriesKind
+
+	column EndUse
+		dataType: string
+		lineageTag: 53489685-37e1-5ce5-b65b-9a66b7d8d869
+		summarizeBy: none
+		sourceColumn: EndUse
+
+	column QuantityTonnes
+		dataType: double
+		lineageTag: 47d2dc45-a957-5bc3-a11d-0f2afb8955ff
+		summarizeBy: none
+		sourceColumn: QuantityTonnes
+
+	column BaseTonnes
+		dataType: double
+		lineageTag: 00429ddf-71ce-55f0-a050-cbe06b15be8b
+		summarizeBy: none
+		sourceColumn: BaseTonnes
+
+	column Growth
+		dataType: double
+		lineageTag: 32a16514-cd2f-5b0d-9ecb-9e660970be75
+		summarizeBy: none
+		sourceColumn: Growth
+
+	column CAGR
+		dataType: double
+		lineageTag: eab61a99-4282-59ef-a3db-df0272054181
+		summarizeBy: none
+		sourceColumn: CAGR
+
+	column GrowthStatus
+		dataType: string
+		lineageTag: f97e13dd-b876-5dea-a93d-4cb71d5e3c05
+		summarizeBy: none
+		sourceColumn: GrowthStatus
+
+	column PhysicalGap
+		dataType: double
+		lineageTag: 58811683-5250-55a4-8acd-bd339a1dc54e
+		summarizeBy: none
+		sourceColumn: PhysicalGap
+
+	column PhysicalGapStatus
+		dataType: string
+		lineageTag: 2972bb1b-3b95-52f6-b6b2-07edab3bd3ee
+		summarizeBy: none
+		sourceColumn: PhysicalGapStatus
+
+	column NameplateCapacity
+		dataType: double
+		lineageTag: 4abb52d2-ce94-5808-8ece-c9dd456456c3
+		summarizeBy: none
+		sourceColumn: NameplateCapacity
+
+	column CapacityStatus
+		dataType: string
+		lineageTag: ef9766d1-46e2-5704-9788-63c426d3619c
+		summarizeBy: none
+		sourceColumn: CapacityStatus
+
+	column Evidence
+		dataType: string
+		lineageTag: 653f57a8-2da7-5612-b8a3-425749b11663
+		summarizeBy: none
+		sourceColumn: Evidence
+
+	column QuantityBasis
+		dataType: string
+		lineageTag: 9505dd7c-6181-52cf-bd9e-fdba3c18de25
+		summarizeBy: none
+		sourceColumn: QuantityBasis
+		isHidden
+
+	column ComparisonContractKey
+		dataType: string
+		lineageTag: e3658a2a-55d9-5c0f-b19f-8a6ecd03926f
+		summarizeBy: none
+		sourceColumn: ComparisonContractKey
+		isHidden
+
+	column SnapshotKey
+		dataType: string
+		lineageTag: b2ae5c67-7863-56c2-9ae8-229ab4d39136
+		summarizeBy: none
+		sourceColumn: SnapshotKey
+		isHidden
+
+	partition Outlook = m
+		mode: import
+		source =
+			let
+				Source = Csv.Document(File.Contents(DataFolder & "/Outlook.csv"),[Delimiter=",", Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+				Headers = Table.PromoteHeaders(Source,[PromoteAllScalars=true]),
+				Typed = Table.TransformColumnTypes(Headers,{{"RowKey", type text}, {"SelectionKey", type text}, {"DefinitionKey", type text}, {"Year", Int64.Type}, {"BaseYear", Int64.Type}, {"Stage", type text}, {"Scenario", type text}, {"Edition", type text}, {"ScenarioCase", type text}, {"ScenarioShort", type text}, {"SeriesKind", type text}, {"EndUse", type text}, {"QuantityTonnes", type number}, {"BaseTonnes", type number}, {"Growth", type number}, {"CAGR", type number}, {"GrowthStatus", type text}, {"PhysicalGap", type number}, {"PhysicalGapStatus", type text}, {"NameplateCapacity", type number}, {"CapacityStatus", type text}, {"Evidence", type text}, {"QuantityBasis", type text}, {"ComparisonContractKey", type text}, {"SnapshotKey", type text}},"en-US")
+			in
+				Typed

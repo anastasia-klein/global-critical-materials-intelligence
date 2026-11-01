@@ -1,0 +1,27 @@
+/// Reviewed DuckDB business-layer export. See export_manifest.json for exact source SQL and snapshot selection.
+table EndUses
+	lineageTag: 8b5a943a-6bcf-53ec-83cc-4f3176f4211c
+
+	column EndUse
+		dataType: string
+		lineageTag: 1be2a829-bfcb-5902-8d61-3fb78890adac
+		summarizeBy: none
+		sourceColumn: EndUse
+		sortByColumn: SortOrder
+
+	column SortOrder
+		dataType: int64
+		lineageTag: ae908be5-726e-5134-a745-d56d4034ce4e
+		summarizeBy: none
+		sourceColumn: SortOrder
+		formatString: 0
+
+	partition EndUses = m
+		mode: import
+		source =
+			let
+				Source = Csv.Document(File.Contents(DataFolder & "/EndUses.csv"),[Delimiter=",", Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+				Headers = Table.PromoteHeaders(Source,[PromoteAllScalars=true]),
+				Typed = Table.TransformColumnTypes(Headers,{{"EndUse", type text}, {"SortOrder", Int64.Type}},"en-US")
+			in
+				Typed

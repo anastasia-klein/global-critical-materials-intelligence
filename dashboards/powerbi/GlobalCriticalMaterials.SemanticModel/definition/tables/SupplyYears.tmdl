@@ -1,0 +1,20 @@
+/// Reviewed DuckDB business-layer export. See export_manifest.json for exact source SQL and snapshot selection.
+table SupplyYears
+	lineageTag: 7b28176e-a55e-5f36-ba20-a9eab35a0d50
+
+	column Year
+		dataType: int64
+		lineageTag: 129a273c-df1c-5a40-909a-f90fcda3217a
+		summarizeBy: none
+		sourceColumn: Year
+		formatString: 0
+
+	partition SupplyYears = m
+		mode: import
+		source =
+			let
+				Source = Csv.Document(File.Contents(DataFolder & "/SupplyYears.csv"),[Delimiter=",", Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+				Headers = Table.PromoteHeaders(Source,[PromoteAllScalars=true]),
+				Typed = Table.TransformColumnTypes(Headers,{{"Year", Int64.Type}},"en-US")
+			in
+				Typed

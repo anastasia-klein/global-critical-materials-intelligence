@@ -1,0 +1,401 @@
+table ReportMeasures
+	lineageTag: 54b68b17-e1e3-5b50-b314-9326c5de7af5
+
+	column Placeholder
+		dataType: string
+		isHidden
+		sourceColumn: Placeholder
+		summarizeBy: none
+
+	measure 'Selected supply year' = SELECTEDVALUE(SupplyYears[Year],2030)
+		lineageTag: dd00ad73-b075-5d80-9729-07e823b53eef
+		displayFolder: Context
+
+	measure 'Selected trade year' = SELECTEDVALUE(TradeYears[Year],2024)
+		lineageTag: faaecce6-2475-5a90-9800-c56a64843aba
+		displayFolder: Context
+
+	measure 'Selected endpoint' = SELECTEDVALUE(FutureYears[Year],2040)
+		lineageTag: 51747e67-3271-5b0e-aa63-ebcc02434c3c
+		displayFolder: Context
+
+	measure 'Selected basis' = SELECTEDVALUE(BasisChoice[Basis],"trade_value")
+		lineageTag: bcf2e283-0120-5279-acab-a0de7bf0d5ae
+		displayFolder: Context
+
+	measure 'Selected scenario' = SELECTEDVALUE(ScenarioChoice[Scenario],"Stated Policies Scenario")
+		lineageTag: 6d250b79-9221-5b3b-9e80-5615ed9c7e9a
+		displayFolder: Context
+
+	measure 'One definition' = CALCULATE(HASONEVALUE(Definitions[DefinitionKey]),KEEPFILTERS(FILTER(ALL(Definitions[Material]),IF(SELECTEDVALUE(DefinitionChoice[GraphiteScope],"Graphite")="All grades",Definitions[Material]<>"Graphite",Definitions[Material]<>"Graphite: all grades"))))
+		lineageTag: 35267f22-9af7-5b8d-9a73-78d6362713af
+		displayFolder: Context
+
+	measure 'One product' = HASONEVALUE(Products[ProductCode])
+		lineageTag: b776d4d9-1656-5012-8442-1e5fa762cea1
+		displayFolder: Context
+
+	measure 'One reporter' = HASONEVALUE(Reporters[ReporterKey])
+		lineageTag: 78630042-3bf4-5302-9c6a-9718e7a1a221
+		displayFolder: Context
+
+	measure 'Panel tonnes' = CALCULATE(IF([One definition] && HASONEVALUE(Stages[Stage]),CALCULATE(MAX(Supply[PanelTonnes]),TREATAS({[Selected supply year]},Supply[Year]))),KEEPFILTERS(FILTER(ALL(Definitions[Material]),IF(SELECTEDVALUE(DefinitionChoice[GraphiteScope],"Graphite")="All grades",Definitions[Material]<>"Graphite",Definitions[Material]<>"Graphite: all grades"))))
+		lineageTag: 119d703e-1d80-568d-97d5-e3e1b5850b97
+		displayFolder: Supply
+		formatString: #,0
+
+	measure 'Country share' = CALCULATE(IF([One definition] && HASONEVALUE(Stages[Stage]),CALCULATE(MAX(Supply[Share]),Supply[EntityType]="country_or_territory",TREATAS({[Selected supply year]},Supply[Year]))),KEEPFILTERS(FILTER(ALL(Definitions[Material]),IF(SELECTEDVALUE(DefinitionChoice[GraphiteScope],"Graphite")="All grades",Definitions[Material]<>"Graphite",Definitions[Material]<>"Graphite: all grades"))))
+		lineageTag: ad7dce98-6a94-5f91-8242-595ad70fe32c
+		displayFolder: Supply
+		formatString: 0.0%
+
+	measure 'Supply trend kt' = CALCULATE(IF([One definition] && HASONEVALUE(Stages[Stage]),DIVIDE(SUM(Supply[QuantityTonnes]),1000)),KEEPFILTERS(FILTER(ALL(Definitions[Material]),IF(SELECTEDVALUE(DefinitionChoice[GraphiteScope],"Graphite")="All grades",Definitions[Material]<>"Graphite",Definitions[Material]<>"Graphite: all grades"))))
+		lineageTag: 5c3886ba-a4a6-5818-b35c-b03c784bb4a7
+		displayFolder: Supply
+		formatString: #,0.0
+
+	measure 'Supply lower' = CALCULATE(IF([One definition] && HASONEVALUE(Stages[Stage]),CALCULATE(MAX(Concentration[HHILower]),TREATAS({[Selected supply year]},Concentration[Year]))),KEEPFILTERS(FILTER(ALL(Definitions[Material]),IF(SELECTEDVALUE(DefinitionChoice[GraphiteScope],"Graphite")="All grades",Definitions[Material]<>"Graphite",Definitions[Material]<>"Graphite: all grades"))))
+		lineageTag: 0f36161a-fecc-508b-aa12-c3bec18a5cef
+		displayFolder: Supply
+		formatString: 0.000
+
+	measure 'Supply upper' = CALCULATE(IF([One definition] && HASONEVALUE(Stages[Stage]),CALCULATE(MAX(Concentration[HHIUpper]),TREATAS({[Selected supply year]},Concentration[Year]))),KEEPFILTERS(FILTER(ALL(Definitions[Material]),IF(SELECTEDVALUE(DefinitionChoice[GraphiteScope],"Graphite")="All grades",Definitions[Material]<>"Graphite",Definitions[Material]<>"Graphite: all grades"))))
+		lineageTag: dc91c1dd-1af3-55c5-b007-4e37a025c272
+		displayFolder: Supply
+		formatString: 0.000
+
+	measure 'Supply residual' = CALCULATE(IF([One definition] && HASONEVALUE(Stages[Stage]),CALCULATE(MAX(Concentration[ResidualShare]),TREATAS({[Selected supply year]},Concentration[Year]))),KEEPFILTERS(FILTER(ALL(Definitions[Material]),IF(SELECTEDVALUE(DefinitionChoice[GraphiteScope],"Graphite")="All grades",Definitions[Material]<>"Graphite",Definitions[Material]<>"Graphite: all grades"))))
+		lineageTag: a273fafc-d0e1-5785-9737-864df5c04f7e
+		displayFolder: Supply
+		formatString: 0.0%
+
+	measure 'Supply top3 lower' = CALCULATE(IF([One definition] && HASONEVALUE(Stages[Stage]),CALCULATE(MAX(Concentration[Top3Lower]),TREATAS({[Selected supply year]},Concentration[Year]))),KEEPFILTERS(FILTER(ALL(Definitions[Material]),IF(SELECTEDVALUE(DefinitionChoice[GraphiteScope],"Graphite")="All grades",Definitions[Material]<>"Graphite",Definitions[Material]<>"Graphite: all grades"))))
+		lineageTag: 66931d9b-db74-5615-86aa-f6f96471c79b
+		displayFolder: Supply
+		formatString: 0.0%
+
+	measure 'Supply top3 upper' = CALCULATE(IF([One definition] && HASONEVALUE(Stages[Stage]),CALCULATE(MAX(Concentration[Top3Upper]),TREATAS({[Selected supply year]},Concentration[Year]))),KEEPFILTERS(FILTER(ALL(Definitions[Material]),IF(SELECTEDVALUE(DefinitionChoice[GraphiteScope],"Graphite")="All grades",Definitions[Material]<>"Graphite",Definitions[Material]<>"Graphite: all grades"))))
+		lineageTag: be067726-01fb-55ca-aeee-96292a9786ae
+		displayFolder: Supply
+		formatString: 0.0%
+
+	measure 'Supply top5 lower' = CALCULATE(IF([One definition] && HASONEVALUE(Stages[Stage]),CALCULATE(MAX(Concentration[Top5Lower]),TREATAS({[Selected supply year]},Concentration[Year]))),KEEPFILTERS(FILTER(ALL(Definitions[Material]),IF(SELECTEDVALUE(DefinitionChoice[GraphiteScope],"Graphite")="All grades",Definitions[Material]<>"Graphite",Definitions[Material]<>"Graphite: all grades"))))
+		lineageTag: 14f2d822-123b-5254-ad5f-1dec52a05f05
+		displayFolder: Supply
+		formatString: 0.0%
+
+	measure 'Supply top5 upper' = CALCULATE(IF([One definition] && HASONEVALUE(Stages[Stage]),CALCULATE(MAX(Concentration[Top5Upper]),TREATAS({[Selected supply year]},Concentration[Year]))),KEEPFILTERS(FILTER(ALL(Definitions[Material]),IF(SELECTEDVALUE(DefinitionChoice[GraphiteScope],"Graphite")="All grades",Definitions[Material]<>"Graphite",Definitions[Material]<>"Graphite: all grades"))))
+		lineageTag: c4bbf9a4-70e0-552c-87cf-c7f5f68d6f92
+		displayFolder: Supply
+		formatString: 0.0%
+
+	measure 'Supply HHI label' = IF(ISBLANK([Supply lower]),"—",FORMAT([Supply lower],"0.000") & " – " & FORMAT([Supply upper],"0.000"))
+		lineageTag: 9b68151b-7e26-5eb4-8529-cdb9de66b9a2
+		displayFolder: Supply
+
+	measure 'Supply top3 label' = IF(ISBLANK([Supply top3 lower]),"—",FORMAT([Supply top3 lower],"0.0%") & " – " & FORMAT([Supply top3 upper],"0.0%"))
+		lineageTag: e34ca921-68c8-562e-b040-3eac0a546fe1
+		displayFolder: Supply
+
+	measure 'Supply top5 label' = IF(ISBLANK([Supply top5 lower]),"—",FORMAT([Supply top5 lower],"0.0%") & " – " & FORMAT([Supply top5 upper],"0.0%"))
+		lineageTag: 113c6081-8e32-508c-a732-32c3ef718cd0
+		displayFolder: Supply
+
+	measure 'Residual label' = IF(ISBLANK([Supply residual]),"—",FORMAT([Supply residual],"0.0%"))
+		lineageTag: defdd182-adc5-5ea2-b624-86e0685540d7
+		displayFolder: Supply
+
+	measure 'Supply volume label' = IF(ISBLANK([Panel tonnes]),"—",FORMAT(DIVIDE([Panel tonnes],1000),"#,0.0") & " kt")
+		lineageTag: 3e928126-4d29-5c9e-915a-f6cb7292245d
+		displayFolder: Supply
+
+	measure 'Imports' = IF([One product] && [One reporter],CALCULATE(SUM(Trade[Imports]),TREATAS({[Selected basis]},Trade[Basis])))
+		lineageTag: edec93d1-02d2-54a5-a3e2-3e333b89478f
+		displayFolder: Trade
+		formatString: #,0
+
+	measure 'Imports snapshot' = CALCULATE([Imports],TREATAS({[Selected trade year]},Trade[Year]))
+		lineageTag: f747d5c3-9a80-5a25-9a4e-fdd552b90096
+		displayFolder: Trade
+		formatString: #,0
+
+	measure 'Imports label' = VAR n=[Imports snapshot] RETURN IF(ISBLANK(n),"—",IF([Selected basis]="trade_value",FORMAT(DIVIDE(n,1000000),"€#,0.0") & "m",FORMAT(n,"#,0.0") & " t"))
+		lineageTag: d676cef7-5778-5a42-bc13-229714630e6a
+		displayFolder: Trade
+
+	measure 'Exports' = IF([One product] && [One reporter],CALCULATE(SUM(Trade[Exports]),TREATAS({[Selected basis]},Trade[Basis])))
+		lineageTag: cbcaeef0-92d9-57c9-be63-c5ce930cef87
+		displayFolder: Trade
+		formatString: #,0
+
+	measure 'Exports snapshot' = CALCULATE([Exports],TREATAS({[Selected trade year]},Trade[Year]))
+		lineageTag: b8838e37-5dc7-5978-9fd3-345428c7715a
+		displayFolder: Trade
+		formatString: #,0
+
+	measure 'Exports label' = VAR n=[Exports snapshot] RETURN IF(ISBLANK(n),"—",IF([Selected basis]="trade_value",FORMAT(DIVIDE(n,1000000),"€#,0.0") & "m",FORMAT(n,"#,0.0") & " t"))
+		lineageTag: 06b25815-2a5c-5d3a-b4e0-4928c4608716
+		displayFolder: Trade
+
+	measure 'Trade balance' = IF([One product] && [One reporter],CALCULATE(SUM(Trade[Balance]),TREATAS({[Selected basis]},Trade[Basis])))
+		lineageTag: dcddf059-ac01-577e-964c-5bebae25e501
+		displayFolder: Trade
+		formatString: #,0
+
+	measure 'Trade balance snapshot' = CALCULATE([Trade balance],TREATAS({[Selected trade year]},Trade[Year]))
+		lineageTag: f259cb79-abe6-53c0-8fa1-c79453b5d6ed
+		displayFolder: Trade
+		formatString: #,0
+
+	measure 'Trade balance label' = VAR n=[Trade balance snapshot] RETURN IF(ISBLANK(n),"—",IF([Selected basis]="trade_value",FORMAT(DIVIDE(n,1000000),"€#,0.0") & "m",FORMAT(n,"#,0.0") & " t"))
+		lineageTag: 96b5de70-b1e2-5897-b940-7526b7b37a63
+		displayFolder: Trade
+
+	measure 'Partner import share' = IF([One product] && [One reporter],CALCULATE(SUM(Partners[Share]),Partners[Flow]="Import",TREATAS({[Selected basis]},Partners[Basis]),TREATAS({[Selected trade year]},Partners[Year])))
+		lineageTag: 6ca8044a-9ac6-518e-82f9-b41aeb868575
+		displayFolder: Trade
+		formatString: 0.0%
+
+	measure 'Partner import amount' = IF([One product] && [One reporter],CALCULATE(SUM(Partners[Amount]),Partners[Flow]="Import",TREATAS({[Selected basis]},Partners[Basis]),TREATAS({[Selected trade year]},Partners[Year])))
+		lineageTag: aaa62595-b011-5d42-acca-202cd1beb614
+		displayFolder: Trade
+		formatString: #,0
+
+	measure 'Supplier HHI lower' = IF([One product] && [One reporter],CALCULATE(MAX(Exposure[HHILower]),TREATAS({[Selected basis]},Exposure[Basis]),TREATAS({[Selected trade year]},Exposure[Year])))
+		lineageTag: 5ac49594-9854-5771-9295-a896354b9a9c
+		displayFolder: Trade
+		formatString: 0.000
+
+	measure 'Supplier HHI upper' = IF([One product] && [One reporter],CALCULATE(MAX(Exposure[HHIUpper]),TREATAS({[Selected basis]},Exposure[Basis]),TREATAS({[Selected trade year]},Exposure[Year])))
+		lineageTag: ffa5a04c-a58a-5156-bfc8-406cbae25b34
+		displayFolder: Trade
+		formatString: 0.000
+
+	measure 'Top supplier lower' = IF([One product] && [One reporter],CALCULATE(MAX(Exposure[TopSupplierLower]),TREATAS({[Selected basis]},Exposure[Basis]),TREATAS({[Selected trade year]},Exposure[Year])))
+		lineageTag: c7839fce-3a4f-5543-8140-44d71b190332
+		displayFolder: Trade
+		formatString: 0.0%
+
+	measure 'Unallocated share' = IF([One product] && [One reporter],CALCULATE(MAX(Exposure[UnallocatedShare]),TREATAS({[Selected basis]},Exposure[Basis]),TREATAS({[Selected trade year]},Exposure[Year])))
+		lineageTag: 0da7898c-8933-56d8-b1a8-a9f3470e43c3
+		displayFolder: Trade
+		formatString: 0.0%
+
+	measure 'Supplier HHI label' = IF(ISBLANK([Supplier HHI lower]),"—",FORMAT([Supplier HHI lower],"0.000") & IF(ABS([Supplier HHI upper]-[Supplier HHI lower])>0.000000001," – " & FORMAT([Supplier HHI upper],"0.000"),""))
+		lineageTag: fd76ed4f-600c-5990-8f2a-811e5f2f573e
+		displayFolder: Trade
+
+	measure 'Top supplier label' = IF(ISBLANK([Top supplier lower]),"—",FORMAT([Top supplier lower],"0.0%"))
+		lineageTag: fd9a6cf2-b131-5442-be2a-5a19c61ca399
+		displayFolder: Trade
+
+	measure 'Import dependency label' = "Unavailable"
+		lineageTag: 7901ed91-eeb2-509f-86eb-6c2445139cee
+		displayFolder: Readiness
+
+	measure 'No physical gap label' = "Unavailable"
+		lineageTag: 54cf23e7-065a-5bb7-ae2d-41801bc3f611
+		displayFolder: Readiness
+
+	measure 'No capacity label' = "Unavailable"
+		lineageTag: 401d5b2f-c986-50d9-8968-f4c31df7e1c9
+		displayFolder: Readiness
+
+	measure 'Mining HHI lower' = CALCULATE(IF([One definition],CALCULATE(MAX(Concentration[HHILower]),REMOVEFILTERS(Stages),Concentration[Stage]="Mining",TREATAS({[Selected supply year]},Concentration[Year]))),KEEPFILTERS(FILTER(ALL(Definitions[Material]),IF(SELECTEDVALUE(DefinitionChoice[GraphiteScope],"Graphite")="All grades",Definitions[Material]<>"Graphite",Definitions[Material]<>"Graphite: all grades"))))
+		lineageTag: 0ba04568-4359-51eb-a8ac-2cabb8acdb7a
+		displayFolder: Risk
+		formatString: 0.000
+
+	measure 'Mining HHI upper' = CALCULATE(IF([One definition],CALCULATE(MAX(Concentration[HHIUpper]),REMOVEFILTERS(Stages),Concentration[Stage]="Mining",TREATAS({[Selected supply year]},Concentration[Year]))),KEEPFILTERS(FILTER(ALL(Definitions[Material]),IF(SELECTEDVALUE(DefinitionChoice[GraphiteScope],"Graphite")="All grades",Definitions[Material]<>"Graphite",Definitions[Material]<>"Graphite: all grades"))))
+		lineageTag: 58da3620-db78-5b83-a4b2-23456d98e05e
+		displayFolder: Risk
+		formatString: 0.000
+
+	measure 'Mining HHI range' = VAR lo=[Mining HHI lower] RETURN IF(ISBLANK(lo),"No source data",FORMAT(lo,"0.000") & " – " & FORMAT([Mining HHI upper],"0.000"))
+		lineageTag: 28113144-3316-58a6-8ce8-95376c464c2a
+		displayFolder: Risk
+
+	measure 'Refining HHI lower' = CALCULATE(IF([One definition],CALCULATE(MAX(Concentration[HHILower]),REMOVEFILTERS(Stages),Concentration[Stage]="Refining",TREATAS({[Selected supply year]},Concentration[Year]))),KEEPFILTERS(FILTER(ALL(Definitions[Material]),IF(SELECTEDVALUE(DefinitionChoice[GraphiteScope],"Graphite")="All grades",Definitions[Material]<>"Graphite",Definitions[Material]<>"Graphite: all grades"))))
+		lineageTag: fdfe6496-79ad-57f8-a373-986852045d41
+		displayFolder: Risk
+		formatString: 0.000
+
+	measure 'Refining HHI upper' = CALCULATE(IF([One definition],CALCULATE(MAX(Concentration[HHIUpper]),REMOVEFILTERS(Stages),Concentration[Stage]="Refining",TREATAS({[Selected supply year]},Concentration[Year]))),KEEPFILTERS(FILTER(ALL(Definitions[Material]),IF(SELECTEDVALUE(DefinitionChoice[GraphiteScope],"Graphite")="All grades",Definitions[Material]<>"Graphite",Definitions[Material]<>"Graphite: all grades"))))
+		lineageTag: 631329f3-732a-557a-9cb3-e78d0a70f807
+		displayFolder: Risk
+		formatString: 0.000
+
+	measure 'Refining HHI range' = VAR lo=[Refining HHI lower] RETURN IF(ISBLANK(lo),"No source data",FORMAT(lo,"0.000") & " – " & FORMAT([Refining HHI upper],"0.000"))
+		lineageTag: 7d206d9f-ef4d-5e8a-b235-d77da5a43a5a
+		displayFolder: Risk
+
+	measure 'Risk supply lower' = CALCULATE(CALCULATE(MAX(SupplyRisk[LowerBound]),TREATAS({[Selected supply year]},SupplyRisk[Year])),KEEPFILTERS(FILTER(ALL(Definitions[Material]),IF(SELECTEDVALUE(DefinitionChoice[GraphiteScope],"Graphite")="All grades",Definitions[Material]<>"Graphite",Definitions[Material]<>"Graphite: all grades"))))
+		lineageTag: e0075d0f-adcc-5642-bed4-76c80c228319
+		displayFolder: Risk
+		formatString: 0.000
+
+	measure 'Risk supply upper' = CALCULATE(CALCULATE(MAX(SupplyRisk[UpperBound]),TREATAS({[Selected supply year]},SupplyRisk[Year])),KEEPFILTERS(FILTER(ALL(Definitions[Material]),IF(SELECTEDVALUE(DefinitionChoice[GraphiteScope],"Graphite")="All grades",Definitions[Material]<>"Graphite",Definitions[Material]<>"Graphite: all grades"))))
+		lineageTag: db550d62-471e-52c0-9557-9b9c9ad335b1
+		displayFolder: Risk
+		formatString: 0.000
+
+	measure 'Risk supply status' = CALCULATE(CALCULATE(SELECTEDVALUE(SupplyRisk[Availability]),TREATAS({[Selected supply year]},SupplyRisk[Year])),KEEPFILTERS(FILTER(ALL(Definitions[Material]),IF(SELECTEDVALUE(DefinitionChoice[GraphiteScope],"Graphite")="All grades",Definitions[Material]<>"Graphite",Definitions[Material]<>"Graphite: all grades"))))
+		lineageTag: 61df95ac-84ff-5b99-9b56-d2978cf20e7a
+		displayFolder: Risk
+
+	measure 'Value exposure HHI' = IF([One product] && [One reporter],CALCULATE(MAX(Sensitivity[ValueHHILower]),TREATAS({[Selected trade year]},Sensitivity[Year])))
+		lineageTag: b3438fd8-ba24-5f9a-a1bf-e65ef4eca323
+		displayFolder: Risk
+		formatString: 0.000
+
+	measure 'Mass exposure HHI' = IF([One product] && [One reporter],CALCULATE(MAX(Sensitivity[MassHHILower]),TREATAS({[Selected trade year]},Sensitivity[Year])))
+		lineageTag: 91b40d23-6722-53ef-9984-6956b46b72c6
+		displayFolder: Risk
+		formatString: 0.000
+
+	measure 'Basis sensitivity result' = CALCULATE(SELECTEDVALUE(Sensitivity[SensitivityResult]),TREATAS({[Selected trade year]},Sensitivity[Year]))
+		lineageTag: 49374957-a42a-5310-83ae-0de122c51886
+		displayFolder: Risk
+
+	measure 'Demand kt' = CALCULATE(IF([One definition],DIVIDE(CALCULATE(SUM(Outlook[QuantityTonnes]),Outlook[SeriesKind]="demand_reported_end_uses_sum"),1000)),KEEPFILTERS(FILTER(ALL(Definitions[Material]),IF(SELECTEDVALUE(DefinitionChoice[GraphiteScope],"Graphite")="All grades",Definitions[Material]<>"Graphite",Definitions[Material]<>"Graphite: all grades"))))
+		lineageTag: a553acda-822d-58d0-9cbe-c04c155d6fa7
+		displayFolder: Outlook
+		formatString: #,0.0
+
+	measure 'Demand endpoint kt' = CALCULATE(CALCULATE([Demand kt],TREATAS({[Selected endpoint]},Outlook[Year]),TREATAS({[Selected scenario]},Outlook[Scenario])),KEEPFILTERS(FILTER(ALL(Definitions[Material]),IF(SELECTEDVALUE(DefinitionChoice[GraphiteScope],"Graphite")="All grades",Definitions[Material]<>"Graphite",Definitions[Material]<>"Graphite: all grades"))))
+		lineageTag: 6f6d5c7f-21ab-5cb6-8533-56c499aef2f0
+		displayFolder: Outlook
+		formatString: #,0.0
+
+	measure 'Demand growth' = CALCULATE(IF([One definition],CALCULATE(MAX(Outlook[Growth]),Outlook[SeriesKind]="demand_reported_end_uses_sum",TREATAS({[Selected endpoint]},Outlook[Year]),TREATAS({[Selected scenario]},Outlook[Scenario]))),KEEPFILTERS(FILTER(ALL(Definitions[Material]),IF(SELECTEDVALUE(DefinitionChoice[GraphiteScope],"Graphite")="All grades",Definitions[Material]<>"Graphite",Definitions[Material]<>"Graphite: all grades"))))
+		lineageTag: 1f2f9439-3965-5500-87eb-c3c82ed664c1
+		displayFolder: Outlook
+		formatString: 0.0%
+
+	measure 'Demand CAGR' = CALCULATE(IF([One definition],CALCULATE(MAX(Outlook[CAGR]),Outlook[SeriesKind]="demand_reported_end_uses_sum",TREATAS({[Selected endpoint]},Outlook[Year]),TREATAS({[Selected scenario]},Outlook[Scenario]))),KEEPFILTERS(FILTER(ALL(Definitions[Material]),IF(SELECTEDVALUE(DefinitionChoice[GraphiteScope],"Graphite")="All grades",Definitions[Material]<>"Graphite",Definitions[Material]<>"Graphite: all grades"))))
+		lineageTag: fa9f42fc-a4ef-5583-9b98-515e2f5e63c5
+		displayFolder: Outlook
+		formatString: 0.0%
+
+	measure 'Demand growth label' = IF(ISBLANK([Demand growth]),"—",FORMAT([Demand growth],"+0.0%;-0.0%;0.0%"))
+		lineageTag: 79d2f6d6-b3d9-57cb-81b3-4470b2614377
+		displayFolder: Outlook
+
+	measure 'Demand CAGR label' = IF(ISBLANK([Demand CAGR]),"—",FORMAT([Demand CAGR],"0.0%"))
+		lineageTag: b758d423-de45-582e-9ab7-1afd3f2d115a
+		displayFolder: Outlook
+
+	measure 'Demand endpoint label' = IF(ISBLANK([Demand endpoint kt]),"—",FORMAT([Demand endpoint kt],"#,0.0") & " kt")
+		lineageTag: 7ebf42bf-988d-53d8-87b2-fc92b2c1bb73
+		displayFolder: Outlook
+
+	measure 'Demand end use kt' = CALCULATE(IF([One definition],DIVIDE(CALCULATE(SUM(Outlook[QuantityTonnes]),Outlook[SeriesKind]="demand_end_use",TREATAS({[Selected endpoint]},Outlook[Year]),TREATAS({[Selected scenario]},Outlook[Scenario]),TREATAS(VALUES(EndUses[EndUse]),Outlook[EndUse])),1000)),KEEPFILTERS(FILTER(ALL(Definitions[Material]),IF(SELECTEDVALUE(DefinitionChoice[GraphiteScope],"Graphite")="All grades",Definitions[Material]<>"Graphite",Definitions[Material]<>"Graphite: all grades"))))
+		lineageTag: 82339a85-2545-5b35-99af-c50b93258f51
+		displayFolder: Outlook
+		formatString: #,0.0; -#,0.0; 0
+
+	measure 'Supply outlook kt' = CALCULATE(IF([One definition],DIVIDE(CALCULATE(SUM(Outlook[QuantityTonnes]),Outlook[SeriesKind]="supply_panel_output"),1000)),KEEPFILTERS(FILTER(ALL(Definitions[Material]),IF(SELECTEDVALUE(DefinitionChoice[GraphiteScope],"Graphite")="All grades",Definitions[Material]<>"Graphite",Definitions[Material]<>"Graphite: all grades"))))
+		lineageTag: dc5644e2-c231-5332-8a81-58eec1ac875d
+		displayFolder: Outlook
+		formatString: #,0.0
+
+	measure 'Outlook context' = "Native 2025 baseline → " & FORMAT([Selected endpoint],"0") & " · " & SELECTEDVALUE(ScenarioChoice[ScenarioShort],"STEPS")
+		lineageTag: e7d4f422-5bb2-5132-b63c-5826414d4343
+		displayFolder: Context
+
+	measure 'Mining country share' = CALCULATE([Country share],REMOVEFILTERS(Stages),Stages[Stage]="Mining")
+		lineageTag: 9c493443-4920-5edd-881b-f69f28814ea2
+		displayFolder: Paired stages
+		formatString: 0.0%
+
+	measure 'Mining output kt' = CALCULATE([Supply trend kt],REMOVEFILTERS(Stages),Stages[Stage]="Mining")
+		lineageTag: 7b987b03-4e9d-5a5a-9747-42ffeb61d929
+		displayFolder: Paired stages
+		formatString: #,0.0
+
+	measure 'Mining output label' = CALCULATE([Supply volume label],REMOVEFILTERS(Stages),Stages[Stage]="Mining")
+		lineageTag: 00558e15-2517-5c00-9a6c-b0779a60000b
+		displayFolder: Paired stages
+
+	measure 'Mining concentration label' = CALCULATE([Supply HHI label],REMOVEFILTERS(Stages),Stages[Stage]="Mining")
+		lineageTag: f8d7be97-4dd8-5bf0-b1e8-608dd47b6712
+		displayFolder: Paired stages
+
+	measure 'Mining top3 label' = CALCULATE([Supply top3 label],REMOVEFILTERS(Stages),Stages[Stage]="Mining")
+		lineageTag: 1b98c244-041a-5242-91b8-226b98ce8914
+		displayFolder: Paired stages
+
+	measure 'Mining HHI interval width' = VAR lo=[Mining HHI lower] VAR hi=[Mining HHI upper] RETURN IF(NOT ISBLANK(lo) && NOT ISBLANK(hi),hi-lo)
+		lineageTag: cf14f4c6-3e0e-57c7-ba37-bf04e864ea52
+		displayFolder: Risk
+		formatString: 0.000
+
+	measure 'Mining outlook kt' = CALCULATE(CALCULATE([Supply outlook kt],Outlook[Stage]="Mining"),KEEPFILTERS(FILTER(ALL(Definitions[Material]),IF(SELECTEDVALUE(DefinitionChoice[GraphiteScope],"Graphite")="All grades",Definitions[Material]<>"Graphite",Definitions[Material]<>"Graphite: all grades"))))
+		lineageTag: fe003ef1-68f1-5a7d-9319-3f2addf64a8a
+		displayFolder: Outlook
+		formatString: #,0.0
+
+	measure 'Refining country share' = CALCULATE([Country share],REMOVEFILTERS(Stages),Stages[Stage]="Refining")
+		lineageTag: d34dff59-c68f-53fb-851d-908686f35484
+		displayFolder: Paired stages
+		formatString: 0.0%
+
+	measure 'Refining output kt' = CALCULATE([Supply trend kt],REMOVEFILTERS(Stages),Stages[Stage]="Refining")
+		lineageTag: 26c92f3e-d898-5478-bf19-2eafd870d96a
+		displayFolder: Paired stages
+		formatString: #,0.0
+
+	measure 'Refining output label' = CALCULATE([Supply volume label],REMOVEFILTERS(Stages),Stages[Stage]="Refining")
+		lineageTag: c26a7fff-50fe-5f3f-ab08-44401de493b6
+		displayFolder: Paired stages
+
+	measure 'Refining concentration label' = CALCULATE([Supply HHI label],REMOVEFILTERS(Stages),Stages[Stage]="Refining")
+		lineageTag: 193c64c1-6606-5abe-aa06-447573d3fbf5
+		displayFolder: Paired stages
+
+	measure 'Refining top3 label' = CALCULATE([Supply top3 label],REMOVEFILTERS(Stages),Stages[Stage]="Refining")
+		lineageTag: b4b7778e-19c7-53c8-a833-9e1aab9454f2
+		displayFolder: Paired stages
+
+	measure 'Refining HHI interval width' = VAR lo=[Refining HHI lower] VAR hi=[Refining HHI upper] RETURN IF(NOT ISBLANK(lo) && NOT ISBLANK(hi),hi-lo)
+		lineageTag: aa42cdd9-5efa-5722-b48a-75fecd1c77c2
+		displayFolder: Risk
+		formatString: 0.000
+
+	measure 'Refining outlook kt' = CALCULATE(CALCULATE([Supply outlook kt],Outlook[Stage]="Refining"),KEEPFILTERS(FILTER(ALL(Definitions[Material]),IF(SELECTEDVALUE(DefinitionChoice[GraphiteScope],"Graphite")="All grades",Definitions[Material]<>"Graphite",Definitions[Material]<>"Graphite: all grades"))))
+		lineageTag: f308c914-0519-5400-971d-527ff8b68ccb
+		displayFolder: Outlook
+		formatString: #,0.0
+
+	measure 'Material tile label' = SELECTEDVALUE(Materials[MaterialName])
+		lineageTag: 4961c0eb-bc70-5324-aa7d-e4c32c700b18
+		displayFolder: Context
+
+	measure 'Material tile color' = SELECTEDVALUE(Materials[CategoryColor],"#DDEBDD")
+		lineageTag: 60af8836-633a-50f9-b239-eefffba33e85
+		displayFolder: Context
+
+	measure 'End use status' = IF(NOT [One definition],"Select one material",IF(ISBLANK([Demand end use kt]),"Not returned by source",IF([Demand end use kt]=0,"Reported zero","Reported value")))
+		lineageTag: d00a14a2-f950-510f-9dc0-da1a894b6b41
+		displayFolder: Outlook
+
+	measure 'Map share' = CALCULATE(IF([One definition],CALCULATE(MAX(Supply[Share]),Supply[Share]>0,Supply[EntityType]="country_or_territory",TREATAS({[Selected supply year]},Supply[Year]))),KEEPFILTERS(FILTER(ALL(Definitions[Material]),IF(SELECTEDVALUE(DefinitionChoice[GraphiteScope],"Graphite")="All grades",Definitions[Material]<>"Graphite",Definitions[Material]<>"Graphite: all grades"))))
+		lineageTag: 53b7afeb-d238-5ef4-8636-32cb81ed35c3
+		displayFolder: Supply
+		formatString: 0.0%
+
+	measure 'Map color' = CALCULATE(IF(SELECTEDVALUE(Supply[Stage])="Refining","#479A67","#183323"),KEEPFILTERS(FILTER(ALL(Definitions[Material]),IF(SELECTEDVALUE(DefinitionChoice[GraphiteScope],"Graphite")="All grades",Definitions[Material]<>"Graphite",Definitions[Material]<>"Graphite: all grades"))))
+		lineageTag: a954dd28-70aa-5dc8-9ddd-b2ff0ad0e925
+		displayFolder: Supply
+
+	measure 'Map latitude' = CALCULATE(IF(NOT ISBLANK([Map share]),AVERAGE(Supply[DisplayLatitude])),KEEPFILTERS(FILTER(ALL(Definitions[Material]),IF(SELECTEDVALUE(DefinitionChoice[GraphiteScope],"Graphite")="All grades",Definitions[Material]<>"Graphite",Definitions[Material]<>"Graphite: all grades"))))
+		lineageTag: 6c651397-c536-59df-9c02-f05252e9a6eb
+		displayFolder: Supply
+
+	measure 'Map longitude' = CALCULATE(IF(NOT ISBLANK([Map share]),AVERAGE(Supply[DisplayLongitude])),KEEPFILTERS(FILTER(ALL(Definitions[Material]),IF(SELECTEDVALUE(DefinitionChoice[GraphiteScope],"Graphite")="All grades",Definitions[Material]<>"Graphite",Definitions[Material]<>"Graphite: all grades"))))
+		lineageTag: 8514b72b-a510-56a4-bb90-3047d9d160fb
+		displayFolder: Supply
+
+	partition ReportMeasures = m
+		mode: import
+		source = #table(type table [Placeholder=text],{{"measure_container"}})

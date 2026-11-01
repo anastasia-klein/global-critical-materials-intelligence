@@ -1,0 +1,52 @@
+name: Analytics and report validation
+on:
+  push:
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  analytics:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v7
+        with:
+          python-version: '3.12'
+          cache: pip
+          cache-dependency-path: requirements-warehouse.lock.txt
+      - name: Install locked analytics dependencies
+        run: python -m pip install -r requirements-warehouse.lock.txt
+      - name: Test ingestion and DuckDB persistence
+        run: python -B -m unittest discover -s tests -v
+      - name: Check committed report inputs
+        run: python scripts/verify_report_inputs.py
+      - name: Build the fixture warehouse and verify metrics
+        run: |
+          python scripts/create_ci_capture.py --output work/ci
+          python scripts/build_warehouse.py --data-root work/ci/capture --config work/ci/fixture_config.json --database work/ci/ci.duckdb --output work/ci/evidence --historical-snapshot
+          python scripts/validate_business_metrics.py --database work/ci/ci.duckdb --output work/ci/evidence/metrics.json
+          python scripts/check_quality_controls.py --database work/ci/ci.duckdb --phase all --output work/ci/evidence/negative_controls.json
+      - name: Build and validate Power BI definitions and fixture values
+        run: |
+          python scripts/export_powerbi.py --database work/ci/ci.duckdb --output work/ci/powerbi/data
+          python scripts/build_powerbi.py --output work/ci/powerbi
+          python scripts/validate_powerbi.py --project work/ci/powerbi --database work/ci/ci.duckdb --output work/ci/evidence/powerbi.json
+          python scripts/validate_powerbi_design.py --project work/ci/powerbi --output work/ci/evidence/presentation.json
+  windows-report-update:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - name: Prepare a local Desktop copy without opening Power BI
+        shell: powershell
+        run: |
+          .\scripts\Update-PowerBI.ps1 -SkipPull -NoOpen -FontName Arial
+          $project = Get-ChildItem .\work\powerbi-desktop -Recurse -Filter GlobalCriticalMaterials.pbip
+          if (@($project).Count -ne 1) { throw 'Expected one working project.' }
+          $expression = Get-Content (Join-Path $project.DirectoryName 'GlobalCriticalMaterials.SemanticModel/definition/expressions.tmdl') -Raw
+          if ($expression -notmatch 'work/powerbi-desktop') { throw 'DataFolder is not local to the runtime.' }
+          $dirty = git status --porcelain
+          if ($dirty) { throw "The update script changed tracked source files: $dirty" }

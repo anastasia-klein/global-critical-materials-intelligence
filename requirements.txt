@@ -1,0 +1,2 @@
+# Full reproducible local analytical stack (Python 3.12 recommended).
+-r requirements-warehouse.lock.txt

@@ -1,0 +1,121 @@
+/// Reviewed DuckDB business-layer export. See export_manifest.json for exact source SQL and snapshot selection.
+table Trade
+	lineageTag: 934dc42a-f26c-5bde-aefb-f5cd5de3230d
+
+	column RowKey
+		dataType: string
+		lineageTag: 196aa507-4e44-5c67-8507-58de1176b3f1
+		summarizeBy: none
+		sourceColumn: RowKey
+		isHidden
+
+	column SelectionKey
+		dataType: string
+		lineageTag: ac0b894e-0611-5cbd-adc9-ca30506a577b
+		summarizeBy: none
+		sourceColumn: SelectionKey
+		isHidden
+
+	column ProductCode
+		dataType: string
+		lineageTag: ab4ba72a-7388-5093-91a3-29cfcb5130f6
+		summarizeBy: none
+		sourceColumn: ProductCode
+
+	column ReporterKey
+		dataType: string
+		lineageTag: e9ca4474-ef09-54e0-bcf8-42740b90e712
+		summarizeBy: none
+		sourceColumn: ReporterKey
+		isHidden
+
+	column Year
+		dataType: int64
+		lineageTag: 65cc5db6-d899-5d78-991b-fda4b3231245
+		summarizeBy: none
+		sourceColumn: Year
+		formatString: 0
+
+	column Basis
+		dataType: string
+		lineageTag: 5a17b7f6-01a1-57a1-89c4-ecbbc0e48dc4
+		summarizeBy: none
+		sourceColumn: Basis
+
+	column Unit
+		dataType: string
+		lineageTag: ec068dfb-144a-58e3-bda0-a61ff5cbd77a
+		summarizeBy: none
+		sourceColumn: Unit
+
+	column DenominatorScope
+		dataType: string
+		lineageTag: 9701a3b5-4f02-53ee-ade8-928981151d17
+		summarizeBy: none
+		sourceColumn: DenominatorScope
+
+	column Imports
+		dataType: double
+		lineageTag: 3f26d4ea-8864-5ae9-8056-1bb7b7f7b5f9
+		summarizeBy: none
+		sourceColumn: Imports
+
+	column Exports
+		dataType: double
+		lineageTag: 8d9b70eb-e980-5bfb-a0d9-019b698d0eb8
+		summarizeBy: none
+		sourceColumn: Exports
+
+	column Balance
+		dataType: double
+		lineageTag: 5954e1c1-cd88-5a55-a500-7c618b58901e
+		summarizeBy: none
+		sourceColumn: Balance
+
+	column ImportUnallocated
+		dataType: double
+		lineageTag: 0be248f9-cdf5-5bf9-93d2-bedd858943ee
+		summarizeBy: none
+		sourceColumn: ImportUnallocated
+
+	column ExportUnallocated
+		dataType: double
+		lineageTag: 9504bf24-da28-572c-a695-35d1093784e7
+		summarizeBy: none
+		sourceColumn: ExportUnallocated
+
+	column BalanceStatus
+		dataType: string
+		lineageTag: 4d105554-bf18-5942-ba36-5f44f76005f4
+		summarizeBy: none
+		sourceColumn: BalanceStatus
+
+	column ClassificationStatus
+		dataType: string
+		lineageTag: 2e92bf9f-363a-5c0f-a516-8cf951a853c7
+		summarizeBy: none
+		sourceColumn: ClassificationStatus
+		isHidden
+
+	column Evidence
+		dataType: string
+		lineageTag: 4ab1b398-0a4b-5384-8ee8-5d8ed62ed8bd
+		summarizeBy: none
+		sourceColumn: Evidence
+
+	column SnapshotKey
+		dataType: string
+		lineageTag: 42832396-e163-5c6c-ab1c-f4763c4874b0
+		summarizeBy: none
+		sourceColumn: SnapshotKey
+		isHidden
+
+	partition Trade = m
+		mode: import
+		source =
+			let
+				Source = Csv.Document(File.Contents(DataFolder & "/Trade.csv"),[Delimiter=",", Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+				Headers = Table.PromoteHeaders(Source,[PromoteAllScalars=true]),
+				Typed = Table.TransformColumnTypes(Headers,{{"RowKey", type text}, {"SelectionKey", type text}, {"ProductCode", type text}, {"ReporterKey", type text}, {"Year", Int64.Type}, {"Basis", type text}, {"Unit", type text}, {"DenominatorScope", type text}, {"Imports", type number}, {"Exports", type number}, {"Balance", type number}, {"ImportUnallocated", type number}, {"ExportUnallocated", type number}, {"BalanceStatus", type text}, {"ClassificationStatus", type text}, {"Evidence", type text}, {"SnapshotKey", type text}},"en-US")
+			in
+				Typed

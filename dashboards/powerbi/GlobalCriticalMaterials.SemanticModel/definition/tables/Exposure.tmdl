@@ -1,0 +1,132 @@
+/// Reviewed DuckDB business-layer export. See export_manifest.json for exact source SQL and snapshot selection.
+table Exposure
+	lineageTag: 868cb0a4-0be4-51f1-9b3e-ee87a0171d39
+
+	column RowKey
+		dataType: string
+		lineageTag: 197526da-f08e-5195-9fef-d0bcce571eb7
+		summarizeBy: none
+		sourceColumn: RowKey
+		isHidden
+
+	column SelectionKey
+		dataType: string
+		lineageTag: c0707f8c-2bdf-5cf1-9bf6-c59f3cb1ae2c
+		summarizeBy: none
+		sourceColumn: SelectionKey
+		isHidden
+
+	column ProductCode
+		dataType: string
+		lineageTag: 8140903c-5e59-5b62-937a-5e8e4c9c43b8
+		summarizeBy: none
+		sourceColumn: ProductCode
+
+	column ReporterKey
+		dataType: string
+		lineageTag: 2ff34b39-7ab1-5197-ad9e-e60a7e000096
+		summarizeBy: none
+		sourceColumn: ReporterKey
+		isHidden
+
+	column Year
+		dataType: int64
+		lineageTag: 6763e406-c6af-5abd-b30e-d632aac6fc4e
+		summarizeBy: none
+		sourceColumn: Year
+		formatString: 0
+
+	column Basis
+		dataType: string
+		lineageTag: 60b182c9-3d8d-5334-a8a9-b35f1b1d2d59
+		summarizeBy: none
+		sourceColumn: Basis
+
+	column Imports
+		dataType: double
+		lineageTag: b6c358f4-c5b2-558c-ad92-27b907fcd2b5
+		summarizeBy: none
+		sourceColumn: Imports
+
+	column DenominatorScope
+		dataType: string
+		lineageTag: 24ddb975-c7da-54bf-ae42-7cca78a8fdd0
+		summarizeBy: none
+		sourceColumn: DenominatorScope
+
+	column HHILower
+		dataType: double
+		lineageTag: 885f857b-7da4-5852-bb30-d3068242047c
+		summarizeBy: none
+		sourceColumn: HHILower
+
+	column HHIUpper
+		dataType: double
+		lineageTag: 9cd71dba-187a-5637-b4de-597bfc610005
+		summarizeBy: none
+		sourceColumn: HHIUpper
+
+	column TopSupplierLower
+		dataType: double
+		lineageTag: 99f0c30e-5b61-521f-b914-bdc7c6a1f6ca
+		summarizeBy: none
+		sourceColumn: TopSupplierLower
+
+	column TopSupplierUpper
+		dataType: double
+		lineageTag: d87f1b1f-fea8-505b-9c9d-ea6a7cabd7cf
+		summarizeBy: none
+		sourceColumn: TopSupplierUpper
+
+	column Top3Lower
+		dataType: double
+		lineageTag: 086f6b3d-5a6c-5026-a098-6ba78580e448
+		summarizeBy: none
+		sourceColumn: Top3Lower
+
+	column Top3Upper
+		dataType: double
+		lineageTag: 56ea73c5-752d-5b3c-a22c-6a5e8f783edb
+		summarizeBy: none
+		sourceColumn: Top3Upper
+
+	column UnallocatedShare
+		dataType: double
+		lineageTag: e818a32a-0da1-576f-9471-e0e9de767446
+		summarizeBy: none
+		sourceColumn: UnallocatedShare
+
+	column DenominatorStatus
+		dataType: string
+		lineageTag: 94dd7e94-37c4-566b-9ed6-020cab657db8
+		summarizeBy: none
+		sourceColumn: DenominatorStatus
+
+	column ImportDependency
+		dataType: double
+		lineageTag: 0847431e-77cf-5843-9517-e0fa530f426a
+		summarizeBy: none
+		sourceColumn: ImportDependency
+
+	column ImportDependencyStatus
+		dataType: string
+		lineageTag: 77121141-ffe2-5e5d-b874-7487fd459efa
+		summarizeBy: none
+		sourceColumn: ImportDependencyStatus
+
+	column SnapshotKey
+		dataType: string
+		lineageTag: 272ca497-651b-5650-96be-f0bd6199a881
+		summarizeBy: none
+		sourceColumn: SnapshotKey
+		isHidden
+
+	partition Exposure = m
+		mode: import
+		source =
+			let
+				Source = Csv.Document(File.Contents(DataFolder & "/Exposure.csv"),[Delimiter=",", Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+				Headers = Table.PromoteHeaders(Source,[PromoteAllScalars=true]),
+				Typed = Table.TransformColumnTypes(Headers,{{"RowKey", type text}, {"SelectionKey", type text}, {"ProductCode", type text}, {"ReporterKey", type text}, {"Year", Int64.Type}, {"Basis", type text}, {"Imports", type number}, {"DenominatorScope", type text}, {"HHILower", type number}, {"HHIUpper", type number}, {"TopSupplierLower", type number}, {"TopSupplierUpper", type number}, {"Top3Lower", type number}, {"Top3Upper", type number}, {"UnallocatedShare", type number}, {"DenominatorStatus", type text}, {"ImportDependency", type number}, {"ImportDependencyStatus", type text}, {"SnapshotKey", type text}},"en-US")
+			in
+				Typed

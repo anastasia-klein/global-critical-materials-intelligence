@@ -1,0 +1,3 @@
+stage_code,stage_name,measure_kind
+mining,Mining,expected_output_not_capacity
+refining,Refining,expected_output_not_capacity

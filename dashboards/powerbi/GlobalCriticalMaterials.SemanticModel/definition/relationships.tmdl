@@ -1,0 +1,160 @@
+relationship 25ed86e5-d1b8-5970-af9c-cefdc5174245
+	fromColumn: Composition.ProductCode
+	toColumn: Products.ProductCode
+	fromCardinality: many
+	toCardinality: one
+	crossFilteringBehavior: oneDirection
+
+relationship f842137d-dacd-5e9a-b777-5c5ab539883e
+	fromColumn: Composition.ReporterKey
+	toColumn: Reporters.ReporterKey
+	fromCardinality: many
+	toCardinality: one
+	crossFilteringBehavior: oneDirection
+
+relationship 69321b57-e90c-5b04-bfa0-a68033146825
+	fromColumn: Concentration.DefinitionKey
+	toColumn: Definitions.DefinitionKey
+	fromCardinality: many
+	toCardinality: one
+	crossFilteringBehavior: oneDirection
+
+relationship 0f5a1aea-1b0f-555c-9fb7-8c51b65600b8
+	fromColumn: Concentration.Stage
+	toColumn: Stages.Stage
+	fromCardinality: many
+	toCardinality: one
+	crossFilteringBehavior: oneDirection
+
+relationship 1ae6220a-4aca-5ec9-bbfc-df6c21ed13b0
+	fromColumn: Exposure.ProductCode
+	toColumn: Products.ProductCode
+	fromCardinality: many
+	toCardinality: one
+	crossFilteringBehavior: oneDirection
+
+relationship 46669a5c-105d-586b-9201-04d17047ab48
+	fromColumn: Exposure.ReporterKey
+	toColumn: Reporters.ReporterKey
+	fromCardinality: many
+	toCardinality: one
+	crossFilteringBehavior: oneDirection
+
+relationship 8992f878-8946-5843-ba0f-e8e264130724
+	fromColumn: Outlook.DefinitionKey
+	toColumn: Definitions.DefinitionKey
+	fromCardinality: many
+	toCardinality: one
+	crossFilteringBehavior: oneDirection
+
+relationship 2fa0b6bd-27cc-58ca-a245-aac4e42f07ac
+	fromColumn: OutlookRisk.DefinitionKey
+	toColumn: Definitions.DefinitionKey
+	fromCardinality: many
+	toCardinality: one
+	crossFilteringBehavior: oneDirection
+
+relationship 3375f03b-abdb-5567-bb4c-5ae18c142063
+	fromColumn: Partners.ProductCode
+	toColumn: Products.ProductCode
+	fromCardinality: many
+	toCardinality: one
+	crossFilteringBehavior: oneDirection
+
+relationship 194b98e6-3216-5653-9597-46f9f4f7bd5f
+	fromColumn: Partners.ReporterKey
+	toColumn: Reporters.ReporterKey
+	fromCardinality: many
+	toCardinality: one
+	crossFilteringBehavior: oneDirection
+
+relationship 95227056-f5ca-52d0-8c57-b9b347704944
+	fromColumn: Sensitivity.ProductCode
+	toColumn: Products.ProductCode
+	fromCardinality: many
+	toCardinality: one
+	crossFilteringBehavior: oneDirection
+
+relationship aaf67f04-130f-5889-8c28-9458f29b6333
+	fromColumn: Sensitivity.ReporterKey
+	toColumn: Reporters.ReporterKey
+	fromCardinality: many
+	toCardinality: one
+	crossFilteringBehavior: oneDirection
+
+relationship 8e3a654c-2c98-5244-826e-db8f66ceadfe
+	fromColumn: Supply.DefinitionKey
+	toColumn: Definitions.DefinitionKey
+	fromCardinality: many
+	toCardinality: one
+	crossFilteringBehavior: oneDirection
+
+relationship 58645a23-a182-5c86-a17a-b175ca0b057e
+	fromColumn: Supply.Stage
+	toColumn: Stages.Stage
+	fromCardinality: many
+	toCardinality: one
+	crossFilteringBehavior: oneDirection
+
+relationship 5b371d62-285f-5012-a09e-deb551c0899f
+	fromColumn: SupplyRisk.DefinitionKey
+	toColumn: Definitions.DefinitionKey
+	fromCardinality: many
+	toCardinality: one
+	crossFilteringBehavior: oneDirection
+
+relationship d81b18ad-b7cf-5f4d-9e5a-deef18ee7546
+	fromColumn: SupplyRisk.Stage
+	toColumn: Stages.Stage
+	fromCardinality: many
+	toCardinality: one
+	crossFilteringBehavior: oneDirection
+
+relationship 1bd2acdb-c86d-58d2-84dd-438d8ef24825
+	fromColumn: Trade.ProductCode
+	toColumn: Products.ProductCode
+	fromCardinality: many
+	toCardinality: one
+	crossFilteringBehavior: oneDirection
+
+relationship 6b8e4eb8-0044-5b7c-96f1-29c04a28fa78
+	fromColumn: Trade.ReporterKey
+	toColumn: Reporters.ReporterKey
+	fromCardinality: many
+	toCardinality: one
+	crossFilteringBehavior: oneDirection
+
+relationship 6f59d274-24be-5d87-81a9-e3e55d258cef
+	fromColumn: TradeRisk.ProductCode
+	toColumn: Products.ProductCode
+	fromCardinality: many
+	toCardinality: one
+	crossFilteringBehavior: oneDirection
+
+relationship a5f8aa81-af5e-506b-acb2-105908d736af
+	fromColumn: TradeRisk.ReporterKey
+	toColumn: Reporters.ReporterKey
+	fromCardinality: many
+	toCardinality: one
+	crossFilteringBehavior: oneDirection
+
+relationship 5c111eda-be19-560a-9a8d-f5b6ec76b31d
+	fromColumn: Definitions.Family
+	toColumn: Materials.Family
+	fromCardinality: many
+	toCardinality: one
+	crossFilteringBehavior: oneDirection
+
+relationship 6964889a-6b08-5e5f-9c93-83001e280f42
+	fromColumn: Products.Family
+	toColumn: Materials.Family
+	fromCardinality: many
+	toCardinality: one
+	crossFilteringBehavior: oneDirection
+
+relationship f0a81314-9750-5295-92c8-d2751d18fa28
+	fromColumn: Partners.PartnerDisplay
+	toColumn: PartnerDisplay.PartnerDisplay
+	fromCardinality: many
+	toCardinality: one
+	crossFilteringBehavior: oneDirection

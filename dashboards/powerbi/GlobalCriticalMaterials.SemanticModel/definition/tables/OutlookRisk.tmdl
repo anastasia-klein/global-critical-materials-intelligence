@@ -1,0 +1,147 @@
+/// Reviewed DuckDB business-layer export. See export_manifest.json for exact source SQL and snapshot selection.
+table OutlookRisk
+	lineageTag: d22c1820-9e09-501f-8382-c54acb8eadc2
+
+	column RowKey
+		dataType: string
+		lineageTag: c0119a02-672b-5fe7-bf7a-66b3fcfe5989
+		summarizeBy: none
+		sourceColumn: RowKey
+		isHidden
+
+	column SelectionKey
+		dataType: string
+		lineageTag: 1b20eecf-1f90-5f07-b640-db2fa38d5f36
+		summarizeBy: none
+		sourceColumn: SelectionKey
+		isHidden
+
+	column DefinitionKey
+		dataType: string
+		lineageTag: 068531bb-056f-5a1e-b87c-8f947ca89463
+		summarizeBy: none
+		sourceColumn: DefinitionKey
+		isHidden
+
+	column Year
+		dataType: int64
+		lineageTag: 3569a26a-f1a6-5ac7-94d0-e67f72fbe7bb
+		summarizeBy: none
+		sourceColumn: Year
+		formatString: 0
+
+	column BaseYear
+		dataType: int64
+		lineageTag: ffd7e372-14d4-5aa7-977f-ebd848e275bd
+		summarizeBy: none
+		sourceColumn: BaseYear
+		formatString: 0
+
+	column EndYear
+		dataType: int64
+		lineageTag: 4c7ac2a5-c086-5a3c-93c9-f879d4457de8
+		summarizeBy: none
+		sourceColumn: EndYear
+		formatString: 0
+
+	column Stage
+		dataType: string
+		lineageTag: 8669f6bd-410c-5359-af53-18ea9244f549
+		summarizeBy: none
+		sourceColumn: Stage
+
+	column Scenario
+		dataType: string
+		lineageTag: 4c1c52a1-f5ff-5333-a23e-2a2e47d0cc32
+		summarizeBy: none
+		sourceColumn: Scenario
+
+	column ScenarioCase
+		dataType: string
+		lineageTag: bcc6f785-46c4-59c8-95a1-5634f69b4adb
+		summarizeBy: none
+		sourceColumn: ScenarioCase
+
+	column Edition
+		dataType: string
+		lineageTag: 01984bb1-7e85-5635-b473-4e41761c5011
+		summarizeBy: none
+		sourceColumn: Edition
+
+	column Basis
+		dataType: string
+		lineageTag: c334d56d-d46b-59e8-8133-375cc7ce60f1
+		summarizeBy: none
+		sourceColumn: Basis
+
+	column Component
+		dataType: string
+		lineageTag: b92b13da-bc99-5d04-ad58-219069d06827
+		summarizeBy: none
+		sourceColumn: Component
+
+	column Unit
+		dataType: string
+		lineageTag: d2ff3d12-1c79-5316-a298-b584ee4aafda
+		summarizeBy: none
+		sourceColumn: Unit
+
+	column Value
+		dataType: double
+		lineageTag: e34506e5-77a6-5fe7-88c7-aa22e809626c
+		summarizeBy: none
+		sourceColumn: Value
+
+	column LowerBound
+		dataType: double
+		lineageTag: 9c296579-c711-59ab-9bcc-434d1494b4fc
+		summarizeBy: none
+		sourceColumn: LowerBound
+
+	column UpperBound
+		dataType: double
+		lineageTag: 6e8eb786-fbee-5cac-9fbf-08f3bb9666c1
+		summarizeBy: none
+		sourceColumn: UpperBound
+
+	column Availability
+		dataType: string
+		lineageTag: d6926b33-07cb-5178-a2db-f312921cad06
+		summarizeBy: none
+		sourceColumn: Availability
+
+	column AvailabilityReason
+		dataType: string
+		lineageTag: 762e527a-e3eb-503f-b74f-bbfeb4b75686
+		summarizeBy: none
+		sourceColumn: AvailabilityReason
+
+	column Evidence
+		dataType: string
+		lineageTag: 72e3560f-eb9a-500c-86c6-49ee971403ff
+		summarizeBy: none
+		sourceColumn: Evidence
+
+	column ComparisonContractKey
+		dataType: string
+		lineageTag: 90eba117-2d54-5a86-902a-6dc09c49a9ba
+		summarizeBy: none
+		sourceColumn: ComparisonContractKey
+		isHidden
+
+	column SnapshotKey
+		dataType: string
+		lineageTag: 94745983-e8f6-5c97-a09a-9e6412d7ab27
+		summarizeBy: none
+		sourceColumn: SnapshotKey
+		isHidden
+
+	partition OutlookRisk = m
+		mode: import
+		source =
+			let
+				Source = Csv.Document(File.Contents(DataFolder & "/OutlookRisk.csv"),[Delimiter=",", Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+				Headers = Table.PromoteHeaders(Source,[PromoteAllScalars=true]),
+				Typed = Table.TransformColumnTypes(Headers,{{"RowKey", type text}, {"SelectionKey", type text}, {"DefinitionKey", type text}, {"Year", Int64.Type}, {"BaseYear", Int64.Type}, {"EndYear", Int64.Type}, {"Stage", type text}, {"Scenario", type text}, {"ScenarioCase", type text}, {"Edition", type text}, {"Basis", type text}, {"Component", type text}, {"Unit", type text}, {"Value", type number}, {"LowerBound", type number}, {"UpperBound", type number}, {"Availability", type text}, {"AvailabilityReason", type text}, {"Evidence", type text}, {"ComparisonContractKey", type text}, {"SnapshotKey", type text}},"en-US")
+			in
+				Typed
