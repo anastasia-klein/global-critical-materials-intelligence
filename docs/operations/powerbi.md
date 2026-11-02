@@ -44,12 +44,14 @@ Auto font selection prefers the exact installed family Avenir Next, otherwise Ar
 Static checks have passed; native Desktop rendering and DAX execution must be checked separately:
 
 - All 24 imported CSV tables refresh; no path, relationship or measure errors.
-- All six square material tiles are visible with full names and correct states/colours; KPI ranges fit.
+- All six square material tiles are visible with full names and correct states/colours; KPI ranges fit. Hover/click each material tile in the published reading view: corner numbers stay visible with no grey text scrollbars.
 - At Fit to page, no visual requires scrolling. Import partners keep the alphabetical reference order and Other partners last. End uses keep all eight categories.
 - Compare Germany / Li carbonates / 2024 / EUR with the source query: imports, exports, Chile/Belgium/US shares and supplier HHI.
 - Switch every reporter, basis and material. EU27 remains external-only; national totals include intra-EU. Multiple product/reporter selections must not create sums of incompatible scopes.
 - On risk, clear material selection to compare all six. Mining/refining bars show lower HHI; upper bounds are in tooltips. The square 0–1 scatter compares concentration, not physical shortage.
-- On outlook, cobalt/grid storage retains reported 0. A source-missing category remains blank/dash with the status tooltip. Graphite scope changes do not affect other material families. Supply stops at 2040; demand extends to 2050.
-- The combined map shows two stage colours. Offsets of ±3° are display-only; they are not facility coordinates. Nearby circles may overlap. Other countries is excluded.
+- On outlook, each KPI and demand chart shows CPS, STEPS and HDS with the same fixed colours. There is no scenario selector. The year is a single-row button choice; the Graphite/All grades switch is below C. Cobalt/grid storage retains reported 0. A source-missing category remains blank/dash with the status tooltip. Graphite scope changes do not affect other material families. Supply stops at 2040; demand extends to 2050.
+- The combined map shows separate circles in two stage colours, not pies. Offsets of ±3° are display-only; they are not facility coordinates. Nearby circles may overlap. Other countries is excluded.
 
 The preview PNGs are design previews, not proof of Desktop acceptance. No automatic Service publication is performed by this workflow.
+
+Pulling updates the source checkout and prepares a Desktop copy. It does not replace the already published Power BI Service report. Refresh and publish the updated report from Desktop to make the new version visible in the Service.

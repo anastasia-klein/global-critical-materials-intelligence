@@ -2,8 +2,8 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.5.0/schema.json",
   "name": "81abff0ae76d58029a47",
   "position": {
-    "x": 28,
-    "y": 340,
+    "x": 288,
+    "y": 282,
     "width": 244,
     "height": 92,
     "z": 16000,
@@ -180,7 +180,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'Mining · Output'"
+                  "Value": "'Refining · Output'"
                 }
               }
             },
@@ -259,7 +259,14 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'Mining · Output'"
+                  "Value": "'Refining · Output'"
+                }
+              }
+            },
+            "keepLayerOrder": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
                 }
               }
             }
@@ -277,7 +284,7 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#183323'"
+                      "Value": "'#479A67'"
                     }
                   }
                 }
@@ -333,11 +340,11 @@
                       "Entity": "ReportMeasures"
                     }
                   },
-                  "Property": "Mining output label"
+                  "Property": "Refining output label"
                 }
               },
-              "queryRef": "ReportMeasures.Mining output label",
-              "nativeQueryRef": "Mining output label",
+              "queryRef": "ReportMeasures.Refining output label",
+              "nativeQueryRef": "Refining output label",
               "active": true
             }
           ]

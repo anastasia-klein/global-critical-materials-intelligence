@@ -13,6 +13,7 @@ from reportlab.lib.styles import ParagraphStyle
 from xml.sax.saxutils import escape
 
 from build_powerbi import COLORS as C
+from powerbi_report import SCENARIO_COLORS
 PALETTE=[C['teal'],C['blue'],C['amber'],C['purple'],'#9CBDA0','#BDAD89']
 W,H=1600,900
 
@@ -66,7 +67,10 @@ class Renderer:
    self.labels[stage+' output label']=f'{volume/1000:,.1f} kt'
    self.labels[stage+' concentration label']=interval(panel['HHILower'],panel['HHIUpper'],lambda x:f'{x:.3f}')
    self.labels[stage+' top3 label']=interval(panel['Top3Lower'],panel['Top3Upper'],fmt)
-  self.context={'material':'Lithium','supply_stage':'Mining and Refining','supply_year':2030,'trade_product':'28369100','reporting_area':'Germany','trade_year':2024,'trade_basis':'trade_value','outlook_scenario':'STEPS','outlook_endpoint':2040,'kpi_labels':self.labels,'kind':'SQL/CSV-derived design preview, not Power BI output'}
+  for scenario in SCENARIO_COLORS:
+   r=next(r for r in self.d['Outlook'] if r['DefinitionKey']==self.li and r['Year']==2040 and r['ScenarioShort']==scenario and r['SeriesKind']=='demand_reported_end_uses_sum')
+   for suffix,value in [('endpoint label',f"{r['QuantityTonnes']/1000:,.1f} kt"),('growth label',f"{r['Growth']:+.1%}"),('CAGR label',f"{r['CAGR']:.1%}")]:self.labels[scenario+' '+suffix]=value
+  self.context={'material':'Lithium','supply_stage':'Mining and Refining','supply_year':2030,'trade_product':'28369100','reporting_area':'Germany','trade_year':2024,'trade_basis':'trade_value','outlook_scenario':'CPS / STEPS / HDS','outlook_endpoint':2040,'kpi_labels':self.labels,'kind':'SQL/CSV-derived design preview, not Power BI output'}
  def bar_chart(self,x,y,w,h,rows,percent=False):
   rows=[(clean(n),v) for n,v in rows];total=len(rows)
   if not rows:return
@@ -76,11 +80,12 @@ class Renderer:
    if value is None:self.text(plotx+5,yy,'—',10.5,C['muted']);continue
    self.bar(plotx,yy+2,plotw*value/maxv,rh*.57,C['teal']);self.text(plotx+plotw*value/maxv+8,yy,f'{value:.1%}' if percent else '0' if value==0 else f'{value:,.1f}',10.5,C['text'])
   if total>len(rows):self.text(x+w-190,y+h-20,f'{len(rows)} of {total} shown in preview',9.5,C['muted'])
- def line_chart(self,x,y,w,h,series,years,valuefmt=None,smooth=False):
+ def line_chart(self,x,y,w,h,series,years,valuefmt=None,smooth=False,colors=None):
+  palette=colors or PALETTE
   valuefmt=valuefmt or (lambda v:f'{v:,.0f}');top=y+49;left=x+64;right=x+w-28;bottom=y+h-28;has_legend=len(series)>1
   if has_legend:
    offset=x+17
-   for j,(label,pts) in enumerate(series):self.dot(offset+4,y+43,3.3,PALETTE[j%6]);self.text(offset+13,y+35,label,10.3,C['text']);offset+=max(140,len(label)*8)
+   for j,(label,pts) in enumerate(series):self.dot(offset+4,y+43,3.3,palette[j%len(palette)]);self.text(offset+13,y+35,label,10.3,C['text']);offset+=max(140,len(label)*8)
    top+=15
   allvals=[v for _,points in series for _,v in points if v is not None]
   if not allvals:return
@@ -98,15 +103,15 @@ class Renderer:
     path=self.c.beginPath();path.moveTo(coords[0][0],H-coords[0][1])
     for i,((a,b),(cc,d)) in enumerate(zip(coords[:-1],coords[1:])):
      third=(cc-a)/3;path.curveTo(a+third,H-(b+slope[i]*third),cc-third,H-(d-slope[i+1]*third),cc,H-d)
-    self.c.setStrokeColor(HexColor(PALETTE[j%6]));self.c.setLineWidth(2.5);self.c.setLineCap(1);self.c.drawPath(path,stroke=1,fill=0)
+    self.c.setStrokeColor(HexColor(palette[j%len(palette)]));self.c.setLineWidth(2.5);self.c.setLineCap(1);self.c.drawPath(path,stroke=1,fill=0)
    else:
     previous=None
     for yr,val in sorted(points):
      if val is None:previous=None;continue
      pt=(xs[yr],bottom-(bottom-top)*val/maxv)
-     if previous:self.line(*previous,*pt,PALETTE[j%6],2.5)
+     if previous:self.line(*previous,*pt,palette[j%len(palette)],2.5)
      previous=pt
-   for pt in coords:self.dot(*pt,2.5,PALETTE[j%6])
+   for pt in coords:self.dot(*pt,2.5,palette[j%len(palette)])
 
  def table(self,x,y,w,h,headers,rows,widths):
   header_y=y+43;lineh=18;cx=x+14
@@ -141,7 +146,7 @@ class Renderer:
    if item is None:unmatched.append(r['CountryISO3']);continue
    xx,yy=project(float(r['DisplayLongitude']),float(r['DisplayLatitude']));self.dot(xx,yy,3+13*math.sqrt(r['Share']),C['teal'] if r['Stage']=='Mining' else C['blue']);self.c.setStrokeColor(HexColor(C['text']));self.c.setLineWidth(.5);self.c.circle(xx,H-yy,3+13*math.sqrt(r['Share']),stroke=1,fill=0)
   self.context['preview_map_unmatched_country_iso3_'+stage]=unmatched
-  self.text(x+18,y+h-27,'Mining: forest / Refining: leaf | Display-only paired offsets ±3°',9.5,C['muted'])
+
  def scatter(self,x,y,w,h):
   cs=[r for r in self.d['Concentration'] if r['Year']==2030];pairs=[]
   for key,name in self.materials.items():
@@ -186,18 +191,43 @@ class Renderer:
    material='Magnet rare earth elements' if r['Symbol']=='REE' else r['MaterialName'];key=defs[material];yy=top+i*rh;self.text(x+18,yy+7,r['Symbol'],14,bold=True)
    for j,st in enumerate(['Mining','Refining']):
     a=next(r for r in self.d['Concentration'] if r['DefinitionKey']==key and r['Stage']==st and r['Year']==2030);value=a['HHILower'];self.bar(left,yy+j*20,pw*value,15,C['teal'] if j==0 else C['blue']);self.text(left+pw*value+6,yy+j*20-1,f'{value:.3f}',10)
+ def scenario_enduses(self,x,y,w,h):
+  vals={(r['EndUse'],r['ScenarioShort']):r['QuantityTonnes']/1000 for r in self.d['Outlook'] if r['DefinitionKey']==self.li and r['Year']==2040 and r['SeriesKind']=='demand_end_use'}
+  enduses=sorted(self.d['EndUses'],key=lambda r:r['SortOrder']);left=x+263;pw=w-330;top=y+72;rh=(h-112)/8;mx=max(vals.values())*1.02
+  for i,(sc,fg) in enumerate(SCENARIO_COLORS.items()):self.dot(x+21+i*105,y+45,3,fg);self.text(x+31+i*105,y+37,sc,10,fg)
+  for i,r in enumerate(enduses):
+   yy=top+i*rh;self.text(x+14,yy+8,r['EndUse'],10,C['muted'],maxwidth=237)
+   for j,(sc,fg) in enumerate(SCENARIO_COLORS.items()):
+    value=vals.get((r['EndUse'],sc));by=yy+j*rh/3
+    if value is None:self.text(left+5,by,'—',8.5,C['muted']);continue
+    self.bar(left,by+1,pw*value/mx,rh/3-3,fg);self.text(left+pw*value/mx+5,by-1,'0' if value==0 else f'{value:,.1f}',8.5,C['text'])
  def visual(self,page,v):
   p=v['position'];x,y,w,h=[p[k] for k in ['x','y','width','height']];z=v['visual'];kind=z['visualType'];title=z['visualContainerObjects']['title'][0]['properties']['text']['expr']['Literal']['Value'].strip("'")
   if kind=='textbox':
-   runs=z['objects']['general'][0]['properties']['paragraphs'][0]['textRuns'];text=''.join(r['value'] for r in runs);sty=runs[0]['textStyle'];self.wrapped(x,y,w,h,text,float(sty['fontSize'][:-2])*1.14,sty['color'],sty.get('fontWeight')=='bold');return
+   runs=z['objects']['general'][0]['properties']['paragraphs'][0]['textRuns']
+   if len(runs)>1:
+    xx=x
+    for run in runs:
+     sty=run['textStyle'];size=float(sty['fontSize'][:-2])*1.14;self.text(xx,y,run['value'],size,sty['color']);xx+=pdfmetrics.stringWidth(clean(run['value']),'Arial',size)
+    return
+   text=''.join(r['value'] for r in runs);sty=runs[0]['textStyle'];self.wrapped(x,y,w,h,text,float(sty['fontSize'][:-2])*1.14,sty['color'],sty.get('fontWeight')=='bold');return
   if kind=='pageNavigator':
    labels=['Global Supply Landscape','European Trade & Dependency','Supply Chain Risk','Future Outlook'];bw=(w-24)/4
    for j,label in enumerate(labels):
     selected=j==page;self.c.setFillColor(HexColor(C['teal'] if selected else C['panel']));self.c.roundRect(x+j*(bw+8),H-y-h,bw,h,8,fill=1,stroke=0);self.wrapped(x+j*(bw+8)+10,y+14,bw-20,h-5,label,11.5,C['canvas'] if selected else C['muted'],selected)
    return
-  if kind!='advancedSlicerVisual':self.box(x,y,w,h)
+  if kind!='advancedSlicerVisual' and z['visualContainerObjects']['background'][0]['properties']['show']['expr']['Literal']['Value']=='true':self.box(x,y,w,h)
   if title:self.text(x+14,y+12,title,12,C['text'],True,maxwidth=w-27)
+  if kind=='shape':return
   if kind=='advancedSlicerVisual':
+   ref=z['query']['queryState']['Values']['projections'][0]['field']['Column'];table=ref['Expression']['SourceRef']['Entity'];col=ref['Property']
+   if table!='Materials':
+    vals=sorted({r[col] for r in self.d[table]},key=lambda v:(v!='Graphite',str(v)) if table=='DefinitionChoice' else v)
+    chosen=z['objects']['general'][0]['properties']['filter']['filter']['Where'][0]['Condition']['In']['Values'][0][0]['Literal']['Value'].strip("'").rstrip('L')
+    width=float(z['objects']['layout'][0]['properties']['fixedWidth']['expr']['Literal']['Value'][:-1])
+    for i,val in enumerate(vals):
+     xx=x+i*(width+8);selected=str(val)==chosen;self.c.setFillColor(HexColor(C['teal'] if selected else C['panel']));self.c.setStrokeColor(HexColor(C['edge']));self.c.roundRect(xx,H-y-34,width,34,6,fill=1,stroke=1);self.text(xx+12,y+8,str(val),11,C['canvas'] if selected else C['text'],selected)
+    return
    values=sorted(self.d['Materials'],key=lambda r:r['SortOrder'])
    for i,r in enumerate(values):
     xx=x+i*114;chosen=page!=2 and r['Symbol']=='Li';fg=r['CategoryColor'];self.c.setFillColor(HexColor(fg));self.c.setStrokeColor(HexColor(C['teal'] if chosen else '#A6B8A5'));self.c.setLineWidth(3 if chosen else 1);self.c.roundRect(xx,H-y-104,104,104,4,fill=1,stroke=1)
@@ -216,6 +246,7 @@ class Renderer:
   if kind=='clusteredBarChart':
    measure=fields['Y'][0]
    if measure=='Mining country share':self.paired_bars(x,y,w,h);return
+   if measure=='CPS end use kt':self.scenario_enduses(x,y,w,h);return
    if measure=='Country share':rows=[(r['Country'],r['Share']) for r in self.d['Supply'] if r['DefinitionKey']==self.li and r['Year']==2030 and r['Stage']=='Mining' and r['EntityType']=='country_or_territory'];pct=True
    elif measure=='Partner import share':
     totals=defaultdict(float)
@@ -240,8 +271,8 @@ class Renderer:
     self.line_chart(x,y,w,h,[('Expected output',list(totals.items()))],sorted(totals));return
    if measure=='Imports':
     rows=[r for r in self.d['Trade'] if r['ProductCode']=='28369100' and r['ReporterKey']==self.reporter_key and r['Basis']=='trade_value'];self.line_chart(x,y,w,h,[(lab,[(r['Year'],r[lab]/1e6) for r in rows]) for lab in ['Imports','Exports']],sorted(r['Year'] for r in rows),lambda v:f'€{v:,.0f}m',smooth=True);return
-   if measure=='Demand kt':
-    rows=[r for r in self.d['Outlook'] if r['DefinitionKey']==self.li and r['SeriesKind']=='demand_reported_end_uses_sum'];self.line_chart(x,y,w,h,[(s,[(r['Year'],r['QuantityTonnes']/1000) for r in rows if r['ScenarioShort']==s]) for s in ['CPS','HDS','STEPS']],sorted({r['Year'] for r in rows}));return
+   if measure in ['Demand kt','CPS demand kt']:
+    rows=[r for r in self.d['Outlook'] if r['DefinitionKey']==self.li and r['SeriesKind']=='demand_reported_end_uses_sum'];self.line_chart(x,y,w,h,[(s,[(r['Year'],r['QuantityTonnes']/1000) for r in rows if r['ScenarioShort']==s]) for s in SCENARIO_COLORS],sorted({r['Year'] for r in rows}),colors=list(SCENARIO_COLORS.values()));return
    rows=[r for r in self.d['Outlook'] if r['DefinitionKey']==self.li and r['SeriesKind']=='supply_panel_output'];self.line_chart(x,y,w,h,[(s,[(r['Year'],r['QuantityTonnes']/1000) for r in rows if r['Stage']==s]) for s in ['Mining','Refining']],sorted({r['Year'] for r in rows}));return
   if kind=='scatterChart':self.scatter(x,y,w,h);return
   if kind=='tableEx':

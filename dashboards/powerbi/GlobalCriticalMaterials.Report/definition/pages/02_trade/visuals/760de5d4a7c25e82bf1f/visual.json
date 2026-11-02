@@ -2,9 +2,9 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.5.0/schema.json",
   "name": "760de5d4a7c25e82bf1f",
   "position": {
-    "x": 28,
-    "y": 244,
-    "width": 350,
+    "x": 634,
+    "y": 228,
+    "width": 300,
     "height": 80,
     "z": 14000,
     "tabOrder": 14000
@@ -180,7 +180,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'REPORTING AREA'"
+                  "Value": "'Measure basis'"
                 }
               }
             },
@@ -259,7 +259,14 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'REPORTING AREA'"
+                  "Value": "'Measure basis'"
+                }
+              }
+            },
+            "keepLayerOrder": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
                 }
               }
             }
@@ -380,7 +387,7 @@
                 "From": [
                   {
                     "Name": "s",
-                    "Entity": "Reporters",
+                    "Entity": "BasisChoice",
                     "Type": 0
                   }
                 ],
@@ -396,7 +403,7 @@
                                   "Source": "s"
                                 }
                               },
-                              "Property": "ReporterLabel"
+                              "Property": "BasisLabel"
                             }
                           }
                         ],
@@ -404,7 +411,7 @@
                           [
                             {
                               "Literal": {
-                                "Value": "'Germany'"
+                                "Value": "'Value · EUR'"
                               }
                             }
                           ]
@@ -428,14 +435,14 @@
                 "Column": {
                   "Expression": {
                     "SourceRef": {
-                      "Entity": "Reporters"
+                      "Entity": "BasisChoice"
                     }
                   },
-                  "Property": "ReporterLabel"
+                  "Property": "BasisLabel"
                 }
               },
-              "queryRef": "Reporters.ReporterLabel",
-              "nativeQueryRef": "ReporterLabel",
+              "queryRef": "BasisChoice.BasisLabel",
+              "nativeQueryRef": "BasisLabel",
               "active": true
             }
           ]

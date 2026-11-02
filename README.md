@@ -21,7 +21,7 @@ A reproducible analytics product for comparing global mining/refining concentrat
 | Supply Chain Risk | Inspect mining/refining and supplier concentration separately |
 | Future Outlook | Compare demand scenarios, end uses and STEPS expected output |
 
-Six periodic material tiles select Cu, Co, Li, Ni, C or REE. Traded CN8 forms remain distinct from IEA material definitions. Fixed partner/end-use axes make selections easier to compare. Reported zeros stay zero; missing source observations are not filled with zero.
+Six periodic material tiles select Cu, Co, Li, Ni, C or REE. Traded CN8 forms remain distinct from IEA material definitions. Fixed partner/end-use axes make selections easier to compare. Three scenario colours are shared by all outlook KPI values, lines and end-use bars; scenario alternatives are not stacked into a sum. Reported zeros stay zero; missing source observations are not filled with zero.
 
 ![SQL-derived design preview; native Desktop acceptance pending](dashboards/previews/design-preview-1.png)
 
@@ -115,7 +115,7 @@ CI also checks deliberate business-rule failures, portable Power BI exports, and
 
 ## Quality and limitations
 
-Current local checks: **36 dbt models, 256 dbt tests and 31 Python tests**. All **636,763 exported scalar fields** were checked against DuckDB; 1,013 partner-scope totals were reconciled after display grouping. Check [validation results](docs/validation/) and hosted Actions for their respective execution status. Schema checks do not execute DAX.
+Current local checks: **36 dbt models, 256 dbt tests and 31 Python tests**. All **637,211 exported scalar fields** were checked against DuckDB; 1,013 partner-scope totals were reconciled after display grouping. Check [validation results](docs/validation/) and hosted Actions for their respective execution status. Schema checks do not execute DAX.
 
 - IEA expected output is not installed capacity. The 2025 baseline is not certified here as observed actuals.
 - Trade product mass is not contained-metal mass; reported partner is not necessarily mine origin.

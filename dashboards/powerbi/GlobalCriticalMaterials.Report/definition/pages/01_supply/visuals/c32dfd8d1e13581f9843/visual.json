@@ -3,9 +3,9 @@
   "name": "c32dfd8d1e13581f9843",
   "position": {
     "x": 1172,
-    "y": 340,
+    "y": 282,
     "width": 400,
-    "height": 484,
+    "height": 542,
     "z": 23000,
     "tabOrder": 23000
   },
@@ -262,6 +262,13 @@
                   "Value": "'Named-country shares · Mining / Refining'"
                 }
               }
+            },
+            "keepLayerOrder": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
             }
           }
         }
@@ -301,6 +308,13 @@
               "expr": {
                 "Literal": {
                   "Value": "15D"
+                }
+              }
+            },
+            "maxMarginFactor": {
+              "expr": {
+                "Literal": {
+                  "Value": "40D"
                 }
               }
             }
@@ -521,7 +535,8 @@
               },
               "queryRef": "ReportMeasures.Mining country share",
               "nativeQueryRef": "Mining country share",
-              "active": true
+              "active": true,
+              "displayName": "Mining"
             },
             {
               "field": {
@@ -536,7 +551,8 @@
               },
               "queryRef": "ReportMeasures.Refining country share",
               "nativeQueryRef": "Refining country share",
-              "active": true
+              "active": true,
+              "displayName": "Refining"
             }
           ]
         }

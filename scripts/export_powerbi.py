@@ -135,7 +135,7 @@ for _f in _json.loads(_world.read_text())['features']:
  if _iso and _iso!='-99' and _p.get('LABEL_X') is not None:
   _anchors.append("('"+_iso+"',"+str(_p['LABEL_X'])+","+str(_p['LABEL_Y'])+")")
 _anchor_sql="select * from (values "+','.join(_anchors)+") a(ISO3,AnchorLongitude,AnchorLatitude)"
-QUERIES['Supply']="select s.*,a.AnchorLatitude as DisplayLatitude,a.AnchorLongitude+case s.Stage when 'Mining' then -3.0 else 3.0 end as DisplayLongitude from ("+QUERIES['Supply']+") s left join ("+_anchor_sql+") a on s.CountryISO3=a.ISO3"
+QUERIES['Supply']="select s.*,s.Country||' / '||s.Stage as MapPoint,a.AnchorLatitude as DisplayLatitude,a.AnchorLongitude+case s.Stage when 'Mining' then -3.0 else 3.0 end as DisplayLongitude from ("+QUERIES['Supply']+") s left join ("+_anchor_sql+") a on s.CountryISO3=a.ISO3"
 
 def export(database,output):
  import duckdb

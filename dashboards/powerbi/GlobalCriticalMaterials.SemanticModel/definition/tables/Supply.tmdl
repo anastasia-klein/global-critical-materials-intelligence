@@ -100,6 +100,12 @@ table Supply
 		sourceColumn: QuantityBasis
 		isHidden
 
+	column MapPoint
+		dataType: string
+		lineageTag: 046061bb-99b7-5ca9-b25e-31a471685372
+		summarizeBy: none
+		sourceColumn: MapPoint
+
 	column DisplayLatitude
 		dataType: double
 		lineageTag: 825f1e17-97d2-5bb9-bf84-4bbb6bc5153a
@@ -120,6 +126,6 @@ table Supply
 			let
 				Source = Csv.Document(File.Contents(DataFolder & "/Supply.csv"),[Delimiter=",", Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
 				Headers = Table.PromoteHeaders(Source,[PromoteAllScalars=true]),
-				Typed = Table.TransformColumnTypes(Headers,{{"RowKey", type text}, {"SelectionKey", type text}, {"DefinitionKey", type text}, {"Year", Int64.Type}, {"Stage", type text}, {"Country", type text}, {"CountryISO3", type text}, {"EntityType", type text}, {"QuantityTonnes", type number}, {"Share", type number}, {"PanelTonnes", type number}, {"Evidence", type text}, {"SnapshotKey", type text}, {"SourceRecordKey", type text}, {"QuantityBasis", type text}, {"DisplayLatitude", type number}, {"DisplayLongitude", type number}},"en-US")
+				Typed = Table.TransformColumnTypes(Headers,{{"RowKey", type text}, {"SelectionKey", type text}, {"DefinitionKey", type text}, {"Year", Int64.Type}, {"Stage", type text}, {"Country", type text}, {"CountryISO3", type text}, {"EntityType", type text}, {"QuantityTonnes", type number}, {"Share", type number}, {"PanelTonnes", type number}, {"Evidence", type text}, {"SnapshotKey", type text}, {"SourceRecordKey", type text}, {"QuantityBasis", type text}, {"MapPoint", type text}, {"DisplayLatitude", type number}, {"DisplayLongitude", type number}},"en-US")
 			in
 				Typed

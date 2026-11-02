@@ -367,6 +367,80 @@ table ReportMeasures
 		displayFolder: Outlook
 		formatString: #,0.0
 
+	measure 'CPS demand kt' = CALCULATE(CALCULATE([Demand kt],REMOVEFILTERS(ScenarioChoice),TREATAS({"Current Policies Scenario"},ScenarioChoice[Scenario]),REMOVEFILTERS(Outlook[Scenario]),REMOVEFILTERS(Outlook[ScenarioShort]),TREATAS({"Current Policies Scenario"},Outlook[Scenario])),KEEPFILTERS(FILTER(ALL(Definitions[Material]),IF(SELECTEDVALUE(DefinitionChoice[GraphiteScope],"Graphite")="All grades",Definitions[Material]<>"Graphite",Definitions[Material]<>"Graphite: all grades"))))
+		lineageTag: 4225b6f5-9238-5a71-b298-fa47cb375f06
+		displayFolder: Scenario comparison
+		formatString: #,0.0
+
+	measure 'CPS endpoint label' = CALCULATE(CALCULATE([Demand endpoint label],REMOVEFILTERS(ScenarioChoice),TREATAS({"Current Policies Scenario"},ScenarioChoice[Scenario]),REMOVEFILTERS(Outlook[Scenario]),REMOVEFILTERS(Outlook[ScenarioShort]),TREATAS({"Current Policies Scenario"},Outlook[Scenario])),KEEPFILTERS(FILTER(ALL(Definitions[Material]),IF(SELECTEDVALUE(DefinitionChoice[GraphiteScope],"Graphite")="All grades",Definitions[Material]<>"Graphite",Definitions[Material]<>"Graphite: all grades"))))
+		lineageTag: 5a2d08eb-9126-57c9-abe2-eb41bbca24ee
+		displayFolder: Scenario comparison
+
+	measure 'CPS growth label' = CALCULATE(CALCULATE([Demand growth label],REMOVEFILTERS(ScenarioChoice),TREATAS({"Current Policies Scenario"},ScenarioChoice[Scenario]),REMOVEFILTERS(Outlook[Scenario]),REMOVEFILTERS(Outlook[ScenarioShort]),TREATAS({"Current Policies Scenario"},Outlook[Scenario])),KEEPFILTERS(FILTER(ALL(Definitions[Material]),IF(SELECTEDVALUE(DefinitionChoice[GraphiteScope],"Graphite")="All grades",Definitions[Material]<>"Graphite",Definitions[Material]<>"Graphite: all grades"))))
+		lineageTag: 651cd411-ff3b-5565-814c-5ece13f0cb47
+		displayFolder: Scenario comparison
+
+	measure 'CPS CAGR label' = CALCULATE(CALCULATE([Demand CAGR label],REMOVEFILTERS(ScenarioChoice),TREATAS({"Current Policies Scenario"},ScenarioChoice[Scenario]),REMOVEFILTERS(Outlook[Scenario]),REMOVEFILTERS(Outlook[ScenarioShort]),TREATAS({"Current Policies Scenario"},Outlook[Scenario])),KEEPFILTERS(FILTER(ALL(Definitions[Material]),IF(SELECTEDVALUE(DefinitionChoice[GraphiteScope],"Graphite")="All grades",Definitions[Material]<>"Graphite",Definitions[Material]<>"Graphite: all grades"))))
+		lineageTag: 331b65cf-b94f-54a4-ba8c-2af057cab036
+		displayFolder: Scenario comparison
+
+	measure 'CPS end use kt' = CALCULATE(CALCULATE([Demand end use kt],REMOVEFILTERS(ScenarioChoice),TREATAS({"Current Policies Scenario"},ScenarioChoice[Scenario]),REMOVEFILTERS(Outlook[Scenario]),REMOVEFILTERS(Outlook[ScenarioShort]),TREATAS({"Current Policies Scenario"},Outlook[Scenario])),KEEPFILTERS(FILTER(ALL(Definitions[Material]),IF(SELECTEDVALUE(DefinitionChoice[GraphiteScope],"Graphite")="All grades",Definitions[Material]<>"Graphite",Definitions[Material]<>"Graphite: all grades"))))
+		lineageTag: 03849219-a91b-5d78-9a9d-afc1cf5cd2d9
+		displayFolder: Scenario comparison
+		formatString: #,0.0;-#,0.0;0
+
+	measure 'STEPS demand kt' = CALCULATE(CALCULATE([Demand kt],REMOVEFILTERS(ScenarioChoice),TREATAS({"Stated Policies Scenario"},ScenarioChoice[Scenario]),REMOVEFILTERS(Outlook[Scenario]),REMOVEFILTERS(Outlook[ScenarioShort]),TREATAS({"Stated Policies Scenario"},Outlook[Scenario])),KEEPFILTERS(FILTER(ALL(Definitions[Material]),IF(SELECTEDVALUE(DefinitionChoice[GraphiteScope],"Graphite")="All grades",Definitions[Material]<>"Graphite",Definitions[Material]<>"Graphite: all grades"))))
+		lineageTag: 258242ab-c2e5-5e1b-979f-439b3303a9cb
+		displayFolder: Scenario comparison
+		formatString: #,0.0
+
+	measure 'STEPS endpoint label' = CALCULATE(CALCULATE([Demand endpoint label],REMOVEFILTERS(ScenarioChoice),TREATAS({"Stated Policies Scenario"},ScenarioChoice[Scenario]),REMOVEFILTERS(Outlook[Scenario]),REMOVEFILTERS(Outlook[ScenarioShort]),TREATAS({"Stated Policies Scenario"},Outlook[Scenario])),KEEPFILTERS(FILTER(ALL(Definitions[Material]),IF(SELECTEDVALUE(DefinitionChoice[GraphiteScope],"Graphite")="All grades",Definitions[Material]<>"Graphite",Definitions[Material]<>"Graphite: all grades"))))
+		lineageTag: 34673f5d-9049-5c39-b79b-43ec4da51444
+		displayFolder: Scenario comparison
+
+	measure 'STEPS growth label' = CALCULATE(CALCULATE([Demand growth label],REMOVEFILTERS(ScenarioChoice),TREATAS({"Stated Policies Scenario"},ScenarioChoice[Scenario]),REMOVEFILTERS(Outlook[Scenario]),REMOVEFILTERS(Outlook[ScenarioShort]),TREATAS({"Stated Policies Scenario"},Outlook[Scenario])),KEEPFILTERS(FILTER(ALL(Definitions[Material]),IF(SELECTEDVALUE(DefinitionChoice[GraphiteScope],"Graphite")="All grades",Definitions[Material]<>"Graphite",Definitions[Material]<>"Graphite: all grades"))))
+		lineageTag: 47fec0cb-fcfa-5c0b-a99e-5b41517f6686
+		displayFolder: Scenario comparison
+
+	measure 'STEPS CAGR label' = CALCULATE(CALCULATE([Demand CAGR label],REMOVEFILTERS(ScenarioChoice),TREATAS({"Stated Policies Scenario"},ScenarioChoice[Scenario]),REMOVEFILTERS(Outlook[Scenario]),REMOVEFILTERS(Outlook[ScenarioShort]),TREATAS({"Stated Policies Scenario"},Outlook[Scenario])),KEEPFILTERS(FILTER(ALL(Definitions[Material]),IF(SELECTEDVALUE(DefinitionChoice[GraphiteScope],"Graphite")="All grades",Definitions[Material]<>"Graphite",Definitions[Material]<>"Graphite: all grades"))))
+		lineageTag: 71164a18-e7e0-5339-ae7d-4b0650623425
+		displayFolder: Scenario comparison
+
+	measure 'STEPS end use kt' = CALCULATE(CALCULATE([Demand end use kt],REMOVEFILTERS(ScenarioChoice),TREATAS({"Stated Policies Scenario"},ScenarioChoice[Scenario]),REMOVEFILTERS(Outlook[Scenario]),REMOVEFILTERS(Outlook[ScenarioShort]),TREATAS({"Stated Policies Scenario"},Outlook[Scenario])),KEEPFILTERS(FILTER(ALL(Definitions[Material]),IF(SELECTEDVALUE(DefinitionChoice[GraphiteScope],"Graphite")="All grades",Definitions[Material]<>"Graphite",Definitions[Material]<>"Graphite: all grades"))))
+		lineageTag: b22f37ca-71b5-5335-8858-222001b98918
+		displayFolder: Scenario comparison
+		formatString: #,0.0;-#,0.0;0
+
+	measure 'HDS demand kt' = CALCULATE(CALCULATE([Demand kt],REMOVEFILTERS(ScenarioChoice),TREATAS({"High Demand Scenario"},ScenarioChoice[Scenario]),REMOVEFILTERS(Outlook[Scenario]),REMOVEFILTERS(Outlook[ScenarioShort]),TREATAS({"High Demand Scenario"},Outlook[Scenario])),KEEPFILTERS(FILTER(ALL(Definitions[Material]),IF(SELECTEDVALUE(DefinitionChoice[GraphiteScope],"Graphite")="All grades",Definitions[Material]<>"Graphite",Definitions[Material]<>"Graphite: all grades"))))
+		lineageTag: fe9f5c8e-3a81-5fb4-8481-dbb1d42775de
+		displayFolder: Scenario comparison
+		formatString: #,0.0
+
+	measure 'HDS endpoint label' = CALCULATE(CALCULATE([Demand endpoint label],REMOVEFILTERS(ScenarioChoice),TREATAS({"High Demand Scenario"},ScenarioChoice[Scenario]),REMOVEFILTERS(Outlook[Scenario]),REMOVEFILTERS(Outlook[ScenarioShort]),TREATAS({"High Demand Scenario"},Outlook[Scenario])),KEEPFILTERS(FILTER(ALL(Definitions[Material]),IF(SELECTEDVALUE(DefinitionChoice[GraphiteScope],"Graphite")="All grades",Definitions[Material]<>"Graphite",Definitions[Material]<>"Graphite: all grades"))))
+		lineageTag: b51a5b2b-e5f2-5d1d-af67-70ffb76600d7
+		displayFolder: Scenario comparison
+
+	measure 'HDS growth label' = CALCULATE(CALCULATE([Demand growth label],REMOVEFILTERS(ScenarioChoice),TREATAS({"High Demand Scenario"},ScenarioChoice[Scenario]),REMOVEFILTERS(Outlook[Scenario]),REMOVEFILTERS(Outlook[ScenarioShort]),TREATAS({"High Demand Scenario"},Outlook[Scenario])),KEEPFILTERS(FILTER(ALL(Definitions[Material]),IF(SELECTEDVALUE(DefinitionChoice[GraphiteScope],"Graphite")="All grades",Definitions[Material]<>"Graphite",Definitions[Material]<>"Graphite: all grades"))))
+		lineageTag: 8a6e2c5c-16ad-5afc-876a-a22aa5748047
+		displayFolder: Scenario comparison
+
+	measure 'HDS CAGR label' = CALCULATE(CALCULATE([Demand CAGR label],REMOVEFILTERS(ScenarioChoice),TREATAS({"High Demand Scenario"},ScenarioChoice[Scenario]),REMOVEFILTERS(Outlook[Scenario]),REMOVEFILTERS(Outlook[ScenarioShort]),TREATAS({"High Demand Scenario"},Outlook[Scenario])),KEEPFILTERS(FILTER(ALL(Definitions[Material]),IF(SELECTEDVALUE(DefinitionChoice[GraphiteScope],"Graphite")="All grades",Definitions[Material]<>"Graphite",Definitions[Material]<>"Graphite: all grades"))))
+		lineageTag: c0e7b13e-37b3-564d-9b99-a56b0d61fedb
+		displayFolder: Scenario comparison
+
+	measure 'HDS end use kt' = CALCULATE(CALCULATE([Demand end use kt],REMOVEFILTERS(ScenarioChoice),TREATAS({"High Demand Scenario"},ScenarioChoice[Scenario]),REMOVEFILTERS(Outlook[Scenario]),REMOVEFILTERS(Outlook[ScenarioShort]),TREATAS({"High Demand Scenario"},Outlook[Scenario])),KEEPFILTERS(FILTER(ALL(Definitions[Material]),IF(SELECTEDVALUE(DefinitionChoice[GraphiteScope],"Graphite")="All grades",Definitions[Material]<>"Graphite",Definitions[Material]<>"Graphite: all grades"))))
+		lineageTag: 2279177a-1154-5b99-a693-6bb3c5c4b047
+		displayFolder: Scenario comparison
+		formatString: #,0.0;-#,0.0;0
+
+	measure 'Map country' = CALCULATE(SELECTEDVALUE(Supply[Country]),KEEPFILTERS(FILTER(ALL(Definitions[Material]),IF(SELECTEDVALUE(DefinitionChoice[GraphiteScope],"Graphite")="All grades",Definitions[Material]<>"Graphite",Definitions[Material]<>"Graphite: all grades"))))
+		lineageTag: 2fa7cee1-5b76-55c2-b102-5599373b785f
+		displayFolder: Supply
+
+	measure 'Map stage' = CALCULATE(SELECTEDVALUE(Supply[Stage]),KEEPFILTERS(FILTER(ALL(Definitions[Material]),IF(SELECTEDVALUE(DefinitionChoice[GraphiteScope],"Graphite")="All grades",Definitions[Material]<>"Graphite",Definitions[Material]<>"Graphite: all grades"))))
+		lineageTag: 2624d19b-2d90-51f8-b489-176da986382e
+		displayFolder: Supply
+
 	measure 'Material tile label' = SELECTEDVALUE(Materials[MaterialName])
 		lineageTag: 4961c0eb-bc70-5324-aa7d-e4c32c700b18
 		displayFolder: Context

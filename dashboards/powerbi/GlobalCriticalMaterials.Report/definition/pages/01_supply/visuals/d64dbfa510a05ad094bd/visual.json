@@ -2,10 +2,10 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.5.0/schema.json",
   "name": "d64dbfa510a05ad094bd",
   "position": {
-    "x": 1134,
-    "y": 115,
-    "width": 42,
-    "height": 17,
+    "x": 1246,
+    "y": 111,
+    "width": 44,
+    "height": 32,
     "z": 8000,
     "tabOrder": 8000
   },
@@ -259,7 +259,14 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'3'"
+                  "Value": "'28'"
+                }
+              }
+            },
+            "keepLayerOrder": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
                 }
               }
             }
@@ -276,7 +283,7 @@
               {
                 "textRuns": [
                   {
-                    "value": "3",
+                    "value": "28",
                     "textStyle": {
                       "fontFamily": "Avenir Next",
                       "fontSize": "8pt",

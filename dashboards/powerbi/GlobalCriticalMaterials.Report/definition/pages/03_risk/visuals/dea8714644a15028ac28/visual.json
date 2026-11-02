@@ -2,9 +2,9 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.5.0/schema.json",
   "name": "dea8714644a15028ac28",
   "position": {
-    "x": 28,
-    "y": 244,
-    "width": 220,
+    "x": 958,
+    "y": 228,
+    "width": 350,
     "height": 80,
     "z": 14000,
     "tabOrder": 14000
@@ -180,7 +180,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'SUPPLY YEAR'"
+                  "Value": "'Reporting area'"
                 }
               }
             },
@@ -259,7 +259,14 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'SUPPLY YEAR'"
+                  "Value": "'Reporting area'"
+                }
+              }
+            },
+            "keepLayerOrder": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
                 }
               }
             }
@@ -380,7 +387,7 @@
                 "From": [
                   {
                     "Name": "s",
-                    "Entity": "SupplyYears",
+                    "Entity": "Reporters",
                     "Type": 0
                   }
                 ],
@@ -396,7 +403,7 @@
                                   "Source": "s"
                                 }
                               },
-                              "Property": "Year"
+                              "Property": "ReporterLabel"
                             }
                           }
                         ],
@@ -404,7 +411,7 @@
                           [
                             {
                               "Literal": {
-                                "Value": "2030L"
+                                "Value": "'Germany'"
                               }
                             }
                           ]
@@ -428,14 +435,14 @@
                 "Column": {
                   "Expression": {
                     "SourceRef": {
-                      "Entity": "SupplyYears"
+                      "Entity": "Reporters"
                     }
                   },
-                  "Property": "Year"
+                  "Property": "ReporterLabel"
                 }
               },
-              "queryRef": "SupplyYears.Year",
-              "nativeQueryRef": "Year",
+              "queryRef": "Reporters.ReporterLabel",
+              "nativeQueryRef": "ReporterLabel",
               "active": true
             }
           ]

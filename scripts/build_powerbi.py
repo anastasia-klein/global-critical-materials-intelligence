@@ -80,6 +80,12 @@ for stage in ['Mining','Refining']:
   measure(stage+' '+suffix,'CALCULATE(['+base+'],REMOVEFILTERS(Stages),Stages[Stage]="'+stage+'")',fmt,'Paired stages')
  measure(stage+' HHI interval width','VAR lo=['+stage+' HHI lower] VAR hi=['+stage+' HHI upper] RETURN IF(NOT ISBLANK(lo) && NOT ISBLANK(hi),hi-lo)','0.000','Risk')
  measure(stage+' outlook kt','CALCULATE([Supply outlook kt],Outlook[Stage]="'+stage+'")','#,0.0','Outlook')
+# Scenario-specific measures share one fixed colour/order contract across visuals.
+for short,scenario in [('CPS','Current Policies Scenario'),('STEPS','Stated Policies Scenario'),('HDS','High Demand Scenario')]:
+ for suffix,base,fmt in [('demand kt','Demand kt','#,0.0'),('endpoint label','Demand endpoint label',None),('growth label','Demand growth label',None),('CAGR label','Demand CAGR label',None),('end use kt','Demand end use kt','#,0.0;-#,0.0;0')]:
+  measure(short+' '+suffix,'CALCULATE(['+base+'],REMOVEFILTERS(ScenarioChoice),TREATAS({"'+scenario+'"},ScenarioChoice[Scenario]),REMOVEFILTERS(Outlook[Scenario]),REMOVEFILTERS(Outlook[ScenarioShort]),TREATAS({"'+scenario+'"},Outlook[Scenario]))',fmt,'Scenario comparison')
+measure('Map country','SELECTEDVALUE(Supply[Country])',folder='Supply')
+measure('Map stage','SELECTEDVALUE(Supply[Stage])',folder='Supply')
 # Shared family selector narrows both exact native definitions and traded forms.
 measure('Material tile label','SELECTEDVALUE(Materials[MaterialName])')
 measure('Material tile color','SELECTEDVALUE(Materials[CategoryColor],"#DDEBDD")')

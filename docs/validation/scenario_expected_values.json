@@ -1,0 +1,1013 @@
+{
+  "kind": "source_CSV_expectations_not_Desktop_DAX_results",
+  "contexts": [
+    {
+      "DefinitionKey": "a22a29f33f9851c3b42faa288bee9096",
+      "year": 2030,
+      "scenario": "CPS",
+      "endpoint_kt": 30841.230791540816,
+      "growth": 0.1086933248686337,
+      "cagr": 0.020850830787377372
+    },
+    {
+      "DefinitionKey": "f85e05a83530953b5a5621544541d0ac",
+      "year": 2030,
+      "scenario": "HDS",
+      "endpoint_kt": 4798.0150356292725,
+      "growth": 0.3587057464219212,
+      "cagr": 0.0632247616863808
+    },
+    {
+      "DefinitionKey": "f85e05a83530953b5a5621544541d0ac",
+      "year": 2045,
+      "scenario": "HDS",
+      "endpoint_kt": 6917.061871469021,
+      "growth": 0.9587791291463348,
+      "cagr": 0.03418747416975054
+    },
+    {
+      "DefinitionKey": "65a65a934a20e758f9553d6a6161160e",
+      "year": 2045,
+      "scenario": "CPS",
+      "endpoint_kt": 2606.2849731445312,
+      "growth": 0.7825932361778898,
+      "cagr": 0.029325217507461643
+    },
+    {
+      "DefinitionKey": "cd3f637d7e4e9b5aac7f192a8bcc082f",
+      "year": 2035,
+      "scenario": "HDS",
+      "endpoint_kt": 357.4003512766212,
+      "growth": 0.38032752354323707,
+      "cagr": 0.032757160489844894
+    },
+    {
+      "DefinitionKey": "ea3fdf50e97a225bb33eb586232e2b72",
+      "year": 2050,
+      "scenario": "HDS",
+      "endpoint_kt": 11523.208862304688,
+      "growth": 0.9940891932284732,
+      "cagr": 0.02799211426369297
+    },
+    {
+      "DefinitionKey": "75567cc225f0d28e5208376d50af7fa8",
+      "year": 2035,
+      "scenario": "CPS",
+      "endpoint_kt": 124.84411334991455,
+      "growth": 0.34796831078690227,
+      "cagr": 0.030310126271570148
+    },
+    {
+      "DefinitionKey": "a22a29f33f9851c3b42faa288bee9096",
+      "year": 2035,
+      "scenario": "HDS",
+      "endpoint_kt": 34283.514836370945,
+      "growth": 0.23243797593657178,
+      "cagr": 0.02111935269255949
+    },
+    {
+      "DefinitionKey": "ea3fdf50e97a225bb33eb586232e2b72",
+      "year": 2045,
+      "scenario": "STEPS",
+      "endpoint_kt": 9538.9482421875,
+      "growth": 0.6507132545983771,
+      "cagr": 0.02537702425666577
+    },
+    {
+      "DefinitionKey": "ea3fdf50e97a225bb33eb586232e2b72",
+      "year": 2045,
+      "scenario": "HDS",
+      "endpoint_kt": 11217.392822265625,
+      "growth": 0.9411677832423442,
+      "cagr": 0.033720558960062874
+    },
+    {
+      "DefinitionKey": "75567cc225f0d28e5208376d50af7fa8",
+      "year": 2025,
+      "scenario": "STEPS",
+      "endpoint_kt": 92.61650466918945,
+      "growth": null,
+      "cagr": null
+    },
+    {
+      "DefinitionKey": "75567cc225f0d28e5208376d50af7fa8",
+      "year": 2025,
+      "scenario": "CPS",
+      "endpoint_kt": 92.61650466918945,
+      "growth": null,
+      "cagr": null
+    },
+    {
+      "DefinitionKey": "ac7c58520ef0efb934e27f5872ae0172",
+      "year": 2030,
+      "scenario": "CPS",
+      "endpoint_kt": 437.93460845947266,
+      "growth": 0.5925606748653724,
+      "cagr": 0.0975370694104214
+    },
+    {
+      "DefinitionKey": "f85e05a83530953b5a5621544541d0ac",
+      "year": 2030,
+      "scenario": "STEPS",
+      "endpoint_kt": 4463.442771971226,
+      "growth": 0.2639613044287421,
+      "cagr": 0.04796494544257235
+    },
+    {
+      "DefinitionKey": "f85e05a83530953b5a5621544541d0ac",
+      "year": 2025,
+      "scenario": "STEPS",
+      "endpoint_kt": 3531.3128308057785,
+      "growth": null,
+      "cagr": null
+    },
+    {
+      "DefinitionKey": "f85e05a83530953b5a5621544541d0ac",
+      "year": 2050,
+      "scenario": "STEPS",
+      "endpoint_kt": 6507.709416627884,
+      "growth": 0.8428583726304837,
+      "cagr": 0.024754132602638812
+    },
+    {
+      "DefinitionKey": "ea3fdf50e97a225bb33eb586232e2b72",
+      "year": 2035,
+      "scenario": "CPS",
+      "endpoint_kt": 9628.150512695312,
+      "growth": 0.6661496912504068,
+      "cagr": 0.052377130392423865
+    },
+    {
+      "DefinitionKey": "65a65a934a20e758f9553d6a6161160e",
+      "year": 2025,
+      "scenario": "HDS",
+      "endpoint_kt": 1462.0749816894531,
+      "growth": null,
+      "cagr": null
+    },
+    {
+      "DefinitionKey": "65a65a934a20e758f9553d6a6161160e",
+      "year": 2035,
+      "scenario": "HDS",
+      "endpoint_kt": 5313.432189941406,
+      "growth": 2.634172157026887,
+      "cagr": 0.13773350998982936
+    },
+    {
+      "DefinitionKey": "75567cc225f0d28e5208376d50af7fa8",
+      "year": 2050,
+      "scenario": "CPS",
+      "endpoint_kt": 150.87551021575928,
+      "growth": 0.6290348113941588,
+      "cagr": 0.019711259160646533
+    },
+    {
+      "DefinitionKey": "ea3fdf50e97a225bb33eb586232e2b72",
+      "year": 2025,
+      "scenario": "CPS",
+      "endpoint_kt": 5778.682769775391,
+      "growth": null,
+      "cagr": null
+    },
+    {
+      "DefinitionKey": "ea3fdf50e97a225bb33eb586232e2b72",
+      "year": 2030,
+      "scenario": "HDS",
+      "endpoint_kt": 9438.43310546875,
+      "growth": 0.6333191285105981,
+      "cagr": 0.10309828569886381
+    },
+    {
+      "DefinitionKey": "65a65a934a20e758f9553d6a6161160e",
+      "year": 2025,
+      "scenario": "STEPS",
+      "endpoint_kt": 1462.0749816894531,
+      "growth": null,
+      "cagr": null
+    },
+    {
+      "DefinitionKey": "f85e05a83530953b5a5621544541d0ac",
+      "year": 2030,
+      "scenario": "CPS",
+      "endpoint_kt": 4330.781660377979,
+      "growth": 0.22639422443629198,
+      "cagr": 0.041660076395711565
+    },
+    {
+      "DefinitionKey": "f85e05a83530953b5a5621544541d0ac",
+      "year": 2050,
+      "scenario": "HDS",
+      "endpoint_kt": 7336.79304587841,
+      "growth": 1.077638939794607,
+      "cagr": 0.02968124652713655
+    },
+    {
+      "DefinitionKey": "65a65a934a20e758f9553d6a6161160e",
+      "year": 2035,
+      "scenario": "CPS",
+      "endpoint_kt": 3674.6040649414062,
+      "growth": 1.5132801743829427,
+      "cagr": 0.09653902004084891
+    },
+    {
+      "DefinitionKey": "65a65a934a20e758f9553d6a6161160e",
+      "year": 2040,
+      "scenario": "CPS",
+      "endpoint_kt": 3294.5819091796875,
+      "growth": 1.2533604298274366,
+      "cagr": 0.055655085578430574
+    },
+    {
+      "DefinitionKey": "ac7c58520ef0efb934e27f5872ae0172",
+      "year": 2035,
+      "scenario": "STEPS",
+      "endpoint_kt": 717.1192512512207,
+      "growth": 1.607822941303993,
+      "cagr": 0.10059569608132324
+    },
+    {
+      "DefinitionKey": "f85e05a83530953b5a5621544541d0ac",
+      "year": 2045,
+      "scenario": "STEPS",
+      "endpoint_kt": 6248.951853811741,
+      "growth": 0.769583198434971,
+      "cagr": 0.02894828894076862
+    },
+    {
+      "DefinitionKey": "ea3fdf50e97a225bb33eb586232e2b72",
+      "year": 2045,
+      "scenario": "CPS",
+      "endpoint_kt": 8395.083801269531,
+      "growth": 0.4527677215954591,
+      "cagr": 0.018848966135584178
+    },
+    {
+      "DefinitionKey": "cd3f637d7e4e9b5aac7f192a8bcc082f",
+      "year": 2045,
+      "scenario": "HDS",
+      "endpoint_kt": 424.8335979618132,
+      "growth": 0.6407636592912098,
+      "cagr": 0.025067115484590508
+    },
+    {
+      "DefinitionKey": "cd3f637d7e4e9b5aac7f192a8bcc082f",
+      "year": 2040,
+      "scenario": "HDS",
+      "endpoint_kt": 382.58283889852464,
+      "growth": 0.477585628219515,
+      "cagr": 0.026368962723878564
+    },
+    {
+      "DefinitionKey": "cd3f637d7e4e9b5aac7f192a8bcc082f",
+      "year": 2030,
+      "scenario": "STEPS",
+      "endpoint_kt": 297.8195872348733,
+      "growth": 0.15021871646792762,
+      "cagr": 0.028385835013993832
+    },
+    {
+      "DefinitionKey": "ac7c58520ef0efb934e27f5872ae0172",
+      "year": 2050,
+      "scenario": "CPS",
+      "endpoint_kt": 828.0350112915039,
+      "growth": 2.011171008003558,
+      "cagr": 0.04507971174798486
+    },
+    {
+      "DefinitionKey": "65a65a934a20e758f9553d6a6161160e",
+      "year": 2045,
+      "scenario": "HDS",
+      "endpoint_kt": 4607.52490234375,
+      "growth": 2.1513601970123823,
+      "cagr": 0.05907057600856458
+    },
+    {
+      "DefinitionKey": "ac7c58520ef0efb934e27f5872ae0172",
+      "year": 2025,
+      "scenario": "STEPS",
+      "endpoint_kt": 274.9877071380615,
+      "growth": null,
+      "cagr": null
+    },
+    {
+      "DefinitionKey": "a22a29f33f9851c3b42faa288bee9096",
+      "year": 2040,
+      "scenario": "HDS",
+      "endpoint_kt": 35664.6677134037,
+      "growth": 0.28208823100386726,
+      "cagr": 0.016703989171363398
+    },
+    {
+      "DefinitionKey": "65a65a934a20e758f9553d6a6161160e",
+      "year": 2045,
+      "scenario": "STEPS",
+      "endpoint_kt": 3452.3890991210938,
+      "growth": 1.3612941486296402,
+      "cagr": 0.04389665160007028
+    },
+    {
+      "DefinitionKey": "f85e05a83530953b5a5621544541d0ac",
+      "year": 2025,
+      "scenario": "CPS",
+      "endpoint_kt": 3531.3128308057785,
+      "growth": null,
+      "cagr": null
+    },
+    {
+      "DefinitionKey": "ea3fdf50e97a225bb33eb586232e2b72",
+      "year": 2025,
+      "scenario": "HDS",
+      "endpoint_kt": 5778.682769775391,
+      "growth": null,
+      "cagr": null
+    },
+    {
+      "DefinitionKey": "75567cc225f0d28e5208376d50af7fa8",
+      "year": 2035,
+      "scenario": "HDS",
+      "endpoint_kt": 146.86613655090332,
+      "growth": 0.5857447554891475,
+      "cagr": 0.04718479666348818
+    },
+    {
+      "DefinitionKey": "ac7c58520ef0efb934e27f5872ae0172",
+      "year": 2040,
+      "scenario": "CPS",
+      "endpoint_kt": 747.5676727294922,
+      "growth": 1.718549423571742,
+      "cagr": 0.06894612071131934
+    },
+    {
+      "DefinitionKey": "ac7c58520ef0efb934e27f5872ae0172",
+      "year": 2045,
+      "scenario": "STEPS",
+      "endpoint_kt": 1067.6609115600586,
+      "growth": 2.8825768710600004,
+      "cagr": 0.07017796145464228
+    },
+    {
+      "DefinitionKey": "65a65a934a20e758f9553d6a6161160e",
+      "year": 2030,
+      "scenario": "HDS",
+      "endpoint_kt": 3556.4249877929688,
+      "growth": 1.4324504778020741,
+      "cagr": 0.19456229178707884
+    },
+    {
+      "DefinitionKey": "ea3fdf50e97a225bb33eb586232e2b72",
+      "year": 2040,
+      "scenario": "CPS",
+      "endpoint_kt": 9528.6728515625,
+      "growth": 0.6489351001236683,
+      "cagr": 0.03390405231241633
+    },
+    {
+      "DefinitionKey": "cd3f637d7e4e9b5aac7f192a8bcc082f",
+      "year": 2050,
+      "scenario": "STEPS",
+      "endpoint_kt": 388.706547238864,
+      "growth": 0.5012362014160128,
+      "cagr": 0.01638433094778402
+    },
+    {
+      "DefinitionKey": "ea3fdf50e97a225bb33eb586232e2b72",
+      "year": 2050,
+      "scenario": "CPS",
+      "endpoint_kt": 8610.12255859375,
+      "growth": 0.48998013935421714,
+      "cagr": 0.016078400090953515
+    },
+    {
+      "DefinitionKey": "f85e05a83530953b5a5621544541d0ac",
+      "year": 2035,
+      "scenario": "CPS",
+      "endpoint_kt": 4993.120329499245,
+      "growth": 0.41395582003985454,
+      "cagr": 0.035246054450621456
+    },
+    {
+      "DefinitionKey": "65a65a934a20e758f9553d6a6161160e",
+      "year": 2035,
+      "scenario": "STEPS",
+      "endpoint_kt": 4318.2659912109375,
+      "growth": 1.9535188313126772,
+      "cagr": 0.11438170714502527
+    },
+    {
+      "DefinitionKey": "f85e05a83530953b5a5621544541d0ac",
+      "year": 2025,
+      "scenario": "HDS",
+      "endpoint_kt": 3531.3128308057785,
+      "growth": null,
+      "cagr": null
+    },
+    {
+      "DefinitionKey": "75567cc225f0d28e5208376d50af7fa8",
+      "year": 2045,
+      "scenario": "STEPS",
+      "endpoint_kt": 152.6901912689209,
+      "growth": 0.6486283067397602,
+      "cagr": 0.025312229802118447
+    },
+    {
+      "DefinitionKey": "ea3fdf50e97a225bb33eb586232e2b72",
+      "year": 2030,
+      "scenario": "STEPS",
+      "endpoint_kt": 8649.79931640625,
+      "growth": 0.49684619506158767,
+      "cagr": 0.08401535886298084
+    },
+    {
+      "DefinitionKey": "ea3fdf50e97a225bb33eb586232e2b72",
+      "year": 2050,
+      "scenario": "STEPS",
+      "endpoint_kt": 9856.311767578125,
+      "growth": 0.7056329548197757,
+      "cagr": 0.021587153785171287
+    },
+    {
+      "DefinitionKey": "65a65a934a20e758f9553d6a6161160e",
+      "year": 2030,
+      "scenario": "STEPS",
+      "endpoint_kt": 3181.9879455566406,
+      "growth": 1.1763507244203018,
+      "cagr": 0.16827686574007683
+    },
+    {
+      "DefinitionKey": "ac7c58520ef0efb934e27f5872ae0172",
+      "year": 2030,
+      "scenario": "STEPS",
+      "endpoint_kt": 476.4558868408203,
+      "growth": 0.7326443127205275,
+      "cagr": 0.11619965378550745
+    },
+    {
+      "DefinitionKey": "ea3fdf50e97a225bb33eb586232e2b72",
+      "year": 2035,
+      "scenario": "HDS",
+      "endpoint_kt": 12486.284057617188,
+      "growth": 1.1607491802327319,
+      "cagr": 0.08009121988523238
+    },
+    {
+      "DefinitionKey": "65a65a934a20e758f9553d6a6161160e",
+      "year": 2040,
+      "scenario": "HDS",
+      "endpoint_kt": 5646.702087402344,
+      "growth": 2.8621152527194473,
+      "cagr": 0.09426291733149683
+    },
+    {
+      "DefinitionKey": "a22a29f33f9851c3b42faa288bee9096",
+      "year": 2025,
+      "scenario": "CPS",
+      "endpoint_kt": 27817.63910700474,
+      "growth": null,
+      "cagr": null
+    },
+    {
+      "DefinitionKey": "f85e05a83530953b5a5621544541d0ac",
+      "year": 2050,
+      "scenario": "CPS",
+      "endpoint_kt": 5796.1413378715515,
+      "growth": 0.6413559533180702,
+      "cagr": 0.0200186465302874
+    },
+    {
+      "DefinitionKey": "f85e05a83530953b5a5621544541d0ac",
+      "year": 2040,
+      "scenario": "HDS",
+      "endpoint_kt": 6522.453907072544,
+      "growth": 0.8470337292616026,
+      "cagr": 0.04175354840730616
+    },
+    {
+      "DefinitionKey": "65a65a934a20e758f9553d6a6161160e",
+      "year": 2050,
+      "scenario": "HDS",
+      "endpoint_kt": 4153.0198974609375,
+      "growth": 1.8404972039546497,
+      "cagr": 0.0426433428199966
+    },
+    {
+      "DefinitionKey": "a22a29f33f9851c3b42faa288bee9096",
+      "year": 2045,
+      "scenario": "CPS",
+      "endpoint_kt": 35085.37223389372,
+      "growth": 0.2612634774264111,
+      "cagr": 0.011673306334219147
+    },
+    {
+      "DefinitionKey": "cd3f637d7e4e9b5aac7f192a8bcc082f",
+      "year": 2030,
+      "scenario": "HDS",
+      "endpoint_kt": 316.65303195267916,
+      "growth": 0.22295597599847783,
+      "cagr": 0.04107535263107032
+    },
+    {
+      "DefinitionKey": "a22a29f33f9851c3b42faa288bee9096",
+      "year": 2045,
+      "scenario": "STEPS",
+      "endpoint_kt": 36569.53290894255,
+      "growth": 0.31461669943564696,
+      "cagr": 0.013771218560611365
+    },
+    {
+      "DefinitionKey": "75567cc225f0d28e5208376d50af7fa8",
+      "year": 2025,
+      "scenario": "HDS",
+      "endpoint_kt": 92.61650466918945,
+      "growth": null,
+      "cagr": null
+    },
+    {
+      "DefinitionKey": "ea3fdf50e97a225bb33eb586232e2b72",
+      "year": 2030,
+      "scenario": "CPS",
+      "endpoint_kt": 8133.184478759766,
+      "growth": 0.4074460915728535,
+      "cagr": 0.07074573668783546
+    },
+    {
+      "DefinitionKey": "ac7c58520ef0efb934e27f5872ae0172",
+      "year": 2025,
+      "scenario": "HDS",
+      "endpoint_kt": 274.9877071380615,
+      "growth": null,
+      "cagr": null
+    },
+    {
+      "DefinitionKey": "75567cc225f0d28e5208376d50af7fa8",
+      "year": 2040,
+      "scenario": "HDS",
+      "endpoint_kt": 159.9174098968506,
+      "growth": 0.7266621156569082,
+      "cagr": 0.03708373720177005
+    },
+    {
+      "DefinitionKey": "65a65a934a20e758f9553d6a6161160e",
+      "year": 2050,
+      "scenario": "STEPS",
+      "endpoint_kt": 3014.2559814453125,
+      "growth": 1.0616288625377388,
+      "cagr": 0.029362681814037117
+    },
+    {
+      "DefinitionKey": "ac7c58520ef0efb934e27f5872ae0172",
+      "year": 2045,
+      "scenario": "HDS",
+      "endpoint_kt": 1410.000602722168,
+      "growth": 4.12750412517261,
+      "cagr": 0.08516380806742485
+    },
+    {
+      "DefinitionKey": "ac7c58520ef0efb934e27f5872ae0172",
+      "year": 2045,
+      "scenario": "CPS",
+      "endpoint_kt": 817.2901000976562,
+      "growth": 1.9720968569963166,
+      "cagr": 0.05597381207808638
+    },
+    {
+      "DefinitionKey": "a22a29f33f9851c3b42faa288bee9096",
+      "year": 2035,
+      "scenario": "CPS",
+      "endpoint_kt": 32366.910224979743,
+      "growth": 0.16353908038261422,
+      "cagr": 0.015261920728714129
+    },
+    {
+      "DefinitionKey": "a22a29f33f9851c3b42faa288bee9096",
+      "year": 2035,
+      "scenario": "STEPS",
+      "endpoint_kt": 33523.79283148609,
+      "growth": 0.2051271749745467,
+      "cagr": 0.018833667774228458
+    },
+    {
+      "DefinitionKey": "cd3f637d7e4e9b5aac7f192a8bcc082f",
+      "year": 2040,
+      "scenario": "CPS",
+      "endpoint_kt": 303.3694437406957,
+      "growth": 0.1716529978259025,
+      "cagr": 0.010617002628340977
+    },
+    {
+      "DefinitionKey": "cd3f637d7e4e9b5aac7f192a8bcc082f",
+      "year": 2025,
+      "scenario": "HDS",
+      "endpoint_kt": 258.9243097603321,
+      "growth": null,
+      "cagr": null
+    },
+    {
+      "DefinitionKey": "f85e05a83530953b5a5621544541d0ac",
+      "year": 2040,
+      "scenario": "STEPS",
+      "endpoint_kt": 5831.383094251156,
+      "growth": 0.6513357421581212,
+      "cagr": 0.03400433314596918
+    },
+    {
+      "DefinitionKey": "75567cc225f0d28e5208376d50af7fa8",
+      "year": 2045,
+      "scenario": "CPS",
+      "endpoint_kt": 140.46674156188965,
+      "growth": 0.5166491335816783,
+      "cagr": 0.021043526173147864
+    },
+    {
+      "DefinitionKey": "65a65a934a20e758f9553d6a6161160e",
+      "year": 2030,
+      "scenario": "CPS",
+      "endpoint_kt": 2916.7359619140625,
+      "growth": 0.9949291236375055,
+      "cagr": 0.14811527261545687
+    },
+    {
+      "DefinitionKey": "75567cc225f0d28e5208376d50af7fa8",
+      "year": 2040,
+      "scenario": "CPS",
+      "endpoint_kt": 130.7664556503296,
+      "growth": 0.4119130938638349,
+      "cagr": 0.023262827751569626
+    },
+    {
+      "DefinitionKey": "75567cc225f0d28e5208376d50af7fa8",
+      "year": 2030,
+      "scenario": "STEPS",
+      "endpoint_kt": 115.59292697906494,
+      "growth": 0.24808129384652755,
+      "cagr": 0.045318351310584815
+    },
+    {
+      "DefinitionKey": "cd3f637d7e4e9b5aac7f192a8bcc082f",
+      "year": 2025,
+      "scenario": "STEPS",
+      "endpoint_kt": 258.9243097603321,
+      "growth": null,
+      "cagr": null
+    },
+    {
+      "DefinitionKey": "a22a29f33f9851c3b42faa288bee9096",
+      "year": 2050,
+      "scenario": "CPS",
+      "endpoint_kt": 35904.446237393655,
+      "growth": 0.2907078885911847,
+      "cagr": 0.010259908350237046
+    },
+    {
+      "DefinitionKey": "f85e05a83530953b5a5621544541d0ac",
+      "year": 2045,
+      "scenario": "CPS",
+      "endpoint_kt": 5641.071891725063,
+      "growth": 0.5974432631724327,
+      "cagr": 0.02369662649209392
+    },
+    {
+      "DefinitionKey": "ea3fdf50e97a225bb33eb586232e2b72",
+      "year": 2040,
+      "scenario": "HDS",
+      "endpoint_kt": 13253.831909179688,
+      "growth": 1.2935731960408074,
+      "cagr": 0.056900671033579764
+    },
+    {
+      "DefinitionKey": "ac7c58520ef0efb934e27f5872ae0172",
+      "year": 2035,
+      "scenario": "CPS",
+      "endpoint_kt": 613.1701698303223,
+      "growth": 1.2298093838881,
+      "cagr": 0.08349465660276678
+    },
+    {
+      "DefinitionKey": "65a65a934a20e758f9553d6a6161160e",
+      "year": 2050,
+      "scenario": "CPS",
+      "endpoint_kt": 2166.009033203125,
+      "growth": 0.48146234654823505,
+      "cagr": 0.015845414886414666
+    },
+    {
+      "DefinitionKey": "75567cc225f0d28e5208376d50af7fa8",
+      "year": 2030,
+      "scenario": "HDS",
+      "endpoint_kt": 127.38045120239258,
+      "growth": 0.37535368730847796,
+      "cagr": 0.06581757961474421
+    },
+    {
+      "DefinitionKey": "a22a29f33f9851c3b42faa288bee9096",
+      "year": 2050,
+      "scenario": "STEPS",
+      "endpoint_kt": 37592.6677110875,
+      "growth": 0.3513967726190437,
+      "cagr": 0.01211838794474418
+    },
+    {
+      "DefinitionKey": "ac7c58520ef0efb934e27f5872ae0172",
+      "year": 2025,
+      "scenario": "CPS",
+      "endpoint_kt": 274.9877071380615,
+      "growth": null,
+      "cagr": null
+    },
+    {
+      "DefinitionKey": "a22a29f33f9851c3b42faa288bee9096",
+      "year": 2040,
+      "scenario": "CPS",
+      "endpoint_kt": 33555.60643881839,
+      "growth": 0.20627082369361727,
+      "cagr": 0.012580722195526306
+    },
+    {
+      "DefinitionKey": "a22a29f33f9851c3b42faa288bee9096",
+      "year": 2050,
+      "scenario": "HDS",
+      "endpoint_kt": 38111.974412590265,
+      "growth": 0.37006502478469927,
+      "cagr": 0.012673970629250464
+    },
+    {
+      "DefinitionKey": "f85e05a83530953b5a5621544541d0ac",
+      "year": 2035,
+      "scenario": "HDS",
+      "endpoint_kt": 5766.209025263786,
+      "growth": 0.6328796970241934,
+      "cagr": 0.0502565988132333
+    },
+    {
+      "DefinitionKey": "cd3f637d7e4e9b5aac7f192a8bcc082f",
+      "year": 2030,
+      "scenario": "CPS",
+      "endpoint_kt": 286.3581462954171,
+      "growth": 0.10595311255431583,
+      "cagr": 0.020345710462621236
+    },
+    {
+      "DefinitionKey": "a22a29f33f9851c3b42faa288bee9096",
+      "year": 2045,
+      "scenario": "HDS",
+      "endpoint_kt": 36690.488485619426,
+      "growth": 0.3189648605506721,
+      "cagr": 0.013938610699846254
+    },
+    {
+      "DefinitionKey": "a22a29f33f9851c3b42faa288bee9096",
+      "year": 2030,
+      "scenario": "STEPS",
+      "endpoint_kt": 31440.49874350615,
+      "growth": 0.13023605714940567,
+      "cagr": 0.024787528882538323
+    },
+    {
+      "DefinitionKey": "cd3f637d7e4e9b5aac7f192a8bcc082f",
+      "year": 2045,
+      "scenario": "CPS",
+      "endpoint_kt": 326.57615840411745,
+      "growth": 0.26128040548377185,
+      "cagr": 0.011673985238940032
+    },
+    {
+      "DefinitionKey": "65a65a934a20e758f9553d6a6161160e",
+      "year": 2025,
+      "scenario": "CPS",
+      "endpoint_kt": 1462.0749816894531,
+      "growth": null,
+      "cagr": null
+    },
+    {
+      "DefinitionKey": "65a65a934a20e758f9553d6a6161160e",
+      "year": 2040,
+      "scenario": "STEPS",
+      "endpoint_kt": 4186.3499755859375,
+      "growth": 1.8632936258498431,
+      "cagr": 0.07264923104991472
+    },
+    {
+      "DefinitionKey": "a22a29f33f9851c3b42faa288bee9096",
+      "year": 2040,
+      "scenario": "STEPS",
+      "endpoint_kt": 34947.38596457522,
+      "growth": 0.2563030899259582,
+      "cagr": 0.015327841443825152
+    },
+    {
+      "DefinitionKey": "ea3fdf50e97a225bb33eb586232e2b72",
+      "year": 2040,
+      "scenario": "STEPS",
+      "endpoint_kt": 10946.704284667969,
+      "growth": 0.8943251811508337,
+      "cagr": 0.04351084947572037
+    },
+    {
+      "DefinitionKey": "75567cc225f0d28e5208376d50af7fa8",
+      "year": 2030,
+      "scenario": "CPS",
+      "endpoint_kt": 112.04773712158203,
+      "growth": 0.2098031287382056,
+      "cagr": 0.03882631081372612
+    },
+    {
+      "DefinitionKey": "ea3fdf50e97a225bb33eb586232e2b72",
+      "year": 2035,
+      "scenario": "STEPS",
+      "endpoint_kt": 10756.301818847656,
+      "growth": 0.8613760691462458,
+      "cagr": 0.06410237525025497
+    },
+    {
+      "DefinitionKey": "a22a29f33f9851c3b42faa288bee9096",
+      "year": 2030,
+      "scenario": "HDS",
+      "endpoint_kt": 32105.691417895257,
+      "growth": 0.1541486786278261,
+      "cagr": 0.029087615498166075
+    },
+    {
+      "DefinitionKey": "75567cc225f0d28e5208376d50af7fa8",
+      "year": 2050,
+      "scenario": "HDS",
+      "endpoint_kt": 192.1339282989502,
+      "growth": 1.0745106823586164,
+      "cagr": 0.029619186883849125
+    },
+    {
+      "DefinitionKey": "cd3f637d7e4e9b5aac7f192a8bcc082f",
+      "year": 2050,
+      "scenario": "HDS",
+      "endpoint_kt": 452.0174281094223,
+      "growth": 0.7457512140432965,
+      "cagr": 0.02253761784533337
+    },
+    {
+      "DefinitionKey": "ac7c58520ef0efb934e27f5872ae0172",
+      "year": 2050,
+      "scenario": "HDS",
+      "endpoint_kt": 1501.0107650756836,
+      "growth": 4.458464964479592,
+      "cagr": 0.0702440475908308
+    },
+    {
+      "DefinitionKey": "f85e05a83530953b5a5621544541d0ac",
+      "year": 2040,
+      "scenario": "CPS",
+      "endpoint_kt": 5360.082059562206,
+      "growth": 0.5178723371101441,
+      "cagr": 0.028211246269588486
+    },
+    {
+      "DefinitionKey": "cd3f637d7e4e9b5aac7f192a8bcc082f",
+      "year": 2035,
+      "scenario": "STEPS",
+      "endpoint_kt": 321.9742507627234,
+      "growth": 0.2435072282735915,
+      "cagr": 0.02203279438805117
+    },
+    {
+      "DefinitionKey": "cd3f637d7e4e9b5aac7f192a8bcc082f",
+      "year": 2050,
+      "scenario": "CPS",
+      "endpoint_kt": 339.69286887999624,
+      "growth": 0.3119388797229039,
+      "cagr": 0.010919430671894714
+    },
+    {
+      "DefinitionKey": "ac7c58520ef0efb934e27f5872ae0172",
+      "year": 2040,
+      "scenario": "HDS",
+      "endpoint_kt": 1227.2244110107422,
+      "growth": 3.462833716398081,
+      "cagr": 0.10486032961953184
+    },
+    {
+      "DefinitionKey": "75567cc225f0d28e5208376d50af7fa8",
+      "year": 2035,
+      "scenario": "STEPS",
+      "endpoint_kt": 131.09050750732422,
+      "growth": 0.41541195033819744,
+      "cagr": 0.03535261754069041
+    },
+    {
+      "DefinitionKey": "cd3f637d7e4e9b5aac7f192a8bcc082f",
+      "year": 2040,
+      "scenario": "STEPS",
+      "endpoint_kt": 333.80019394587725,
+      "growth": 0.2891805881605032,
+      "cagr": 0.01707797689274293
+    },
+    {
+      "DefinitionKey": "ac7c58520ef0efb934e27f5872ae0172",
+      "year": 2040,
+      "scenario": "STEPS",
+      "endpoint_kt": 932.4825668334961,
+      "growth": 2.390997279617775,
+      "cagr": 0.0848137038476724
+    },
+    {
+      "DefinitionKey": "ea3fdf50e97a225bb33eb586232e2b72",
+      "year": 2025,
+      "scenario": "STEPS",
+      "endpoint_kt": 5778.682769775391,
+      "growth": null,
+      "cagr": null
+    },
+    {
+      "DefinitionKey": "cd3f637d7e4e9b5aac7f192a8bcc082f",
+      "year": 2035,
+      "scenario": "CPS",
+      "endpoint_kt": 299.51572693604976,
+      "growth": 0.15676943278632383,
+      "cagr": 0.0146696736175298
+    },
+    {
+      "DefinitionKey": "ac7c58520ef0efb934e27f5872ae0172",
+      "year": 2030,
+      "scenario": "HDS",
+      "endpoint_kt": 539.5380973815918,
+      "growth": 0.9620444237193082,
+      "cagr": 0.14430492536111816
+    },
+    {
+      "DefinitionKey": "75567cc225f0d28e5208376d50af7fa8",
+      "year": 2040,
+      "scenario": "STEPS",
+      "endpoint_kt": 139.51162433624268,
+      "growth": 0.5063365307787708,
+      "cagr": 0.027688430197516434
+    },
+    {
+      "DefinitionKey": "f85e05a83530953b5a5621544541d0ac",
+      "year": 2035,
+      "scenario": "STEPS",
+      "endpoint_kt": 5291.443264424801,
+      "growth": 0.4984351480458882,
+      "cagr": 0.041271052615048154
+    },
+    {
+      "DefinitionKey": "a22a29f33f9851c3b42faa288bee9096",
+      "year": 2025,
+      "scenario": "HDS",
+      "endpoint_kt": 27817.63910700474,
+      "growth": null,
+      "cagr": null
+    },
+    {
+      "DefinitionKey": "ac7c58520ef0efb934e27f5872ae0172",
+      "year": 2050,
+      "scenario": "STEPS",
+      "endpoint_kt": 1122.2675399780273,
+      "growth": 3.0811553056609062,
+      "cagr": 0.0578676218249945
+    },
+    {
+      "DefinitionKey": "75567cc225f0d28e5208376d50af7fa8",
+      "year": 2045,
+      "scenario": "HDS",
+      "endpoint_kt": 173.60250282287598,
+      "growth": 0.8744229599568119,
+      "cagr": 0.031913703443129826
+    },
+    {
+      "DefinitionKey": "ac7c58520ef0efb934e27f5872ae0172",
+      "year": 2035,
+      "scenario": "HDS",
+      "endpoint_kt": 880.5501251220703,
+      "growth": 2.202143595022513,
+      "cagr": 0.12342499006640595
+    },
+    {
+      "DefinitionKey": "75567cc225f0d28e5208376d50af7fa8",
+      "year": 2050,
+      "scenario": "STEPS",
+      "endpoint_kt": 167.3458375930786,
+      "growth": 0.8068684214634285,
+      "cagr": 0.023946017269874664
+    },
+    {
+      "DefinitionKey": "cd3f637d7e4e9b5aac7f192a8bcc082f",
+      "year": 2025,
+      "scenario": "CPS",
+      "endpoint_kt": 258.9243097603321,
+      "growth": null,
+      "cagr": null
+    },
+    {
+      "DefinitionKey": "a22a29f33f9851c3b42faa288bee9096",
+      "year": 2025,
+      "scenario": "STEPS",
+      "endpoint_kt": 27817.63910700474,
+      "growth": null,
+      "cagr": null
+    },
+    {
+      "DefinitionKey": "cd3f637d7e4e9b5aac7f192a8bcc082f",
+      "year": 2045,
+      "scenario": "STEPS",
+      "endpoint_kt": 368.1927794178482,
+      "growth": 0.4220093113646153,
+      "cagr": 0.01775939954563599
+    }
+  ]
+}

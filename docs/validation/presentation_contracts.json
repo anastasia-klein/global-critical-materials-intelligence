@@ -8,5 +8,8 @@
   "reported_zero_observations_preserved": 9,
   "reported_end_use_rows": 558,
   "map_country_rows_with_display_coordinates": 400,
+  "scenario_end_use_groups_compared": 186,
+  "nonmonotonic_scenario_groups": 17,
+  "scenario_chart": "three_comparable_bars_not_additive_stacks",
   "Desktop_rendering_and_DAX_evaluation": "pending"
 }

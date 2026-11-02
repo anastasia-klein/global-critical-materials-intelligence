@@ -2,10 +2,10 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.5.0/schema.json",
   "name": "8613e72151c65be5aed1",
   "position": {
-    "x": 1476,
-    "y": 115,
-    "width": 42,
-    "height": 17,
+    "x": 28,
+    "y": 870,
+    "width": 1544,
+    "height": 30,
     "z": 11000,
     "tabOrder": 11000
   },
@@ -259,7 +259,14 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'group'"
+                  "Value": "'Physical gap/capacity unavailable · Supply ends 2040, demand 2050 | IEA GCMO2026 · CC BY 4.0 · Eurostat DS-045409 · Reuse with attribution · Captured 30 Oct–1 Nov 2026'"
+                }
+              }
+            },
+            "keepLayerOrder": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
                 }
               }
             }
@@ -276,10 +283,10 @@
               {
                 "textRuns": [
                   {
-                    "value": "group",
+                    "value": "Physical gap/capacity unavailable · Supply ends 2040, demand 2050 | IEA GCMO2026 · CC BY 4.0 · Eurostat DS-045409 · Reuse with attribution · Captured 30 Oct–1 Nov 2026",
                     "textStyle": {
                       "fontFamily": "Avenir Next",
-                      "fontSize": "8pt",
+                      "fontSize": "9pt",
                       "color": "#59695D",
                       "fontWeight": "normal"
                     }

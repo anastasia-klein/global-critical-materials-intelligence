@@ -3,9 +3,9 @@
   "name": "84f1f1347fdb51a694db",
   "position": {
     "x": 28,
-    "y": 16,
+    "y": 17,
     "width": 550,
-    "height": 48,
+    "height": 62,
     "z": 0,
     "tabOrder": 0
   },
@@ -262,6 +262,13 @@
                   "Value": "'Global critical materials'"
                 }
               }
+            },
+            "keepLayerOrder": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
             }
           }
         }
@@ -279,7 +286,7 @@
                     "value": "Global critical materials",
                     "textStyle": {
                       "fontFamily": "Avenir Next",
-                      "fontSize": "20pt",
+                      "fontSize": "26pt",
                       "color": "#18271D",
                       "fontWeight": "bold"
                     }

@@ -3,9 +3,9 @@
   "name": "3d5eb4a6397b54a7a2bd",
   "position": {
     "x": 28,
-    "y": 838,
-    "width": 1544,
-    "height": 37,
+    "y": 234,
+    "width": 118,
+    "height": 32,
     "z": 12000,
     "tabOrder": 12000
   },
@@ -259,7 +259,14 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'0 = source reported zero; — = end use not returned. Physical gap / capacity unavailable. Supply ends 2040, demand 2050. Graphite scopes remain separate; lines are guides.'"
+                  "Value": "'Outlook year'"
+                }
+              }
+            },
+            "keepLayerOrder": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
                 }
               }
             }
@@ -276,12 +283,12 @@
               {
                 "textRuns": [
                   {
-                    "value": "0 = source reported zero; — = end use not returned. Physical gap / capacity unavailable. Supply ends 2040, demand 2050. Graphite scopes remain separate; lines are guides.",
+                    "value": "Outlook year",
                     "textStyle": {
                       "fontFamily": "Avenir Next",
                       "fontSize": "10pt",
                       "color": "#59695D",
-                      "fontWeight": "normal"
+                      "fontWeight": "bold"
                     }
                   }
                 ]

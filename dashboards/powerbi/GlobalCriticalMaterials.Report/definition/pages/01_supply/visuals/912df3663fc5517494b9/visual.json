@@ -3,9 +3,9 @@
   "name": "912df3663fc5517494b9",
   "position": {
     "x": 28,
-    "y": 666,
+    "y": 608,
     "width": 1126,
-    "height": 158,
+    "height": 216,
     "z": 24000,
     "tabOrder": 24000
   },
@@ -262,6 +262,13 @@
                   "Value": "'Expected output · Mining / Refining · kt'"
                 }
               }
+            },
+            "keepLayerOrder": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
             }
           }
         }
@@ -301,6 +308,13 @@
               "expr": {
                 "Literal": {
                   "Value": "false"
+                }
+              }
+            },
+            "axisType": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Categorical'"
                 }
               }
             }
@@ -576,7 +590,8 @@
               },
               "queryRef": "ReportMeasures.Mining output kt",
               "nativeQueryRef": "Mining output kt",
-              "active": true
+              "active": true,
+              "displayName": "Mining"
             },
             {
               "field": {
@@ -591,7 +606,8 @@
               },
               "queryRef": "ReportMeasures.Refining output kt",
               "nativeQueryRef": "Refining output kt",
-              "active": true
+              "active": true,
+              "displayName": "Refining"
             }
           ]
         }

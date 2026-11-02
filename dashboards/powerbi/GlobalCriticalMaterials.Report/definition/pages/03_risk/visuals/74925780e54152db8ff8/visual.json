@@ -2,9 +2,9 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.5.0/schema.json",
   "name": "74925780e54152db8ff8",
   "position": {
-    "x": 914,
-    "y": 244,
-    "width": 350,
+    "x": 1326,
+    "y": 228,
+    "width": 246,
     "height": 80,
     "z": 15000,
     "tabOrder": 15000
@@ -180,7 +180,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'TRADE REPORTING AREA'"
+                  "Value": "'Trade year'"
                 }
               }
             },
@@ -259,7 +259,14 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'TRADE REPORTING AREA'"
+                  "Value": "'Trade year'"
+                }
+              }
+            },
+            "keepLayerOrder": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
                 }
               }
             }
@@ -380,7 +387,7 @@
                 "From": [
                   {
                     "Name": "s",
-                    "Entity": "Reporters",
+                    "Entity": "TradeYears",
                     "Type": 0
                   }
                 ],
@@ -396,7 +403,7 @@
                                   "Source": "s"
                                 }
                               },
-                              "Property": "ReporterLabel"
+                              "Property": "Year"
                             }
                           }
                         ],
@@ -404,7 +411,7 @@
                           [
                             {
                               "Literal": {
-                                "Value": "'Germany'"
+                                "Value": "2024L"
                               }
                             }
                           ]
@@ -428,14 +435,14 @@
                 "Column": {
                   "Expression": {
                     "SourceRef": {
-                      "Entity": "Reporters"
+                      "Entity": "TradeYears"
                     }
                   },
-                  "Property": "ReporterLabel"
+                  "Property": "Year"
                 }
               },
-              "queryRef": "Reporters.ReporterLabel",
-              "nativeQueryRef": "ReporterLabel",
+              "queryRef": "TradeYears.Year",
+              "nativeQueryRef": "Year",
               "active": true
             }
           ]

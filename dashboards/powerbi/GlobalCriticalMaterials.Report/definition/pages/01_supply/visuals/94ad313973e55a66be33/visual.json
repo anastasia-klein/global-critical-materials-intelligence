@@ -3,9 +3,9 @@
   "name": "94ad313973e55a66be33",
   "position": {
     "x": 28,
-    "y": 838,
-    "width": 1544,
-    "height": 37,
+    "y": 234,
+    "width": 118,
+    "height": 32,
     "z": 12000,
     "tabOrder": 12000
   },
@@ -259,7 +259,14 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'Expected output, not capacity. 2025 baseline / native basis unverified. Other countries is opaque. Map circles shifted ±3° longitude for readability; not facility locations.'"
+                  "Value": "'Supply year'"
+                }
+              }
+            },
+            "keepLayerOrder": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
                 }
               }
             }
@@ -276,12 +283,12 @@
               {
                 "textRuns": [
                   {
-                    "value": "Expected output, not capacity. 2025 baseline / native basis unverified. Other countries is opaque. Map circles shifted ±3° longitude for readability; not facility locations.",
+                    "value": "Supply year",
                     "textStyle": {
                       "fontFamily": "Avenir Next",
                       "fontSize": "10pt",
                       "color": "#59695D",
-                      "fontWeight": "normal"
+                      "fontWeight": "bold"
                     }
                   }
                 ]

@@ -14,14 +14,38 @@ def validate(project):
  for page in pages:
   cfg=json.loads(page.read_text());assert (cfg['width'],cfg['height'],cfg['displayOption'])==(1600,900,'FitToPage')
   visuals=[json.loads(p.read_text()) for p in page.parent.glob('visuals/*/visual.json')]
-  material=[v for v in visuals if v['visual']['visualType']=='advancedSlicerVisual'];assert len(material)==1
+  material=[v for v in visuals if v['visual']['visualType']=='advancedSlicerVisual' and v['visual']['query']['queryState']['Values']['projections'][0]['queryRef']=='Materials.Symbol'];assert len(material)==1
   v=material[0];tiles.append(v['position']);obj=v['visual']['objects'];layout=obj['layout'][0]['properties']
   for key,value in [('fixedHeight','104D'),('fixedWidth','104D'),('columnCount','6D'),('showFixedSize','true')]:assert literal(layout[key])==value
   for card in ['value','label','padding','outline','fillCustom']:
    assert {r['selector']['id'] for r in obj[card]}=={'default','selection:selected','interaction:hover'},card
   assert v['visual']['query']['queryState']['Label']['projections'][0]['queryRef']=='ReportMeasures.Material tile label'
   for v in visuals:
+   assert literal(v['visual']['visualContainerObjects']['general'][0]['properties']['keepLayerOrder'])=='true'
    if v['visual']['visualType']=='slicer':assert v['position']['height']>=80
+   if v['visual']['visualType']=='advancedSlicerVisual':
+    for name in ['image','accentBar','selectionIcon']:
+     assert all(literal(row['properties']['show'])=='false' for row in v['visual']['objects'][name])
+  text=[v for v in visuals if v['visual']['visualType']=='textbox']
+  numbers=[v for v in text if v['visual']['objects']['general'][0]['properties']['paragraphs'][0]['textRuns'][0]['value'] in ['29','27','3','28','6','group']]
+  assert len(numbers)==6 and all(v['position']['height']>=32 for v in numbers)
+  visible=' '.join(run['value'] for v in text for paragraph in v['visual']['objects']['general'][0]['properties']['paragraphs'] for run in paragraph['textRuns'])
+  assert 'PORTFOLIO ANALYSIS' not in visible and 'SUPPLY INTELLIGENCE / EUROPE' not in visible
+  if cfg['name']=='01_supply':
+   m=next(v for v in visuals if v['visual']['visualType']=='azureMap')['visual'];assert 'Series' not in m['query']['queryState']
+   assert m['query']['queryState']['Category']['projections'][0]['queryRef']=='Supply.MapPoint'
+  if cfg['name']=='04_outlook':
+   assert not any(v['visual'].get('query',{}).get('queryState',{}).get('Values',{}).get('projections',[{}])[0].get('queryRef','').startswith('ScenarioChoice.') for v in visuals)
+   scenario_cards=[v for v in visuals if v['visual']['visualType']=='card']
+   assert len(scenario_cards)==9
+   labels=[v['visual']['query']['queryState']['Values']['projections'][0]['queryRef'].split('.')[1] for v in scenario_cards]
+   assert all(sum(name.startswith(sc+' ') for name in labels)==3 for sc in ['CPS','STEPS','HDS'])
+   end=next(v for v in visuals if v['visual']['visualType']=='clusteredBarChart')
+   assert [v['displayName'] for v in end['visual']['query']['queryState']['Y']['projections']]==['CPS','STEPS','HDS']
+  if cfg['name']=='03_risk':
+   t=next(v for v in visuals if v['visual']['visualType']=='tableEx')
+   assert sum(float(literal(v['properties']['value'])[:-1]) for v in t['visual']['objects']['columnWidth'])<=t['position']['width']-24
+
   if cfg['name'] in ['02_trade','04_outlook']:
    chart=next(v for v in visuals if v['visual']['visualType']=='clusteredBarChart')
    q=chart['visual']['query'];assert q['queryState']['Category']['showAll']
@@ -60,7 +84,13 @@ def validate(project):
  # Display offsets are available for every genuine country point; residuals stay excluded.
  map_rows=[r for r in rows('Supply') if r['EntityType']=='country_or_territory']
  assert all(r['DisplayLatitude'] and r['DisplayLongitude'] for r in map_rows)
- return {'status':'passed_presentation_contracts_pending_Desktop','pages':len(pages),'identical_material_tile_groups':len(tiles),'partner_axis_groups':len(groups),'partner_scope_totals_preserved':scalars,'end_use_axis_categories':len(ends),'reported_zero_observations_preserved':zero_count,'reported_end_use_rows':len(detail),'map_country_rows_with_display_coordinates':len(map_rows),'Desktop_rendering_and_DAX_evaluation':'pending'}
+ assert all(r['MapPoint']==r['Country']+' / '+r['Stage'] for r in map_rows)
+ scenarios=collections.defaultdict(dict)
+ for r in detail:scenarios[(r['DefinitionKey'],r['Year'],r['EndUse'])][r['ScenarioShort']]=float(r['QuantityTonnes'])
+ assert all(set(v)=={'CPS','STEPS','HDS'} for v in scenarios.values())
+ inversions=sum(not (v['CPS']<=v['STEPS']+1e-9<=v['HDS']+1e-9) for v in scenarios.values())
+
+ return {'status':'passed_presentation_contracts_pending_Desktop','pages':len(pages),'identical_material_tile_groups':len(tiles),'partner_axis_groups':len(groups),'partner_scope_totals_preserved':scalars,'end_use_axis_categories':len(ends),'reported_zero_observations_preserved':zero_count,'reported_end_use_rows':len(detail),'map_country_rows_with_display_coordinates':len(map_rows),'scenario_end_use_groups_compared':len(scenarios),'nonmonotonic_scenario_groups':inversions,'scenario_chart':'three_comparable_bars_not_additive_stacks','Desktop_rendering_and_DAX_evaluation':'pending'}
 
 if __name__=='__main__':
  p=argparse.ArgumentParser(description=__doc__);p.add_argument('--project',type=Path,required=True);p.add_argument('--output',type=Path,required=True);a=p.parse_args();r=validate(a.project);a.output.parent.mkdir(parents=True,exist_ok=True);a.output.write_text(json.dumps(r,indent=2)+'\n');print(json.dumps(r))

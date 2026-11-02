@@ -3,9 +3,9 @@
   "name": "241a1f7c250e513aab48",
   "position": {
     "x": 28,
-    "y": 838,
-    "width": 1544,
-    "height": 37,
+    "y": 234,
+    "width": 118,
+    "height": 32,
     "z": 12000,
     "tabOrder": 12000
   },
@@ -259,7 +259,14 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'Bars show HHI lower bounds; upper bounds stay in tooltips. No physical gap, import dependency or capacity: compatible inputs absent. Clear the material tile to compare all six families.'"
+                  "Value": "'Supply year'"
+                }
+              }
+            },
+            "keepLayerOrder": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
                 }
               }
             }
@@ -276,12 +283,12 @@
               {
                 "textRuns": [
                   {
-                    "value": "Bars show HHI lower bounds; upper bounds stay in tooltips. No physical gap, import dependency or capacity: compatible inputs absent. Clear the material tile to compare all six families.",
+                    "value": "Supply year",
                     "textStyle": {
                       "fontFamily": "Avenir Next",
                       "fontSize": "10pt",
                       "color": "#59695D",
-                      "fontWeight": "normal"
+                      "fontWeight": "bold"
                     }
                   }
                 ]
