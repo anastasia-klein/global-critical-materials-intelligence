@@ -11,6 +11,14 @@ def validate(project):
  def literal(v):return v['expr']['Literal']['Value']
  pages=list((project/'GlobalCriticalMaterials.Report/definition/pages').glob('*/page.json'))
  tiles=[];zero_count=0;scalars=0
+ from build_powerbi import FONT_STACK
+ def fonts(node):
+  if isinstance(node,dict):
+   for k,v in node.items():
+    if k in ['fontFamily','fontFace']:yield v if isinstance(v,str) else literal(v)[1:-1].replace("''","'")
+    else:yield from fonts(v)
+  elif isinstance(node,list):
+   for v in node:yield from fonts(v)
  for page in pages:
   cfg=json.loads(page.read_text());assert (cfg['width'],cfg['height'],cfg['displayOption'])==(1600,900,'FitToPage')
   visuals=[json.loads(p.read_text()) for p in page.parent.glob('visuals/*/visual.json')]
@@ -21,6 +29,7 @@ def validate(project):
    assert {r['selector']['id'] for r in obj[card]}=={'default','selection:selected','interaction:hover'},card
   assert v['visual']['query']['queryState']['Label']['projections'][0]['queryRef']=='ReportMeasures.Material tile label'
   for v in visuals:
+   assert all(f==FONT_STACK for f in fonts(v))
    assert literal(v['visual']['visualContainerObjects']['general'][0]['properties']['keepLayerOrder'])=='true'
    if v['visual']['visualType']=='slicer':assert v['position']['height']>=80
    if v['visual']['visualType']=='advancedSlicerVisual':
@@ -29,6 +38,9 @@ def validate(project):
   text=[v for v in visuals if v['visual']['visualType']=='textbox']
   numbers=[v for v in text if v['visual']['objects']['general'][0]['properties']['paragraphs'][0]['textRuns'][0]['value'] in ['29','27','3','28','6','group']]
   assert len(numbers)==6 and all(v['position']['height']>=32 for v in numbers)
+  licenses=[v for v in text if any('CC BY 4.0' in r['value'] for p in v['visual']['objects']['general'][0]['properties']['paragraphs'] for r in p['textRuns'])]
+  assert len(licenses)==1 and licenses[0]['position']['x']>=800
+  assert licenses[0]['visual']['objects']['general'][0]['properties']['paragraphs'][0]['horizontalTextAlignment']=='right'
   visible=' '.join(run['value'] for v in text for paragraph in v['visual']['objects']['general'][0]['properties']['paragraphs'] for run in paragraph['textRuns'])
   assert 'PORTFOLIO ANALYSIS' not in visible and 'SUPPLY INTELLIGENCE / EUROPE' not in visible
   if cfg['name']=='01_supply':
@@ -38,6 +50,12 @@ def validate(project):
    assert not any(v['visual'].get('query',{}).get('queryState',{}).get('Values',{}).get('projections',[{}])[0].get('queryRef','').startswith('ScenarioChoice.') for v in visuals)
    scenario_cards=[v for v in visuals if v['visual']['visualType']=='card']
    assert len(scenario_cards)==9
+   assert all(literal(v['visual']['visualContainerObjects']['title'][0]['properties']['alignment'])=="'center'" for v in scenario_cards)
+   toggle=next(v for v in visuals if v['visual'].get('query',{}).get('queryState',{}).get('Values',{}).get('projections',[{}])[0].get('queryRef')=='DefinitionChoice.GraphiteScope')
+   assert toggle['position']['width']==104 and toggle['position']['height']==36
+   assert 'general' not in toggle['visual']['objects']
+   assert literal(toggle['visual']['objects']['selection'][0]['properties']['strictSingleSelect'])=='false'
+   assert toggle['filterConfig']['filters'][0]['filter']['Where'][0]['Condition']['In']['Values']==[[{'Literal':{'Value':"'All grades'"}}]]
    labels=[v['visual']['query']['queryState']['Values']['projections'][0]['queryRef'].split('.')[1] for v in scenario_cards]
    assert all(sum(name.startswith(sc+' ') for name in labels)==3 for sc in ['CPS','STEPS','HDS'])
    end=next(v for v in visuals if v['visual']['visualType']=='clusteredBarChart')
@@ -54,6 +72,8 @@ def validate(project):
    charts=[v for v in visuals if v['visual']['visualType']=='clusteredBarChart'];assert len(charts)==1
    assert len(charts[0]['visual']['query']['queryState']['Y']['projections'])==2
  assert len({tuple(p[k] for k in ['x','y','width','height']) for p in tiles})==1
+ supply_model=(project/'GlobalCriticalMaterials.SemanticModel/definition/tables/Supply.tmdl').read_text()
+ assert 'WithMapPoint = if Table.HasColumns(Headers, "MapPoint")' in supply_model and 'Table.TransformColumnTypes(WithMapPoint' in supply_model
  materials=rows('Materials');assert len(materials)==6
  assert {r['Symbol']:r['AtomicNumber'] for r in materials}=={'Cu':'29','Co':'27','Li':'3','Ni':'28','C':'6','REE':''}
  assert len({r['CategoryColor'] for r in materials if r['Category']=='Transition metal'})==1

@@ -3,6 +3,7 @@ from pathlib import Path
 import argparse,json,uuid
 ROOT=Path(__file__).resolve().parents[1]
 BASE='https://developer.microsoft.com/json-schemas/fabric/'
+FONT_STACK="'Avenir Next', Arial, sans-serif"
 COLORS={'canvas':'#EDF4E9','panel':'#FFFFFF','edge':'#DDE7DA','text':'#18271D','muted':'#59695D','teal':'#183323','blue':'#479A67','amber':'#96712E','purple':'#7D8261'}
 
 def ident(x):return str(uuid.uuid5(uuid.NAMESPACE_URL,'gcm-powerbi/'+x))
@@ -126,7 +127,9 @@ def build_model(root,manifest,data_folder):
    if name in ['DisplayLatitude','DisplayLongitude']:lines+=['\t\tdataCategory: '+('Latitude' if name=='DisplayLatitude' else 'Longitude')]
    if typ=='int64':lines+=['\t\tformatString: 0']
    mtype={'double':'type number','int64':'Int64.Type','boolean':'type logical','string':'type text'}[typ];mtypes.append('{"'+name+'", '+mtype+'}')
-  lines+=['','\tpartition '+table+' = m','\t\tmode: import','\t\tsource =','\t\t\tlet','\t\t\t\tSource = Csv.Document(File.Contents(DataFolder & "/'+table+'.csv"),[Delimiter=",", Encoding=65001, QuoteStyle=QuoteStyle.Csv]),','\t\t\t\tHeaders = Table.PromoteHeaders(Source,[PromoteAllScalars=true]),','\t\t\t\tTyped = Table.TransformColumnTypes(Headers,{'+', '.join(mtypes)+'},"en-US")','\t\t\tin','\t\t\t\tTyped','']
+  pretype=['\t\t\t\tWithMapPoint = if Table.HasColumns(Headers, \"MapPoint\") then Headers else Table.AddColumn(Headers, \"MapPoint\", each [Country] & \" / \" & [Stage], type text),'] if table=='Supply' else []
+  input_step='WithMapPoint' if table=='Supply' else 'Headers'
+  lines+=['','\tpartition '+table+' = m','\t\tmode: import','\t\tsource =','\t\t\tlet','\t\t\t\tSource = Csv.Document(File.Contents(DataFolder & "/'+table+'.csv"),[Delimiter=",", Encoding=65001, QuoteStyle=QuoteStyle.Csv]),','\t\t\t\tHeaders = Table.PromoteHeaders(Source,[PromoteAllScalars=true]),',*pretype,'\t\t\t\tTyped = Table.TransformColumnTypes('+input_step+',{'+', '.join(mtypes)+'},"en-US")','\t\t\tin','\t\t\t\tTyped','']
   (tables/(table+'.tmdl')).write_text('\n'.join(lines))
   names={x['name'] for x in meta['columns']}
   for col,target in [('DefinitionKey','Definitions'),('ProductCode','Products'),('ReporterKey','Reporters'),('Stage','Stages')]:
@@ -149,7 +152,7 @@ def build_model(root,manifest,data_folder):
  return model
 
 if __name__=='__main__':
- parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--output',type=Path,default=ROOT/'dashboards/powerbi');parser.add_argument('--data-folder',default='C:/GlobalCriticalMaterials/data');parser.add_argument('--display-font',choices=['Avenir Next','Arial Narrow','Arial'],default='Avenir Next');args=parser.parse_args()
+ parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--output',type=Path,default=ROOT/'dashboards/powerbi');parser.add_argument('--data-folder',default='C:/GlobalCriticalMaterials/data');parser.add_argument('--display-font',choices=[FONT_STACK,'Avenir Next','Arial Narrow','Arial'],default=FONT_STACK);args=parser.parse_args()
  manifest=json.loads((args.output/'data/export_manifest.json').read_text());build_model(args.output,manifest,args.data_folder)
  from powerbi_report import build_report
  build_report(args.output,manifest,display_font=args.display_font)

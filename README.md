@@ -81,7 +81,7 @@ cd global-critical-materials-intelligence
 powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\Update-PowerBI.ps1
 ```
 
-For every subsequent update, close Power BI Desktop and run that last command again. It performs `git pull --ff-only`, checks CSV fingerprints and opens a commit-specific local working copy with its DataFolder configured. The checkout stays clean. Avenir Next is used when installed; otherwise the working copy uses Arial. `-ExecutionPolicy Bypass` applies only to this PowerShell process, not the machine's saved policy.
+For every subsequent update, close Power BI Desktop and run that last command again. It performs `git pull --ff-only`, checks CSV fingerprints and opens a commit-specific local working copy with its DataFolder configured. The checkout stays clean. The published report keeps the font chain `'Avenir Next', Arial, sans-serif`: each reader uses Avenir Next when available and Arial otherwise. Omit `-FontName` to preserve this behaviour. `-ExecutionPolicy Bypass` applies only to this PowerShell process, not the machine's saved policy.
 
 No Python, DuckDB driver, cloud warehouse or source API calls are needed just to open the included report inputs. Power BI Desktop still needs **Refresh** after opening. See [VM operation details](docs/operations/powerbi.md).
 

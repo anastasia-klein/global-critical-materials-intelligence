@@ -2,7 +2,8 @@
 param(
     [string]$FontName = '',
     [switch]$SkipPull,
-    [switch]$NoOpen
+    [switch]$NoOpen,
+    [switch]$FreshCopy
 )
 Set-StrictMode -Version Latest
 $ErrorActionPreference = 'Stop'
@@ -40,17 +41,39 @@ foreach ($Table in $Manifest.tables.PSObject.Properties) {
     if ($Actual -ne ([string]$Table.Value.sha256).ToLowerInvariant()) { throw "Fingerprint mismatch: $($Table.Name).csv" }
     $TableCount++
 }
-Add-Type -AssemblyName System.Drawing
-$FontCollection = New-Object System.Drawing.Text.InstalledFontCollection
-try { $InstalledFonts = @($FontCollection.Families | ForEach-Object { $_.Name }) }
-finally { $FontCollection.Dispose() }
+# A shared report must keep its reader-side font fallback chain on publication.
+$FontStack = "'Avenir Next', Arial, sans-serif"
 if ([string]::IsNullOrWhiteSpace($FontName)) {
-    if ($InstalledFonts -contains 'Avenir Next') { $FontName = 'Avenir Next' } else { $FontName = 'Arial' }
+    $EffectiveFont = $FontStack
+    $SafeFont = 'Auto'
+} else {
+    Add-Type -AssemblyName System.Drawing
+    $FontCollection = New-Object System.Drawing.Text.InstalledFontCollection
+    try { $InstalledFonts = @($FontCollection.Families | ForEach-Object { $_.Name }) }
+    finally { $FontCollection.Dispose() }
+    if ($InstalledFonts -notcontains $FontName) { throw "Font '$FontName' is not installed. Omit -FontName to keep the shared font fallback chain." }
+    $EffectiveFont = $FontName
+    $SafeFont = $FontName -replace '[^A-Za-z0-9_-]', '_'
 }
-if ($InstalledFonts -notcontains $FontName) { throw "Font '$FontName' is not installed. Install it or omit -FontName for automatic selection." }
-$SafeFont = $FontName -replace '[^A-Za-z0-9_-]', '_'
+function Set-ReportFont {
+    param($Node, [string]$Family)
+    if ($null -eq $Node -or $Node -is [string]) { return }
+    if ($Node -is [pscustomobject]) {
+        foreach ($Property in $Node.PSObject.Properties) {
+            if ($Property.Name -in @('fontFamily', 'fontFace')) {
+                if ($Property.Value -is [string]) { $Property.Value = $Family }
+                elseif ($null -ne $Property.Value.expr.Literal) {
+                    $Property.Value.expr.Literal.Value = "'" + $Family.Replace("'", "''") + "'"
+                }
+            } else { Set-ReportFont -Node $Property.Value -Family $Family }
+        }
+    } elseif ($Node -is [System.Collections.IEnumerable]) {
+        foreach ($Child in $Node) { Set-ReportFont -Node $Child -Family $Family }
+    }
+}
 $RuntimeRoot = Join-Path $RepoRoot 'work/powerbi-desktop'
 $Runtime = Join-Path $RuntimeRoot ($Commit + '-' + $SafeFont)
+if ($FreshCopy) { $Runtime += '-' + [guid]::NewGuid().ToString('N').Substring(0,8) }
 $Stamp = Join-Path $Runtime '.source-commit'
 $ProjectPath = Join-Path $Runtime 'GlobalCriticalMaterials.pbip'
 if (-not (Test-Path -LiteralPath $Runtime)) {
@@ -64,27 +87,31 @@ if (-not (Test-Path -LiteralPath $Runtime)) {
         New-Item -ItemType Directory -Path (Split-Path -Parent $Destination) -Force | Out-Null
         [System.IO.File]::Copy($File.FullName, $Destination, $false)
     }
-    if ($FontName -ne 'Avenir Next') {
-        $JsonFont = ConvertTo-Json -InputObject $FontName -Compress
-        foreach ($File in Get-ChildItem -LiteralPath $Stage -Recurse -File -Filter '*.json') {
-            if ($File.FullName -match '[\\/]data[\\/]') { continue }
-            $Content = [System.IO.File]::ReadAllText($File.FullName, $Utf8)
-            $Content = $Content.Replace('"Avenir Next"', $JsonFont)
-            [System.IO.File]::WriteAllText($File.FullName, $Content, $Utf8)
-        }
+    foreach ($File in Get-ChildItem -LiteralPath $Stage -Recurse -File -Filter '*.json') {
+        if ($File.FullName -match '[\\/]data[\\/]') { continue }
+        $Json = [System.IO.File]::ReadAllText($File.FullName, $Utf8) | ConvertFrom-Json
+        Set-ReportFont -Node $Json -Family $EffectiveFont
+        [System.IO.File]::WriteAllText($File.FullName, ($Json | ConvertTo-Json -Depth 100), $Utf8)
     }
     [System.IO.File]::WriteAllText((Join-Path $Stage '.source-commit'), $Commit + "`n", $Utf8)
     Move-Item -LiteralPath $Stage -Destination $Runtime
 }
 if (-not (Test-Path -LiteralPath $Stamp) -or -not (Test-Path -LiteralPath $ProjectPath)) { throw 'Incomplete local runtime; inspect its folder before retrying.' }
 if ([System.IO.File]::ReadAllText($Stamp, $Utf8).Trim() -ne $Commit) { throw 'Local runtime commit stamp differs from the checkout.' }
+# Reused runtime inputs must match the selected source commit, not merely exist.
+foreach ($Table in $Manifest.tables.PSObject.Properties) {
+    $RuntimeCsv = Join-Path $Runtime ('data/' + $Table.Name + '.csv')
+    if (-not (Test-Path -LiteralPath $RuntimeCsv -PathType Leaf)) { throw 'Local report inputs are incomplete. Run this script with -FreshCopy; the existing copy will be preserved.' }
+    $Actual = (Get-FileHash -LiteralPath $RuntimeCsv -Algorithm SHA256).Hash.ToLowerInvariant()
+    if ($Actual -ne ([string]$Table.Value.sha256).ToLowerInvariant()) { throw "Local $($Table.Name).csv differs from the selected commit. Run with -FreshCopy to preserve it and open a new copy." }
+}
 # Configure only the ignored runtime copy; tracked source files stay untouched.
 & (Join-Path $Runtime 'Configure-DataFolder.ps1')
 $TrackedChanges = Invoke-RepositoryGit -GitArguments @('status', '--porcelain', '--untracked-files=no')
 if ($TrackedChanges) {
     throw 'Tracked source files changed unexpectedly; Desktop was not opened.'
 }
-Write-Host "Verified $TableCount CSV inputs. Commit: $Commit. Font: $FontName."
+Write-Host "Verified $TableCount CSV inputs. Commit: $Commit. Font: $EffectiveFont."
 Write-Host "Working project: $ProjectPath"
 Write-Host 'Select Refresh after opening the project in Power BI Desktop.'
 if (-not $NoOpen) { Start-Process -FilePath $ProjectPath }

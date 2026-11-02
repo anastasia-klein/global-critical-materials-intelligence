@@ -198,7 +198,7 @@
             "fontFamily": {
               "expr": {
                 "Literal": {
-                  "Value": "'Avenir Next'"
+                  "Value": "'''Avenir Next'', Arial, sans-serif'"
                 }
               }
             },
@@ -285,13 +285,14 @@
                   {
                     "value": "Where are mining and refining concentrated?",
                     "textStyle": {
-                      "fontFamily": "Avenir Next",
+                      "fontFamily": "'Avenir Next', Arial, sans-serif",
                       "fontSize": "26pt",
                       "color": "#18271D",
                       "fontWeight": "bold"
                     }
                   }
-                ]
+                ],
+                "horizontalTextAlignment": "left"
               }
             ]
           }

@@ -126,6 +126,7 @@ table Supply
 			let
 				Source = Csv.Document(File.Contents(DataFolder & "/Supply.csv"),[Delimiter=",", Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
 				Headers = Table.PromoteHeaders(Source,[PromoteAllScalars=true]),
-				Typed = Table.TransformColumnTypes(Headers,{{"RowKey", type text}, {"SelectionKey", type text}, {"DefinitionKey", type text}, {"Year", Int64.Type}, {"Stage", type text}, {"Country", type text}, {"CountryISO3", type text}, {"EntityType", type text}, {"QuantityTonnes", type number}, {"Share", type number}, {"PanelTonnes", type number}, {"Evidence", type text}, {"SnapshotKey", type text}, {"SourceRecordKey", type text}, {"QuantityBasis", type text}, {"MapPoint", type text}, {"DisplayLatitude", type number}, {"DisplayLongitude", type number}},"en-US")
+				WithMapPoint = if Table.HasColumns(Headers, "MapPoint") then Headers else Table.AddColumn(Headers, "MapPoint", each [Country] & " / " & [Stage], type text),
+				Typed = Table.TransformColumnTypes(WithMapPoint,{{"RowKey", type text}, {"SelectionKey", type text}, {"DefinitionKey", type text}, {"Year", Int64.Type}, {"Stage", type text}, {"Country", type text}, {"CountryISO3", type text}, {"EntityType", type text}, {"QuantityTonnes", type number}, {"Share", type number}, {"PanelTonnes", type number}, {"Evidence", type text}, {"SnapshotKey", type text}, {"SourceRecordKey", type text}, {"QuantityBasis", type text}, {"MapPoint", type text}, {"DisplayLatitude", type number}, {"DisplayLongitude", type number}},"en-US")
 			in
 				Typed

@@ -198,7 +198,7 @@
             "fontFamily": {
               "expr": {
                 "Literal": {
-                  "Value": "'Avenir Next'"
+                  "Value": "'''Avenir Next'', Arial, sans-serif'"
                 }
               }
             },
@@ -285,13 +285,14 @@
                   {
                     "value": "Above diagonal: refining lower-bound HHI exceeds mining · Concentration comparison, not a physical deficit",
                     "textStyle": {
-                      "fontFamily": "Avenir Next",
+                      "fontFamily": "'Avenir Next', Arial, sans-serif",
                       "fontSize": "10pt",
                       "color": "#59695D",
                       "fontWeight": "normal"
                     }
                   }
-                ]
+                ],
+                "horizontalTextAlignment": "left"
               }
             ]
           }

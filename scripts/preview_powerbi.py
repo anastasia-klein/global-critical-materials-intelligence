@@ -39,8 +39,8 @@ class Renderer:
   if maxwidth:
    while pdfmetrics.stringWidth(s,font,size)>maxwidth and len(s)>3:s=s[:-4]+'...'
   c.drawString(x,H-y-size,s)
- def wrapped(self,x,y,w,h,text,size=13,fg=None,bold=False,font=None):
-  style=ParagraphStyle('p',fontName=font or ('ArialNarrowBold' if bold else 'ArialNarrow' if size>=18 else 'Arial'),fontSize=size,leading=size*1.22,textColor=HexColor(fg or C['muted']),spaceAfter=0)
+ def wrapped(self,x,y,w,h,text,size=13,fg=None,bold=False,font=None,align='left'):
+  style=ParagraphStyle('p',alignment={'left':0,'center':1,'right':2}[align],fontName=font or ('ArialNarrowBold' if bold else 'ArialNarrow' if size>=18 else 'Arial'),fontSize=size,leading=size*1.22,textColor=HexColor(fg or C['muted']),spaceAfter=0)
   para=Paragraph(escape(clean(text)).replace('\n','<br/>'),style);pw,ph=para.wrap(w,h);para.drawOn(self.c,x,H-y-ph)
  def box(self,x,y,w,h):
   self.c.setFillColor(HexColor('#DFE9DB'));self.c.roundRect(x+1,H-y-h-3,w,h,20,fill=1,stroke=0)
@@ -210,21 +210,24 @@ class Renderer:
     for run in runs:
      sty=run['textStyle'];size=float(sty['fontSize'][:-2])*1.14;self.text(xx,y,run['value'],size,sty['color']);xx+=pdfmetrics.stringWidth(clean(run['value']),'Arial',size)
     return
-   text=''.join(r['value'] for r in runs);sty=runs[0]['textStyle'];self.wrapped(x,y,w,h,text,float(sty['fontSize'][:-2])*1.14,sty['color'],sty.get('fontWeight')=='bold');return
+   text=''.join(r['value'] for r in runs);sty=runs[0]['textStyle'];self.wrapped(x,y,w,h,text,float(sty['fontSize'][:-2])*1.14,sty['color'],sty.get('fontWeight')=='bold',align=z['objects']['general'][0]['properties']['paragraphs'][0].get('horizontalTextAlignment','left'));return
   if kind=='pageNavigator':
    labels=['Global Supply Landscape','European Trade & Dependency','Supply Chain Risk','Future Outlook'];bw=(w-24)/4
    for j,label in enumerate(labels):
     selected=j==page;self.c.setFillColor(HexColor(C['teal'] if selected else C['panel']));self.c.roundRect(x+j*(bw+8),H-y-h,bw,h,8,fill=1,stroke=0);self.wrapped(x+j*(bw+8)+10,y+14,bw-20,h-5,label,11.5,C['canvas'] if selected else C['muted'],selected)
    return
   if kind!='advancedSlicerVisual' and z['visualContainerObjects']['background'][0]['properties']['show']['expr']['Literal']['Value']=='true':self.box(x,y,w,h)
-  if title:self.text(x+14,y+12,title,12,C['text'],True,maxwidth=w-27)
+  if title:
+   tp=z['visualContainerObjects']['title'][0]['properties'];center=tp.get('alignment',{}).get('expr',{}).get('Literal',{}).get('Value')=="'center'"
+   self.wrapped(x+14,y+9,w-28,22,title,10 if center else 12,tp.get('fontColor',{}).get('solid',{}).get('color',{}).get('expr',{}).get('Literal',{}).get('Value',"'"+C['text']+"'").strip("'"),True,align='center' if center else 'left')
   if kind=='shape':return
   if kind=='advancedSlicerVisual':
    ref=z['query']['queryState']['Values']['projections'][0]['field']['Column'];table=ref['Expression']['SourceRef']['Entity'];col=ref['Property']
    if table!='Materials':
     vals=sorted({r[col] for r in self.d[table]},key=lambda v:(v!='Graphite',str(v)) if table=='DefinitionChoice' else v)
-    chosen=z['objects']['general'][0]['properties']['filter']['filter']['Where'][0]['Condition']['In']['Values'][0][0]['Literal']['Value'].strip("'").rstrip('L')
-    width=float(z['objects']['layout'][0]['properties']['fixedWidth']['expr']['Literal']['Value'][:-1])
+    chosen=z.get('objects',{}).get('general',[{'properties':{}}])[0]['properties'].get('filter',{}).get('filter',{}).get('Where',[{'Condition':{'In':{'Values':[[{'Literal':{'Value':''}}]]}}}])[0]['Condition']['In']['Values'][0][0]['Literal']['Value'].strip("'").rstrip('L')
+    if table=='DefinitionChoice':vals=['All grades']
+    width=(w-8*(len(vals)-1))/len(vals)
     for i,val in enumerate(vals):
      xx=x+i*(width+8);selected=str(val)==chosen;self.c.setFillColor(HexColor(C['teal'] if selected else C['panel']));self.c.setStrokeColor(HexColor(C['edge']));self.c.roundRect(xx,H-y-34,width,34,6,fill=1,stroke=1);self.text(xx+12,y+8,str(val),11,C['canvas'] if selected else C['text'],selected)
     return
@@ -240,7 +243,7 @@ class Renderer:
    self.text(x+14,y+43,value,15,C['text'],maxwidth=w-55);self.text(x+w-26,y+43,'v',12,C['muted']);return
   roles=z.get('query',{}).get('queryState',{});fields={k:[q['field'].get('Measure',q['field'].get('Column'))['Property'] for q in o['projections']] for k,o in roles.items()}
   if kind=='card':
-   val=self.labels[fields['Values'][0]];self.text(x+14,y+43,val,float(z['objects']['labels'][0]['properties']['fontSize']['expr']['Literal']['Value'][:-1]),z['objects']['labels'][0]['properties']['color']['solid']['color']['expr']['Literal']['Value'].strip("'"),True,maxwidth=w-28);return
+   val=self.labels[fields['Values'][0]];size=float(z['objects']['labels'][0]['properties']['fontSize']['expr']['Literal']['Value'][:-1]);xx=x+(w-pdfmetrics.stringWidth(clean(val),'ArialNarrowBold',size))/2;self.text(xx,y+43,val,size,z['objects']['labels'][0]['properties']['color']['solid']['color']['expr']['Literal']['Value'].strip("'"),True,maxwidth=w-28);return
   if kind=='azureMap':self.map(x,y,w,h,'Both');return
   if kind=='barChart':self.bounds_bars(x,y,w,h,'Mining' if fields['Y'][0].startswith('Mining') else 'Refining');return
   if kind=='clusteredBarChart':
@@ -298,7 +301,7 @@ if __name__=='__main__':
  pdfmetrics.registerFont(TTFont('Arial',str(regular)));pdfmetrics.registerFont(TTFont('ArialBold',str(bold)))
  narrow=next((args.arial_folder/n for n in ['Arial Narrow.ttf','ARIALN.TTF','arialn.ttf'] if (args.arial_folder/n).exists()),None);narrow_bold=next((args.arial_folder/n for n in ['Arial Narrow Bold.ttf','ARIALNB.TTF','arialnb.ttf'] if (args.arial_folder/n).exists()),None)
  if json.loads((args.project/'CriticalMaterialsSage.theme.json').read_text())['textClasses']['title']['fontFace']=='Arial':narrow,narrow_bold=regular,bold
- if json.loads((args.project/'CriticalMaterialsSage.theme.json').read_text())['textClasses']['title']['fontFace']=='Avenir Next':
+ if json.loads((args.project/'CriticalMaterialsSage.theme.json').read_text())['textClasses']['title']['fontFace'].find('Avenir Next')>=0:
   avenir=Path('/System/Library/Fonts/Avenir Next.ttc')
   if not avenir.exists():raise FileNotFoundError('Avenir Next unavailable for preview; build the Arial variant or install a licensed font')
   for alias,index in [('Arial',7),('ArialBold',0),('ArialNarrow',7),('ArialNarrowBold',0)]:pdfmetrics.registerFont(TTFont(alias,str(avenir),subfontIndex=index))

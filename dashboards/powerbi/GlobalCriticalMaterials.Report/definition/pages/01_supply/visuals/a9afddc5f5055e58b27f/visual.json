@@ -2,8 +2,8 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.5.0/schema.json",
   "name": "a9afddc5f5055e58b27f",
   "position": {
-    "x": 28,
-    "y": 390,
+    "x": 288,
+    "y": 254,
     "width": 244,
     "height": 92,
     "z": 17000,
@@ -180,7 +180,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'Mining · HHI bounds'"
+                  "Value": "'Refining · Output'"
                 }
               }
             },
@@ -198,7 +198,7 @@
             "fontFamily": {
               "expr": {
                 "Literal": {
-                  "Value": "'Avenir Next'"
+                  "Value": "'''Avenir Next'', Arial, sans-serif'"
                 }
               }
             },
@@ -259,7 +259,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'Mining · HHI bounds'"
+                  "Value": "'Refining · Output'"
                 }
               }
             },
@@ -284,7 +284,7 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#183323'"
+                      "Value": "'#479A67'"
                     }
                   }
                 }
@@ -293,14 +293,14 @@
             "fontFamily": {
               "expr": {
                 "Literal": {
-                  "Value": "'Avenir Next'"
+                  "Value": "'''Avenir Next'', Arial, sans-serif'"
                 }
               }
             },
             "fontSize": {
               "expr": {
                 "Literal": {
-                  "Value": "19D"
+                  "Value": "25D"
                 }
               }
             },
@@ -340,11 +340,11 @@
                       "Entity": "ReportMeasures"
                     }
                   },
-                  "Property": "Mining concentration label"
+                  "Property": "Refining output label"
                 }
               },
-              "queryRef": "ReportMeasures.Mining concentration label",
-              "nativeQueryRef": "Mining concentration label",
+              "queryRef": "ReportMeasures.Refining output label",
+              "nativeQueryRef": "Refining output label",
               "active": true
             }
           ]

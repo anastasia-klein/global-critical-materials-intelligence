@@ -2,8 +2,8 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.5.0/schema.json",
   "name": "d68f40536f3f59179100",
   "position": {
-    "x": 1401.3333333333333,
-    "y": 307,
+    "x": 1242.6666666666667,
+    "y": 286,
     "width": 158.66666666666666,
     "height": 70,
     "z": 26000,
@@ -180,7 +180,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'HDS'"
+                  "Value": "'STEPS'"
                 }
               }
             },
@@ -189,7 +189,7 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#465A5D'"
+                      "Value": "'#FF686B'"
                     }
                   }
                 }
@@ -198,7 +198,7 @@
             "fontFamily": {
               "expr": {
                 "Literal": {
-                  "Value": "'Avenir Next'"
+                  "Value": "'''Avenir Next'', Arial, sans-serif'"
                 }
               }
             },
@@ -213,6 +213,13 @@
               "expr": {
                 "Literal": {
                   "Value": "true"
+                }
+              }
+            },
+            "alignment": {
+              "expr": {
+                "Literal": {
+                  "Value": "'center'"
                 }
               }
             }
@@ -259,7 +266,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'HDS'"
+                  "Value": "'STEPS'"
                 }
               }
             },
@@ -284,7 +291,7 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#465A5D'"
+                      "Value": "'#FF686B'"
                     }
                   }
                 }
@@ -293,7 +300,7 @@
             "fontFamily": {
               "expr": {
                 "Literal": {
-                  "Value": "'Avenir Next'"
+                  "Value": "'''Avenir Next'', Arial, sans-serif'"
                 }
               }
             },
@@ -340,11 +347,11 @@
                       "Entity": "ReportMeasures"
                     }
                   },
-                  "Property": "HDS CAGR label"
+                  "Property": "STEPS CAGR label"
                 }
               },
-              "queryRef": "ReportMeasures.HDS CAGR label",
-              "nativeQueryRef": "HDS CAGR label",
+              "queryRef": "ReportMeasures.STEPS CAGR label",
+              "nativeQueryRef": "STEPS CAGR label",
               "active": true
             }
           ]

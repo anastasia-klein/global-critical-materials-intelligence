@@ -3,9 +3,9 @@
   "name": "e88d5ca660a556fdb805",
   "position": {
     "x": 28,
-    "y": 870,
-    "width": 1544,
-    "height": 30,
+    "y": 858,
+    "width": 740,
+    "height": 42,
     "z": 11000,
     "tabOrder": 11000
   },
@@ -198,7 +198,7 @@
             "fontFamily": {
               "expr": {
                 "Literal": {
-                  "Value": "'Avenir Next'"
+                  "Value": "'''Avenir Next'', Arial, sans-serif'"
                 }
               }
             },
@@ -259,7 +259,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'Dependency unavailable: consumption/output missing · CN8 continuity unverified · Partner ≠ mine origin · German cobalt mass unresolved | IEA GCMO2026 · CC BY 4.0 · Eurostat DS-045409 · Reuse with attribution · Captured 30 Oct–1 Nov 2026'"
+                  "Value": "'Dependency unavailable: consumption/output missing · CN8 continuity unverified · Partner ≠ mine origin · German cobalt mass unresolved'"
                 }
               }
             },
@@ -283,15 +283,16 @@
               {
                 "textRuns": [
                   {
-                    "value": "Dependency unavailable: consumption/output missing · CN8 continuity unverified · Partner ≠ mine origin · German cobalt mass unresolved | IEA GCMO2026 · CC BY 4.0 · Eurostat DS-045409 · Reuse with attribution · Captured 30 Oct–1 Nov 2026",
+                    "value": "Dependency unavailable: consumption/output missing · CN8 continuity unverified · Partner ≠ mine origin · German cobalt mass unresolved",
                     "textStyle": {
-                      "fontFamily": "Avenir Next",
-                      "fontSize": "9pt",
+                      "fontFamily": "'Avenir Next', Arial, sans-serif",
+                      "fontSize": "8.5pt",
                       "color": "#59695D",
                       "fontWeight": "normal"
                     }
                   }
-                ]
+                ],
+                "horizontalTextAlignment": "left"
               }
             ]
           }

@@ -43,10 +43,4 @@ jobs:
       - name: Prepare a local Desktop copy without opening Power BI
         shell: powershell
         run: |
-          .\scripts\Update-PowerBI.ps1 -SkipPull -NoOpen -FontName Arial
-          $project = Get-ChildItem .\work\powerbi-desktop -Recurse -Filter GlobalCriticalMaterials.pbip
-          if (@($project).Count -ne 1) { throw 'Expected one working project.' }
-          $expression = Get-Content (Join-Path $project.DirectoryName 'GlobalCriticalMaterials.SemanticModel/definition/expressions.tmdl') -Raw
-          if ($expression -notmatch 'work/powerbi-desktop') { throw 'DataFolder is not local to the runtime.' }
-          $dirty = git status --porcelain
-          if ($dirty) { throw "The update script changed tracked source files: $dirty" }
+          .\scripts\Test-PowerBIUpdate.ps1

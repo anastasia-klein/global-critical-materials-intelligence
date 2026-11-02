@@ -16,22 +16,22 @@
   "bad": "#96712E",
   "textClasses": {
     "callout": {
-      "fontFace": "Avenir Next",
+      "fontFace": "'Avenir Next', Arial, sans-serif",
       "fontSize": 28,
       "color": "#18271D"
     },
     "title": {
-      "fontFace": "Avenir Next",
+      "fontFace": "'Avenir Next', Arial, sans-serif",
       "fontSize": 14,
       "color": "#18271D"
     },
     "header": {
-      "fontFace": "Avenir Next",
+      "fontFace": "'Avenir Next', Arial, sans-serif",
       "fontSize": 12,
       "color": "#18271D"
     },
     "label": {
-      "fontFace": "Avenir Next",
+      "fontFace": "'Avenir Next', Arial, sans-serif",
       "fontSize": 10,
       "color": "#59695D"
     }

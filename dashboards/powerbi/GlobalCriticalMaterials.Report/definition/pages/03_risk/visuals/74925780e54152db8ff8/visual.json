@@ -2,9 +2,9 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.5.0/schema.json",
   "name": "74925780e54152db8ff8",
   "position": {
-    "x": 1326,
-    "y": 228,
-    "width": 246,
+    "x": 1056,
+    "y": 254,
+    "width": 516,
     "height": 80,
     "z": 15000,
     "tabOrder": 15000
@@ -180,7 +180,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'Trade year'"
+                  "Value": "'Reporting area'"
                 }
               }
             },
@@ -198,7 +198,7 @@
             "fontFamily": {
               "expr": {
                 "Literal": {
-                  "Value": "'Avenir Next'"
+                  "Value": "'''Avenir Next'', Arial, sans-serif'"
                 }
               }
             },
@@ -259,7 +259,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'Trade year'"
+                  "Value": "'Reporting area'"
                 }
               }
             },
@@ -330,7 +330,7 @@
             "fontFamily": {
               "expr": {
                 "Literal": {
-                  "Value": "'Avenir Next'"
+                  "Value": "'''Avenir Next'', Arial, sans-serif'"
                 }
               }
             },
@@ -387,7 +387,7 @@
                 "From": [
                   {
                     "Name": "s",
-                    "Entity": "TradeYears",
+                    "Entity": "Reporters",
                     "Type": 0
                   }
                 ],
@@ -403,7 +403,7 @@
                                   "Source": "s"
                                 }
                               },
-                              "Property": "Year"
+                              "Property": "ReporterLabel"
                             }
                           }
                         ],
@@ -411,7 +411,7 @@
                           [
                             {
                               "Literal": {
-                                "Value": "2024L"
+                                "Value": "'Germany'"
                               }
                             }
                           ]
@@ -435,14 +435,14 @@
                 "Column": {
                   "Expression": {
                     "SourceRef": {
-                      "Entity": "TradeYears"
+                      "Entity": "Reporters"
                     }
                   },
-                  "Property": "Year"
+                  "Property": "ReporterLabel"
                 }
               },
-              "queryRef": "TradeYears.Year",
-              "nativeQueryRef": "Year",
+              "queryRef": "Reporters.ReporterLabel",
+              "nativeQueryRef": "ReporterLabel",
               "active": true
             }
           ]

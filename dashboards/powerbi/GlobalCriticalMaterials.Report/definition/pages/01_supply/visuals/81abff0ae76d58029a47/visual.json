@@ -2,8 +2,8 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.5.0/schema.json",
   "name": "81abff0ae76d58029a47",
   "position": {
-    "x": 288,
-    "y": 282,
+    "x": 28,
+    "y": 254,
     "width": 244,
     "height": 92,
     "z": 16000,
@@ -180,7 +180,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'Refining · Output'"
+                  "Value": "'Mining · Output'"
                 }
               }
             },
@@ -198,7 +198,7 @@
             "fontFamily": {
               "expr": {
                 "Literal": {
-                  "Value": "'Avenir Next'"
+                  "Value": "'''Avenir Next'', Arial, sans-serif'"
                 }
               }
             },
@@ -259,7 +259,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'Refining · Output'"
+                  "Value": "'Mining · Output'"
                 }
               }
             },
@@ -284,7 +284,7 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#479A67'"
+                      "Value": "'#183323'"
                     }
                   }
                 }
@@ -293,7 +293,7 @@
             "fontFamily": {
               "expr": {
                 "Literal": {
-                  "Value": "'Avenir Next'"
+                  "Value": "'''Avenir Next'', Arial, sans-serif'"
                 }
               }
             },
@@ -340,11 +340,11 @@
                       "Entity": "ReportMeasures"
                     }
                   },
-                  "Property": "Refining output label"
+                  "Property": "Mining output label"
                 }
               },
-              "queryRef": "ReportMeasures.Refining output label",
-              "nativeQueryRef": "Refining output label",
+              "queryRef": "ReportMeasures.Mining output label",
+              "nativeQueryRef": "Mining output label",
               "active": true
             }
           ]

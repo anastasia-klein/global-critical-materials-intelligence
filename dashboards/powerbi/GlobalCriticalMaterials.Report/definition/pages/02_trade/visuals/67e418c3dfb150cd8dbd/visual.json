@@ -2,8 +2,8 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.5.0/schema.json",
   "name": "67e418c3dfb150cd8dbd",
   "position": {
-    "x": 964,
-    "y": 324,
+    "x": 652,
+    "y": 282,
     "width": 296,
     "height": 92,
     "z": 19000,
@@ -180,7 +180,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'Top supplier share'"
+                  "Value": "'Trade balance'"
                 }
               }
             },
@@ -198,7 +198,7 @@
             "fontFamily": {
               "expr": {
                 "Literal": {
-                  "Value": "'Avenir Next'"
+                  "Value": "'''Avenir Next'', Arial, sans-serif'"
                 }
               }
             },
@@ -259,7 +259,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'Top supplier share'"
+                  "Value": "'Trade balance'"
                 }
               }
             },
@@ -293,7 +293,7 @@
             "fontFamily": {
               "expr": {
                 "Literal": {
-                  "Value": "'Avenir Next'"
+                  "Value": "'''Avenir Next'', Arial, sans-serif'"
                 }
               }
             },
@@ -340,11 +340,11 @@
                       "Entity": "ReportMeasures"
                     }
                   },
-                  "Property": "Top supplier label"
+                  "Property": "Trade balance label"
                 }
               },
-              "queryRef": "ReportMeasures.Top supplier label",
-              "nativeQueryRef": "Top supplier label",
+              "queryRef": "ReportMeasures.Trade balance label",
+              "nativeQueryRef": "Trade balance label",
               "active": true
             }
           ]

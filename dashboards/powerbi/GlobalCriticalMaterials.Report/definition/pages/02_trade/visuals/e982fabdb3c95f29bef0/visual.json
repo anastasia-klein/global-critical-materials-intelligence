@@ -2,8 +2,8 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.5.0/schema.json",
   "name": "e982fabdb3c95f29bef0",
   "position": {
-    "x": 652,
-    "y": 324,
+    "x": 340,
+    "y": 282,
     "width": 296,
     "height": 92,
     "z": 18000,
@@ -180,7 +180,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'Trade balance'"
+                  "Value": "'Exports · Selected scope'"
                 }
               }
             },
@@ -198,7 +198,7 @@
             "fontFamily": {
               "expr": {
                 "Literal": {
-                  "Value": "'Avenir Next'"
+                  "Value": "'''Avenir Next'', Arial, sans-serif'"
                 }
               }
             },
@@ -259,7 +259,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'Trade balance'"
+                  "Value": "'Exports · Selected scope'"
                 }
               }
             },
@@ -284,7 +284,7 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#18271D'"
+                      "Value": "'#479A67'"
                     }
                   }
                 }
@@ -293,7 +293,7 @@
             "fontFamily": {
               "expr": {
                 "Literal": {
-                  "Value": "'Avenir Next'"
+                  "Value": "'''Avenir Next'', Arial, sans-serif'"
                 }
               }
             },
@@ -340,11 +340,11 @@
                       "Entity": "ReportMeasures"
                     }
                   },
-                  "Property": "Trade balance label"
+                  "Property": "Exports label"
                 }
               },
-              "queryRef": "ReportMeasures.Trade balance label",
-              "nativeQueryRef": "Trade balance label",
+              "queryRef": "ReportMeasures.Exports label",
+              "nativeQueryRef": "Exports label",
               "active": true
             }
           ]

@@ -3,9 +3,9 @@
   "name": "f411417315ec5db287e5",
   "position": {
     "x": 28,
-    "y": 870,
-    "width": 1544,
-    "height": 30,
+    "y": 858,
+    "width": 740,
+    "height": 42,
     "z": 11000,
     "tabOrder": 11000
   },
@@ -198,7 +198,7 @@
             "fontFamily": {
               "expr": {
                 "Literal": {
-                  "Value": "'Avenir Next'"
+                  "Value": "'''Avenir Next'', Arial, sans-serif'"
                 }
               }
             },
@@ -259,7 +259,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'No physical gap, import dependency or capacity: compatible inputs absent | IEA GCMO2026 · CC BY 4.0 · Eurostat DS-045409 · Reuse with attribution · Captured 30 Oct–1 Nov 2026'"
+                  "Value": "'No physical gap, import dependency or capacity: compatible inputs absent'"
                 }
               }
             },
@@ -283,15 +283,16 @@
               {
                 "textRuns": [
                   {
-                    "value": "No physical gap, import dependency or capacity: compatible inputs absent | IEA GCMO2026 · CC BY 4.0 · Eurostat DS-045409 · Reuse with attribution · Captured 30 Oct–1 Nov 2026",
+                    "value": "No physical gap, import dependency or capacity: compatible inputs absent",
                     "textStyle": {
-                      "fontFamily": "Avenir Next",
-                      "fontSize": "9pt",
+                      "fontFamily": "'Avenir Next', Arial, sans-serif",
+                      "fontSize": "8.5pt",
                       "color": "#59695D",
                       "fontWeight": "normal"
                     }
                   }
-                ]
+                ],
+                "horizontalTextAlignment": "left"
               }
             ]
           }
