@@ -2,10 +2,10 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.5.0/schema.json",
   "name": "3b3a435d13275f86af0c",
   "position": {
-    "x": 28,
-    "y": 206,
-    "width": 118,
-    "height": 32,
+    "x": 850,
+    "y": 876,
+    "width": 722,
+    "height": 22,
     "z": 14000,
     "tabOrder": 14000
   },
@@ -259,7 +259,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'Supply year'"
+                  "Value": "'Captured 30 Oct–1 Nov 2026 · Reuse with attribution'"
                 }
               }
             },
@@ -283,16 +283,16 @@
               {
                 "textRuns": [
                   {
-                    "value": "Supply year",
+                    "value": "Captured 30 Oct–1 Nov 2026 · Reuse with attribution",
                     "textStyle": {
                       "fontFamily": "'Avenir Next', Arial, sans-serif",
-                      "fontSize": "10pt",
-                      "color": "#59695D",
-                      "fontWeight": "bold"
+                      "fontSize": "9pt",
+                      "color": "#183323",
+                      "fontWeight": "normal"
                     }
                   }
                 ],
-                "horizontalTextAlignment": "left"
+                "horizontalTextAlignment": "right"
               }
             ]
           }

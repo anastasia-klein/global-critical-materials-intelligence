@@ -2,10 +2,10 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.5.0/schema.json",
   "name": "77afabc5def155f4b53e",
   "position": {
-    "x": 652,
-    "y": 282,
+    "x": 340,
+    "y": 254,
     "width": 296,
-    "height": 92,
+    "height": 84,
     "z": 20000,
     "tabOrder": 20000
   },
@@ -180,7 +180,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'Trade balance'"
+                  "Value": "'Exports · Selected scope'"
                 }
               }
             },
@@ -259,7 +259,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'Trade balance'"
+                  "Value": "'Exports · Selected scope'"
                 }
               }
             },
@@ -284,7 +284,7 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#18271D'"
+                      "Value": "'#479A67'"
                     }
                   }
                 }
@@ -340,11 +340,11 @@
                       "Entity": "ReportMeasures"
                     }
                   },
-                  "Property": "Trade balance label"
+                  "Property": "Exports label"
                 }
               },
-              "queryRef": "ReportMeasures.Trade balance label",
-              "nativeQueryRef": "Trade balance label",
+              "queryRef": "ReportMeasures.Exports label",
+              "nativeQueryRef": "Exports label",
               "active": true
             }
           ]

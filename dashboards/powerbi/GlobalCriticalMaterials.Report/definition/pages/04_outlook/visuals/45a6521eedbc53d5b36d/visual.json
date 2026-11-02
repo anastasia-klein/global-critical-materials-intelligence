@@ -3,7 +3,7 @@
   "name": "45a6521eedbc53d5b36d",
   "position": {
     "x": 660,
-    "y": 704,
+    "y": 669,
     "width": 240,
     "height": 23,
     "z": 38000,
@@ -259,7 +259,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'HDS: High Demand'"
+                  "Value": "'STEPS: Stated Policies'"
                 }
               }
             },
@@ -283,16 +283,16 @@
               {
                 "textRuns": [
                   {
-                    "value": "HDS",
+                    "value": "STEPS",
                     "textStyle": {
                       "fontFamily": "'Avenir Next', Arial, sans-serif",
                       "fontSize": "10pt",
-                      "color": "#465A5D",
+                      "color": "#FF686B",
                       "fontWeight": "bold"
                     }
                   },
                   {
-                    "value": ": High Demand",
+                    "value": ": Stated Policies",
                     "textStyle": {
                       "fontFamily": "'Avenir Next', Arial, sans-serif",
                       "fontSize": "10pt",

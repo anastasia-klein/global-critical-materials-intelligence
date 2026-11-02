@@ -2,8 +2,8 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.5.0/schema.json",
   "name": "6a0269f925ec51aab861",
   "position": {
-    "x": 357.3333333333333,
-    "y": 286,
+    "x": 198.66666666666666,
+    "y": 262,
     "width": 158.66666666666666,
     "height": 70,
     "z": 21000,
@@ -180,7 +180,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'HDS'"
+                  "Value": "'STEPS'"
                 }
               }
             },
@@ -189,7 +189,7 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#465A5D'"
+                      "Value": "'#FF686B'"
                     }
                   }
                 }
@@ -266,7 +266,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'HDS'"
+                  "Value": "'STEPS'"
                 }
               }
             },
@@ -291,7 +291,7 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#465A5D'"
+                      "Value": "'#FF686B'"
                     }
                   }
                 }
@@ -347,11 +347,11 @@
                       "Entity": "ReportMeasures"
                     }
                   },
-                  "Property": "HDS endpoint label"
+                  "Property": "STEPS endpoint label"
                 }
               },
-              "queryRef": "ReportMeasures.HDS endpoint label",
-              "nativeQueryRef": "HDS endpoint label",
+              "queryRef": "ReportMeasures.STEPS endpoint label",
+              "nativeQueryRef": "STEPS endpoint label",
               "active": true
             }
           ]

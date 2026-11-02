@@ -2,10 +2,10 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.5.0/schema.json",
   "name": "3d5eb4a6397b54a7a2bd",
   "position": {
-    "x": 850,
-    "y": 854,
-    "width": 722,
-    "height": 22,
+    "x": 28,
+    "y": 858,
+    "width": 740,
+    "height": 42,
     "z": 12000,
     "tabOrder": 12000
   },
@@ -259,7 +259,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'IEA GCMO2026 · CC BY 4.0 · Eurostat DS-045409'"
+                  "Value": "'Physical gap/capacity unavailable · Supply ends 2040, demand 2050'"
                 }
               }
             },
@@ -283,16 +283,16 @@
               {
                 "textRuns": [
                   {
-                    "value": "IEA GCMO2026 · CC BY 4.0 · Eurostat DS-045409",
+                    "value": "Physical gap/capacity unavailable · Supply ends 2040, demand 2050",
                     "textStyle": {
                       "fontFamily": "'Avenir Next', Arial, sans-serif",
-                      "fontSize": "9pt",
-                      "color": "#183323",
+                      "fontSize": "8.5pt",
+                      "color": "#59695D",
                       "fontWeight": "normal"
                     }
                   }
                 ],
-                "horizontalTextAlignment": "right"
+                "horizontalTextAlignment": "left"
               }
             ]
           }

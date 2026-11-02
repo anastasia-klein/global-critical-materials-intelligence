@@ -3,7 +3,7 @@
   "name": "c27ab2ef6cc15e51bd79",
   "position": {
     "x": 850,
-    "y": 876,
+    "y": 854,
     "width": 722,
     "height": 22,
     "z": 13000,
@@ -259,7 +259,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'Captured 30 Oct–1 Nov 2026 · Reuse with attribution'"
+                  "Value": "'IEA GCMO2026 · CC BY 4.0 · Eurostat DS-045409'"
                 }
               }
             },
@@ -283,7 +283,7 @@
               {
                 "textRuns": [
                   {
-                    "value": "Captured 30 Oct–1 Nov 2026 · Reuse with attribution",
+                    "value": "IEA GCMO2026 · CC BY 4.0 · Eurostat DS-045409",
                     "textStyle": {
                       "fontFamily": "'Avenir Next', Arial, sans-serif",
                       "fontSize": "9pt",

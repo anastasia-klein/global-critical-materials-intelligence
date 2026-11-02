@@ -2,10 +2,10 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.5.0/schema.json",
   "name": "f2b3cb0cbc255b66b819",
   "position": {
-    "x": 29,
-    "y": 159,
-    "width": 820,
-    "height": 38,
+    "x": 28,
+    "y": 92,
+    "width": 830,
+    "height": 48,
     "z": 3000,
     "tabOrder": 3000
   },
@@ -259,7 +259,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'2025 native baseline and scenario years · Demand sums returned end uses · Supply: STEPS only'"
+                  "Value": "'How does the outlook change across scenarios?'"
                 }
               }
             },
@@ -283,12 +283,12 @@
               {
                 "textRuns": [
                   {
-                    "value": "2025 native baseline and scenario years · Demand sums returned end uses · Supply: STEPS only",
+                    "value": "How does the outlook change across scenarios?",
                     "textStyle": {
                       "fontFamily": "'Avenir Next', Arial, sans-serif",
-                      "fontSize": "10pt",
-                      "color": "#59695D",
-                      "fontWeight": "normal"
+                      "fontSize": "26pt",
+                      "color": "#18271D",
+                      "fontWeight": "bold"
                     }
                   }
                 ],

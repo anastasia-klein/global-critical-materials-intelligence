@@ -3,9 +3,9 @@
   "name": "0be5dd9bdcfb58fdbc6c",
   "position": {
     "x": 660,
-    "y": 658,
+    "y": 644,
     "width": 240,
-    "height": 23,
+    "height": 194,
     "z": 36000,
     "tabOrder": 36000
   },
@@ -259,7 +259,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'CPS: Current Policies'"
+                  "Value": "'textbox'"
                 }
               }
             },
@@ -283,16 +283,7 @@
               {
                 "textRuns": [
                   {
-                    "value": "CPS",
-                    "textStyle": {
-                      "fontFamily": "'Avenir Next', Arial, sans-serif",
-                      "fontSize": "10pt",
-                      "color": "#08B7AE",
-                      "fontWeight": "bold"
-                    }
-                  },
-                  {
-                    "value": ": Current Policies",
+                    "value": "",
                     "textStyle": {
                       "fontFamily": "'Avenir Next', Arial, sans-serif",
                       "fontSize": "10pt",

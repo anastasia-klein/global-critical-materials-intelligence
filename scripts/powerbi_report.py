@@ -68,14 +68,15 @@ class Page:
   # A visual-only domain filter leaves the unselected page context unfiltered.
   # Selecting the single visible item applies All grades; clearing it restores
   # SELECTEDVALUE's Graphite default without a second visible button.
-  v=self.buttons(1400,114,52,'','DefinitionChoice','GraphiteScope',None,1)
+  v=self.buttons(1410,198,48,'','DefinitionChoice','GraphiteScope',None,1)
   v['position']['height']=28
   # Use embedded vector states: a slicer callout cannot replace its field's
   # displayed text with a decorative glyph. No font glyph represents the thumb.
   states=['default','selection:selected','interaction:hover','selection:selected-interaction:hover','interaction:press','selection:selected-interaction:press']
   def st(fn):return [{'selector':{'id':state},'properties':fn('selection:selected' in state)} for state in states]
   obj=v['visual']['objects']
-  obj['value']=st(lambda _:dict(show=lit(False)))
+  obj['value']=st(lambda _:dict(show=lit(False),fontSize=lit(8),transparency=lit(100)))
+  obj['label']=st(lambda _:dict(show=lit(False),fontSize=lit(8),transparency=lit(100)))
   obj['padding']=st(lambda _:dict(paddingSelection=lit('Custom'),topMargin=lit(0),bottomMargin=lit(0),leftMargin=lit(0),rightMargin=lit(0)))
   obj['fillCustom']=st(lambda _:dict(show=lit(False)))
   obj['outline']=st(lambda _:dict(show=lit(False)))
@@ -86,7 +87,7 @@ class Page:
    return dict(show=lit(True),sourceType=lit('image'),imageFile={'image':{'name':lit(name),'url':resource,'scaling':lit('Normal')}},imageFit=lit('Normal'),setAsBackGround=lit(True),ignorePadding=lit(True),padding=lit(0),transparency=lit(0),altText=lit('All grades On' if on else 'All grades Off'))
   obj['image']=st(image_state)
   v['visual']['visualContainerObjects']['general'][0]['properties']['altText']=lit('All grades graphite toggle: off = Graphite; on = All grades. Click to change scope.')
-  self.text(1354,216,104,26,'All grades',8,align='right')
+  self.text(1354,201,54,26,'All grades',8,align='left')
   v['visual']['objects']['selection']=props(singleSelect=lit(False),strictSingleSelect=lit(False),selectAllCheckboxEnabled=lit(False))
   definition={'Version':2,'From':[{'Name':'g','Entity':'DefinitionChoice','Type':0}],'Where':[{'Condition':{'In':{'Expressions':[{'Column':{'Expression':{'SourceRef':{'Source':'g'}},'Property':'GraphiteScope'}}],'Values':[[{'Literal':{'Value':"'All grades'"}}]]}}}]}
   v['filterConfig']={'filters':[{'name':'graphite_scope_domain','field':field('DefinitionChoice','GraphiteScope'),'type':'Categorical','filter':definition,'howCreated':'User','isHiddenInViewMode':True,'isLockedInViewMode':True}]}
@@ -95,7 +96,7 @@ class Page:
   self.add('shape',x,y,w,h,title,objects={'shape':props(tileShape=lit('rectangle')),'fill':props(show=lit(False)),'outline':props(show=lit(False))})
   self.text(x+14,y+28,w-28,h-32,text,10)
  def materials(self,optional=False):
-  x,y,w,h=898,110,674,112
+  x,y,w,h=898,90,674,112
   states=['default','selection:selected','interaction:hover']
   def st(fn):return [{'selector':{'id':state},'properties':fn(state)} for state in states]
   objects={
@@ -158,15 +159,16 @@ class Page:
     'grid':props(gridHorizontal=lit(True),gridHorizontalColor=color(C['edge']),gridVertical=lit(False),rowPadding=lit(5)),
     'total':props(totals=lit(False))})
  def common(self,headline,sub,footer):
-  self.text(28,17,550,62,'Global critical materials',26,C['text'],True)
+  self.text(28,12,550,42,'Global critical materials',26,C['text'],True)
+  self.text(29,57,550,26,'Exploratory analysis of public IEA & Eurostat data',10)
   nav=self.add('pageNavigator',600,24,972,50,transparent=True,objects={
     'layout':props(orientation=lit(2),cellPadding=lit(8)),
     'text':[{'selector':{'id':state},'properties':{'fontFamily':lit(BODY_FONT),'fontSize':lit(10.5),'fontColor':color(C['canvas'] if state=='selected' else C['muted']),'bold':lit(state=='selected'),'leftMargin':lit(4),'rightMargin':lit(4)}} for state in ['default','selected']],
     'fill':[{'selector':{'id':state},'properties':{'show':lit(True),'fillColor':color(C['teal'] if state=='selected' else C['panel'])}} for state in ['default','selected']],
     'outline':props(show=lit(False)),'shape':props(tileShape=lit('roundRect'),rectangleRoundedCurve=lit(14))})
   self.controls.add(nav['name'])
-  self.text(28,104,830,52,headline,26,C['text'],True)
-  self.text(29,159,820,38,sub,10,C['muted'])
+  self.text(28,92,830,48,headline,26,C['text'],True)
+  self.text(29,143,820,34,sub,10,C['muted'])
   self.materials(optional=self.name=='03_risk')
   self.text(28,858,740,42,footer,8.5,C['muted'])
   self.text(850,854,722,22,'IEA GCMO2026 · CC BY 4.0 · Eurostat DS-045409',9,C['teal'],align='right')
@@ -224,65 +226,66 @@ def build_report(root,manifest,display_font=FONT_STACK):
  p=Page(report,*PAGES[0]);p.common('Where are mining and refining concentrated?',
   'STEPS / Base Case · Mining: forest green · Refining: leaf green · Independent stage denominators',
   'Expected output, not capacity · 2025 baseline/basis unverified · Other countries is opaque')
- p.buttons(28,204,650,'Supply year','SupplyYears','Year',2030,4)
- p.text(735,220,837,34,'Material scope: native IEA definition · Graphite excludes all-grades graphite · Tile colours identify chemical category',9)
+ p.buttons(28,180,650,'Supply year','SupplyYears','Year',2030,4)
+ p.text(735,196,837,34,'Material scope: native IEA definition · Graphite excludes all-grades graphite · Tile colours identify chemical category',9)
  for i,(label,m) in enumerate([('Mining · Output','Mining output label'),('Refining · Output','Refining output label'),('Mining · HHI bounds','Mining concentration label'),('Refining · HHI bounds','Refining concentration label'),('Mining · Top 3 bounds','Mining top3 label'),('Refining · Top 3 bounds','Refining top3 label')]):
-  p.card(28+(i%2)*260,254+(i//2)*108,244,label,m,C['teal'] if i%2==0 else C['blue'])
- p.add('azureMap',550,254,604,308,'Country shares · Mining / Refining',{'Category':[('Supply','MapPoint',False)],'X':[('ReportMeasures','Map longitude',True)],'Y':[('ReportMeasures','Map latitude',True)],'Size':[('ReportMeasures','Map share',True)],'Tooltips':[('ReportMeasures','Map country',True),('ReportMeasures','Map stage',True)]},
+  p.card(28+(i%2)*260,230+(i//2)*108,244,label,m,C['teal'] if i%2==0 else C['blue'])
+ p.add('azureMap',550,230,604,308,'Country shares · Mining / Refining',{'Category':[('Supply','MapPoint',False)],'X':[('ReportMeasures','Map longitude',True)],'Y':[('ReportMeasures','Map latitude',True)],'Size':[('ReportMeasures','Map share',True)],'Tooltips':[('ReportMeasures','Map country',True),('ReportMeasures','Map stage',True)]},
   {'mapControls':props(defaultStyle=lit('grayscale_light'),autoZoom=lit(True),showStylePicker=lit(False),showNavigationControls=lit(True)),
    'bubbleLayer':props(show=lit(True),sizeByValue=lit(True),clusteringEnabled=lit(False),minBubbleRadius=lit(3),maxRadius=lit(18),mapTransparency=lit(15)),
    'commonDataOptions':props(showZeros=lit(False)), 'legend':props(show=lit(False)),
    'dataPoint':[{'properties':{'showAllDataPoints':lit(True)}},{'selector':{'data':[{'dataViewWildcard':{'matchingOption':1}}]},'properties':{'fill':{'solid':{'color':{'expr':field('ReportMeasures','Map color',True)}}}}}]},alt='Country display anchors, mining 3 degrees west and refining 3 degrees east; not facilities. Separate country/stage marker identities; stages never added. Circles may overlap at world scale.')
- legend=p.text(564,292,560,32,'● Mining     ● Refining',10)
+ legend=p.text(564,268,560,32,'● Mining     ● Refining',10)
  runs=legend['visual']['objects']['general'][0]['properties']['paragraphs'][0]['textRuns'];style=runs[0]['textStyle'];legend['visual']['objects']['general'][0]['properties']['paragraphs'][0]['textRuns']=[{'value':'● Mining     ','textStyle':dict(style,color=C['teal'])},{'value':'● Refining','textStyle':dict(style,color=C['blue'])}]
- p.chart('clusteredBarChart',1172,254,400,588,'Named-country shares · Mining / Refining',{'Category':[('Supply','Country',False)],'Y':[('ReportMeasures','Mining country share',True),('ReportMeasures','Refining country share',True)]},('Supply','Country',False,'asc'),extra={'categoryAxis':props(labelColor=color(C['muted']),fontFamily=lit(BODY_FONT),fontSize=lit(10),innerPadding=lit(15),maxMarginFactor=lit(40))})
- p.chart('lineChart',28,580,1126,262,'Expected output · Mining / Refining · kt',{'Category':[('Supply','Year',False)],'Y':[('ReportMeasures','Mining output kt',True),('ReportMeasures','Refining output kt',True)]},('Supply','Year',False,'asc'))
+ v=p.chart('clusteredBarChart',1172,230,400,612,'Country shares · Mining / Refining',{'Category':[('Supply','Country',False)],'Y':[('ReportMeasures','Mining country share',True),('ReportMeasures','Refining country share',True)]},('Supply','Country',False,'asc'),extra={'categoryAxis':props(labelColor=color(C['muted']),fontFamily=lit(BODY_FONT),fontSize=lit(9),innerPadding=lit(15),maxMarginFactor=lit(40)),'labels':props(show=lit(True),fontFamily=lit(BODY_FONT),fontSize=lit(9),labelPrecision=lit(1),labelDisplayUnits=lit(1),labelPosition=lit('OutsideEnd'),labelOverflow=lit(True))})
+ v['visual']['visualContainerObjects']['general'][0]['properties']['altText']=lit('Country shares of stage output. Individually identified countries only; Other countries is excluded from bars but retained in each denominator. Percentages are not rebased to visible countries.')
+ p.chart('lineChart',28,556,1126,286,'Expected output · Mining / Refining · kt',{'Category':[('Supply','Year',False)],'Y':[('ReportMeasures','Mining output kt',True),('ReportMeasures','Refining output kt',True)]},('Supply','Year',False,'asc'))
  p.finish()
  # Trade: compact fixed partner axis with its own missing-data explanation.
  p=Page(report,*PAGES[1]);p.common('How exposed is the reporting area?',
   'Countries include intra-EU trade · EU27 covers external partners only · One native CN8 form per material',
   'Dependency unavailable: consumption/output missing · CN8 continuity unverified · Partner ≠ mine origin · German cobalt mass unresolved')
- p.slicer(28,184,280,'Reporting area','Reporters','ReporterLabel','Germany')
- p.slicer(326,184,220,'Snapshot year','TradeYears','Year',2024)
- p.slicer(564,184,300,'Measure basis','BasisChoice','BasisLabel','Value · EUR')
- p.text(880,224,692,44,'Traded forms: Cu/Ni ores; Co oxides; Li carbonates; natural graphite flakes; rare-earth-containing magnets. EU27 is a bloc, not these six countries added together.',10)
- for x,label,m in [(28,'Imports · Selected scope','Imports label'),(340,'Exports · Selected scope','Exports label'),(652,'Trade balance','Trade balance label'),(964,'Top supplier share','Top supplier label'),(1276,'Supplier HHI','Supplier HHI label')]:p.card(x,282,296,label,m,C['teal'] if x==28 else C['blue'] if x==340 else None)
- p.chart('lineChart',28,392,760,450,'Imports / Exports · selected scope',{'Category':[('Trade','Year',False)],'Y':[('ReportMeasures','Imports',True),('ReportMeasures','Exports',True)]},('Trade','Year',False,'asc'))
- v=p.chart('clusteredBarChart',806,392,766,450,'Import partners · share',{'Category':[('PartnerDisplay','PartnerDisplay',False)],'Y':[('ReportMeasures','Partner import share',True)]},('PartnerDisplay','PartnerDisplay',False,'asc'),extra={'dataPoint':props(fill=color(C['teal'])),'labels':props(show=lit(True),fontFamily=lit(BODY_FONT),fontSize=lit(9),labelPrecision=lit(1),labelPosition=lit('OutsideEnd'),showBlankAs=lit('—')),'categoryAxis':props(labelColor=color(C['muted']),fontFamily=lit(BODY_FONT),fontSize=lit(9),innerPadding=lit(15),preferredCategoryWidth=lit(16))})
+ p.slicer(28,164,280,'Reporting area','Reporters','ReporterLabel','Germany')
+ p.slicer(326,164,220,'Snapshot year','TradeYears','Year',2024)
+ p.slicer(564,164,300,'Measure basis','BasisChoice','BasisLabel','Value · EUR')
+ p.text(880,204,692,44,'Traded forms: Cu/Ni ores; Co oxides; Li carbonates; natural graphite flakes; rare-earth-containing magnets. EU27 is a bloc, not these six countries added together.',10)
+ for x,label,m in [(28,'Imports · Selected scope','Imports label'),(340,'Exports · Selected scope','Exports label'),(652,'Trade balance','Trade balance label'),(964,'Top supplier share','Top supplier label'),(1276,'Supplier HHI','Supplier HHI label')]:p.card(x,254,296,label,m,C['teal'] if x==28 else C['blue'] if x==340 else None)['position'].update(height=84)
+ p.chart('lineChart',28,354,760,488,'Imports / Exports · selected scope',{'Category':[('Trade','Year',False)],'Y':[('ReportMeasures','Imports',True),('ReportMeasures','Exports',True)]},('Trade','Year',False,'asc'))
+ v=p.chart('clusteredBarChart',806,354,766,488,'Import partners · share',{'Category':[('PartnerDisplay','PartnerDisplay',False)],'Y':[('ReportMeasures','Partner import share',True)]},('PartnerDisplay','PartnerDisplay',False,'asc'),extra={'dataPoint':props(fill=color(C['teal'])),'labels':props(show=lit(True),fontFamily=lit(BODY_FONT),fontSize=lit(9),labelPrecision=lit(1),labelPosition=lit('OutsideEnd'),showBlankAs=lit('—')),'categoryAxis':props(labelColor=color(C['muted']),fontFamily=lit(BODY_FONT),fontSize=lit(9),innerPadding=lit(10),outerPadding=lit(0),preferredCategoryWidth=lit(12))})
  v['visual']['query']['queryState']['Category']['showAll']=True
- p.text(1090,398,468,34,'— / blank = not returned · Small positive shares may round to 0.0%',8,align='right')
+ p.text(1090,360,468,34,'— / blank = not returned · Small positive shares may round to 0.0%',8,align='right')
  p.finish()
  # Risk: supplier-only controls are directly above the wider supplier table.
  p=Page(report,*PAGES[2]);p.common('Where does concentration sit along the chain?',
-  'Above diagonal: refining lower-bound HHI exceeds mining · Concentration comparison, not a physical deficit',
+  'HHI: country shares of expected output in tonnes, 0–1 · Above diagonal: refining is more concentrated',
   'No physical gap, import dependency or capacity: compatible inputs absent')
- p.buttons(28,204,650,'Supply year','SupplyYears','Year',2030,4)
- p.slicer(1056,254,516,'Reporting area','Reporters','ReporterLabel','Germany')
- p.slicer(1056,352,516,'Trade year','TradeYears','Year',2024)
- p.chart('scatterChart',28,254,588,588,'Mining vs. Refining · HHI lower bounds',{'Series':[('Materials','Symbol',False)],'X':[('ReportMeasures','Mining HHI lower',True)],'Y':[('ReportMeasures','Refining HHI lower',True)],'Tooltips':[('ReportMeasures','Mining HHI upper',True),('ReportMeasures','Refining HHI upper',True)]},extra={'categoryAxis':props(start=lit(0),end=lit(1),labelColor=color(C['muted']),showAxisTitle=lit(True),titleText=lit('Mining HHI · lower bound')),'valueAxis':props(start=lit(0),end=lit(1),labelColor=color(C['muted']),showAxisTitle=lit(True),titleText=lit('Refining HHI · lower bound')),'plotAreaShading':props(show=lit(True),upperShadingColor=color('#F2F7EF'),lowerShadingColor=color('#E3EFDF'),transparency=lit(25)),'ratioLine':props(show=lit(False)),'legend':props(show=lit(False)),'categoryLabels':props(show=lit(True),color=color(C['text']),fontSize=lit(10))})
- p.chart('clusteredBarChart',634,254,404,588,'Supply concentration · Mining / Refining',{'Category':[('Materials','Symbol',False)],'Y':[('ReportMeasures','Mining HHI lower',True),('ReportMeasures','Refining HHI lower',True)],'Tooltips':[('ReportMeasures','Mining HHI upper',True),('ReportMeasures','Refining HHI upper',True)]},('Materials','Symbol',False,'asc'),extra={'valueAxis':props(start=lit(0),end=lit(1),labelColor=color(C['muted']),fontSize=lit(10)),'labels':props(show=lit(True),fontFamily=lit(BODY_FONT),fontSize=lit(10),labelPrecision=lit(3),labelPosition=lit('OutsideEnd'))})
- v=p.table(1056,450,516,270,'Supplier HHI · EUR / Mass',[('Products','ProductShort',False),('ReportMeasures','Value exposure HHI',True),('ReportMeasures','Mass exposure HHI',True)])
+ p.buttons(28,180,650,'Supply year','SupplyYears','Year',2030,4)
+ p.slicer(1056,230,516,'Reporting area','Reporters','ReporterLabel','Germany')
+ p.slicer(1056,328,516,'Trade year','TradeYears','Year',2024)
+ p.chart('scatterChart',28,230,612,612,'Mining vs. Refining · Output-share HHI (lower)',{'Series':[('Materials','Symbol',False)],'X':[('ReportMeasures','Mining HHI lower',True)],'Y':[('ReportMeasures','Refining HHI lower',True)],'Tooltips':[('ReportMeasures','Mining HHI upper',True),('ReportMeasures','Refining HHI upper',True)]},extra={'categoryAxis':props(start=lit(0),end=lit(1),labelColor=color(C['muted']),showAxisTitle=lit(True),titleText=lit('Mining HHI · output tonnes')),'valueAxis':props(start=lit(0),end=lit(1),labelColor=color(C['muted']),showAxisTitle=lit(True),titleText=lit('Refining HHI · output tonnes')),'plotAreaShading':props(show=lit(True),upperShadingColor=color('#F2F7EF'),lowerShadingColor=color('#E3EFDF'),transparency=lit(25)),'ratioLine':props(show=lit(False)),'legend':props(show=lit(False)),'categoryLabels':props(show=lit(True),color=color(C['text']),fontSize=lit(10))})
+ p.chart('clusteredBarChart',658,230,380,612,'Supply concentration · Mining / Refining',{'Category':[('Materials','Symbol',False)],'Y':[('ReportMeasures','Mining HHI lower',True),('ReportMeasures','Refining HHI lower',True)],'Tooltips':[('ReportMeasures','Mining HHI upper',True),('ReportMeasures','Refining HHI upper',True)]},('Materials','Symbol',False,'asc'),extra={'valueAxis':props(start=lit(0),end=lit(1),labelColor=color(C['muted']),fontSize=lit(10)),'labels':props(show=lit(True),fontFamily=lit(BODY_FONT),fontSize=lit(10),labelPrecision=lit(3),labelPosition=lit('OutsideEnd'))})
+ v=p.table(1056,426,516,294,'Supplier HHI · EUR / Mass',[('Products','ProductShort',False),('ReportMeasures','Value exposure HHI',True),('ReportMeasures','Mass exposure HHI',True)])
  for item,label,width in zip(v['visual']['query']['queryState']['Values']['projections'],['Product','HHI (EUR)','HHI (mass)'],[280,90,90]):item['displayName']=label
  v['visual']['objects']['columnHeaders'][0]['properties'].update(autoSizeColumnWidth=lit(False),customColumnWidth=lit(True))
  v['visual']['objects']['columnWidth']=[{'selector':{'metadata':item['queryRef']},'properties':{'value':lit(width)}} for item,width in zip(v['visual']['query']['queryState']['Values']['projections'],[280,90,90])]
- p.note(1056,738,516,104,'Interpretation','Supplier HHI describes exposure to reported trading partners. EUR and mass can give different results; neither identifies upstream mine origin.')
+ p.note(1056,738,516,104,'Interpretation','Supply HHI uses country shares of expected-output tonnes. Higher refining HHI means greater concentration, not surplus. The trade table compares EUR and product-mass HHI; partners can differ from mine origin.')
  p.finish()
  # Outlook: every scenario appears in each KPI and comparison chart.
  p=Page(report,*PAGES[3]);p.common('How does the outlook change across scenarios?',
   '2025 native baseline and scenario years · Demand sums returned end uses · Supply: STEPS only',
   'Physical gap/capacity unavailable · Supply ends 2040, demand 2050')
- p.buttons(28,204,800,'Outlook year','FutureYears','Year',2040,6)
+ p.buttons(28,180,800,'Outlook year','FutureYears','Year',2040,6)
  p.graphite_toggle()
- for x,label,suffix in [(28,'Demand at endpoint · native scope','endpoint label'),(550,'Demand growth from baseline','growth label'),(1072,'Annualised growth','CAGR label')]:p.scenario_panel(x,254,500,label,suffix)
- p.chart('lineChart',28,378,886,232,'Demand scenarios · kt',{'Category':[('Outlook','Year',False)],'Y':[('ReportMeasures',sc+' demand kt',True) for sc in SCENARIO_COLORS]},('Outlook','Year',False,'asc'))
- v=p.chart('clusteredBarChart',932,378,640,464,'End-use demand · kt',{'Category':[('EndUses','EndUse',False)],'Y':[('ReportMeasures',sc+' end use kt',True) for sc in SCENARIO_COLORS],'Tooltips':[('ReportMeasures','End use status',True)]},('EndUses','EndUse',False,'asc'),extra={'labels':props(show=lit(True),fontFamily=lit(BODY_FONT),fontSize=lit(9),labelPosition=lit('OutsideEnd'),labelDisplayUnits=lit(1),valueFormatString=lit('#,0.0;-#,0.0;0'),showBlankAs=lit('—')),'categoryAxis':props(labelColor=color(C['muted']),fontFamily=lit(BODY_FONT),fontSize=lit(9),innerPadding=lit(12),preferredCategoryWidth=lit(40),maxMarginFactor=lit(45)),'layout':props(clusteredGapSize=lit(10))})
+ for x,label,suffix in [(28,'Demand at endpoint · native scope','endpoint label'),(550,'Demand growth from baseline','growth label'),(1072,'Annualised growth','CAGR label')]:p.scenario_panel(x,230,500,label,suffix)
+ p.chart('lineChart',28,354,886,256,'Demand scenarios · kt',{'Category':[('Outlook','Year',False)],'Y':[('ReportMeasures',sc+' demand kt',True) for sc in SCENARIO_COLORS]},('Outlook','Year',False,'asc'))
+ v=p.chart('clusteredBarChart',932,354,640,488,'End-use demand · kt',{'Category':[('EndUses','EndUse',False)],'Y':[('ReportMeasures',sc+' end use kt',True) for sc in SCENARIO_COLORS],'Tooltips':[('ReportMeasures','End use status',True)]},('EndUses','EndUse',False,'asc'),extra={'labels':props(show=lit(True),fontFamily=lit(BODY_FONT),fontSize=lit(9),labelPosition=lit('OutsideEnd'),labelDisplayUnits=lit(1),valueFormatString=lit('#,0.0;-#,0.0;0'),showBlankAs=lit('—')),'categoryAxis':props(labelColor=color(C['muted']),fontFamily=lit(BODY_FONT),fontSize=lit(9),innerPadding=lit(12),preferredCategoryWidth=lit(40),maxMarginFactor=lit(45)),'layout':props(clusteredGapSize=lit(10))})
  v['visual']['query']['queryState']['Category']['showAll']=True
- p.text(1160,384,398,34,'0 = reported zero · — / blank = not returned',8,align='right')
- p.chart('lineChart',28,628,600,214,'Expected output · Mining / Refining · STEPS · kt',{'Category':[('Outlook','Year',False)],'Y':[('ReportMeasures','Mining outlook kt',True),('ReportMeasures','Refining outlook kt',True)]},('Outlook','Year',False,'asc'))
- p.note(646,628,268,214,'Scenario context','')
+ p.text(1160,360,398,34,'0 = reported zero · — / blank = not returned',8,align='right')
+ p.chart('lineChart',28,616,600,226,'Expected output · Mining / Refining · STEPS · kt',{'Category':[('Outlook','Year',False)],'Y':[('ReportMeasures','Mining outlook kt',True),('ReportMeasures','Refining outlook kt',True)]},('Outlook','Year',False,'asc'))
+ p.note(646,616,268,226,'Scenario context','')
  for i,(scenario,description) in enumerate([('CPS','Current Policies'),('STEPS','Stated Policies'),('HDS','High Demand')]):
-  v=p.text(660,658+i*23,240,23,scenario+': '+description,10)
+  v=p.text(660,646+i*23,240,23,scenario+': '+description,10)
   style=v['visual']['objects']['general'][0]['properties']['paragraphs'][0]['textRuns'][0]['textStyle']
   v['visual']['objects']['general'][0]['properties']['paragraphs'][0]['textRuns']=[{'value':scenario,'textStyle':dict(style,color=SCENARIO_COLORS[scenario],fontWeight='bold')},{'value':': '+description,'textStyle':style}]
- p.text(660,740,240,90,'Scenarios are alternatives. Supply output is available only for STEPS; it is not installed capacity.',10)
+ p.text(660,728,240,102,'Scenarios are alternatives. Supply output is available only for STEPS; it is not installed capacity.',10)
  p.finish()

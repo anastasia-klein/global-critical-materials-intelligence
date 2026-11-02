@@ -2,8 +2,8 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.5.0/schema.json",
   "name": "dd7e077c15b25973a1a8",
   "position": {
-    "x": 1132,
-    "y": 111,
+    "x": 1018,
+    "y": 91,
     "width": 44,
     "height": 32,
     "z": 7000,
@@ -259,7 +259,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'3'"
+                  "Value": "'27'"
                 }
               }
             },
@@ -283,7 +283,7 @@
               {
                 "textRuns": [
                   {
-                    "value": "3",
+                    "value": "27",
                     "textStyle": {
                       "fontFamily": "'Avenir Next', Arial, sans-serif",
                       "fontSize": "8pt",

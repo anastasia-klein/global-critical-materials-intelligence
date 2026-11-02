@@ -160,8 +160,8 @@ class Renderer:
   for k in range(6):
    val=k/5;xx=l+side*val;yy=b-side*val;self.line(xx,t,xx,b,C['edge'],.5);self.line(l,yy,r,yy,C['edge'],.5);self.text(xx-9,b+6,f'{val:.1f}',10,C['muted']);self.text(x+23,yy-7,f'{val:.1f}',10,C['muted'])
   self.c.saveState();self.c.setDash(5,4);self.line(l,b,r,t,C['muted'],1.1);self.c.restoreState()
-  self.text(l+side/2-60,b+24,'Mining HHI (lower)',10,C['muted'])
-  self.c.saveState();self.c.translate(x+12,H-(t+b)/2);self.c.rotate(90);self.c.setFont('Arial',10);self.c.setFillColor(HexColor(C['muted']));self.c.drawCentredString(0,0,'Refining HHI (lower)');self.c.restoreState()
+  self.text(l+side/2-60,b+24,'Mining HHI (output tonnes)',10,C['muted'])
+  self.c.saveState();self.c.translate(x+12,H-(t+b)/2);self.c.rotate(90);self.c.setFont('Arial',10);self.c.setFillColor(HexColor(C['muted']));self.c.drawCentredString(0,0,'Refining HHI (output tonnes)');self.c.restoreState()
   for j,(name,a,bb) in enumerate(pairs):
    fg=PALETTE[j%6];xx=l+side*a;yy=b-side*bb;self.dot(xx,yy,5.8,fg);self.text(xx+8,yy+(5 if name=='Co' else -18 if name=='REE' else -14),name.replace('Magnet rare earth elements','Magnet REE'),10,C['text'],maxwidth=r-xx+15)
  def paired_bars(self,x,y,w,h):
@@ -293,7 +293,7 @@ class Renderer:
   self.c.setFillColor(HexColor(C['canvas']));self.c.rect(0,0,W,H,fill=1,stroke=0);folder=project/'GlobalCriticalMaterials.Report/definition/pages'/name
   visuals=[json.loads(f.read_text()) for f in folder.glob('visuals/*/visual.json')]
   for v in sorted(visuals,key=lambda z:z['position']['z']):self.visual(index,v)
-  self.text(1100,84,'DESIGN PREVIEW | DESKTOP QA PENDING',10,C['amber'],True)
+  self.text(1100,78,'DESIGN PREVIEW | DESKTOP QA PENDING',8,C['amber'],True)
   self.c.showPage()
 
 if __name__=='__main__':

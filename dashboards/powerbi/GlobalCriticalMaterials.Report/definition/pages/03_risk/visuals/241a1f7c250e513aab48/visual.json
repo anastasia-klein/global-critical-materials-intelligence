@@ -2,10 +2,10 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.5.0/schema.json",
   "name": "241a1f7c250e513aab48",
   "position": {
-    "x": 850,
-    "y": 854,
-    "width": 722,
-    "height": 22,
+    "x": 28,
+    "y": 858,
+    "width": 740,
+    "height": 42,
     "z": 12000,
     "tabOrder": 12000
   },
@@ -259,7 +259,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'IEA GCMO2026 · CC BY 4.0 · Eurostat DS-045409'"
+                  "Value": "'No physical gap, import dependency or capacity: compatible inputs absent'"
                 }
               }
             },
@@ -283,16 +283,16 @@
               {
                 "textRuns": [
                   {
-                    "value": "IEA GCMO2026 · CC BY 4.0 · Eurostat DS-045409",
+                    "value": "No physical gap, import dependency or capacity: compatible inputs absent",
                     "textStyle": {
                       "fontFamily": "'Avenir Next', Arial, sans-serif",
-                      "fontSize": "9pt",
-                      "color": "#183323",
+                      "fontSize": "8.5pt",
+                      "color": "#59695D",
                       "fontWeight": "normal"
                     }
                   }
                 ],
-                "horizontalTextAlignment": "right"
+                "horizontalTextAlignment": "left"
               }
             ]
           }

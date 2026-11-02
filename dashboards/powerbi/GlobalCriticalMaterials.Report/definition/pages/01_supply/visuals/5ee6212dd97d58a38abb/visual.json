@@ -2,8 +2,8 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.5.0/schema.json",
   "name": "5ee6212dd97d58a38abb",
   "position": {
-    "x": 288,
-    "y": 470,
+    "x": 28,
+    "y": 446,
     "width": 244,
     "height": 92,
     "z": 22000,
@@ -180,7 +180,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'Refining · Top 3 bounds'"
+                  "Value": "'Mining · Top 3 bounds'"
                 }
               }
             },
@@ -259,7 +259,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'Refining · Top 3 bounds'"
+                  "Value": "'Mining · Top 3 bounds'"
                 }
               }
             },
@@ -284,7 +284,7 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#479A67'"
+                      "Value": "'#183323'"
                     }
                   }
                 }
@@ -340,11 +340,11 @@
                       "Entity": "ReportMeasures"
                     }
                   },
-                  "Property": "Refining top3 label"
+                  "Property": "Mining top3 label"
                 }
               },
-              "queryRef": "ReportMeasures.Refining top3 label",
-              "nativeQueryRef": "Refining top3 label",
+              "queryRef": "ReportMeasures.Mining top3 label",
+              "nativeQueryRef": "Mining top3 label",
               "active": true
             }
           ]

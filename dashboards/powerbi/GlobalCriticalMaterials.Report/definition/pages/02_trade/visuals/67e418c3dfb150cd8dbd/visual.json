@@ -2,10 +2,10 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.5.0/schema.json",
   "name": "67e418c3dfb150cd8dbd",
   "position": {
-    "x": 340,
-    "y": 282,
+    "x": 28,
+    "y": 254,
     "width": 296,
-    "height": 92,
+    "height": 84,
     "z": 19000,
     "tabOrder": 19000
   },
@@ -180,7 +180,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'Exports · Selected scope'"
+                  "Value": "'Imports · Selected scope'"
                 }
               }
             },
@@ -259,7 +259,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'Exports · Selected scope'"
+                  "Value": "'Imports · Selected scope'"
                 }
               }
             },
@@ -284,7 +284,7 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#479A67'"
+                      "Value": "'#183323'"
                     }
                   }
                 }
@@ -340,11 +340,11 @@
                       "Entity": "ReportMeasures"
                     }
                   },
-                  "Property": "Exports label"
+                  "Property": "Imports label"
                 }
               },
-              "queryRef": "ReportMeasures.Exports label",
-              "nativeQueryRef": "Exports label",
+              "queryRef": "ReportMeasures.Imports label",
+              "nativeQueryRef": "Imports label",
               "active": true
             }
           ]

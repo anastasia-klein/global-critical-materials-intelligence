@@ -43,8 +43,12 @@ def validate(project):
   assert len(licenses)==1 and licenses[0]['position']['x']>=800
   assert licenses[0]['visual']['objects']['general'][0]['properties']['paragraphs'][0]['horizontalTextAlignment']=='right'
   visible=' '.join(run['value'] for v in text for paragraph in v['visual']['objects']['general'][0]['properties']['paragraphs'] for run in paragraph['textRuns'])
+  assert 'Exploratory analysis of public IEA & Eurostat data' in visible
+  assert tiles[-1]['y']==90
   assert 'PORTFOLIO ANALYSIS' not in visible and 'SUPPLY INTELLIGENCE / EUROPE' not in visible
   if cfg['name']=='01_supply':
+   country=next(v for v in visuals if v['visual']['visualType']=='clusteredBarChart')
+   assert literal(country['visual']['objects']['labels'][0]['properties']['show'])=='true'
    m=next(v for v in visuals if v['visual']['visualType']=='azureMap')['visual'];assert 'Series' not in m['query']['queryState']
    assert m['query']['queryState']['Category']['projections'][0]['queryRef']=='Supply.MapPoint'
   if cfg['name']=='04_outlook':
@@ -53,8 +57,10 @@ def validate(project):
    assert len(scenario_cards)==9
    assert all(literal(v['visual']['visualContainerObjects']['title'][0]['properties']['alignment'])=="'center'" for v in scenario_cards)
    toggle=next(v for v in visuals if v['visual'].get('query',{}).get('queryState',{}).get('Values',{}).get('projections',[{}])[0].get('queryRef')=='DefinitionChoice.GraphiteScope')
-   assert toggle['position']['width']==52 and toggle['position']['height']==28 and toggle['position']['x']==1400 and toggle['position']['y']==114
+   assert toggle['position']['width']==48 and toggle['position']['height']==28 and toggle['position']['x']==1410 and toggle['position']['y']==198
    assert 'general' not in toggle['visual']['objects']
+   for card in ['value','label']:
+    assert all(literal(r['properties']['transparency'])=='100D' for r in toggle['visual']['objects'][card])
    assert all(literal(r['properties']['show'])=='false' for r in toggle['visual']['objects']['value'])
    state_images={r['selector']['id']:r['properties'] for r in toggle['visual']['objects']['image']}
    for state in ['default','interaction:hover','interaction:press','selection:selected','selection:selected-interaction:hover','selection:selected-interaction:press']:
@@ -80,11 +86,17 @@ def validate(project):
    end=next(v for v in visuals if v['visual']['visualType']=='clusteredBarChart')
    assert [v['displayName'] for v in end['visual']['query']['queryState']['Y']['projections']]==['CPS','STEPS','HDS']
   if cfg['name']=='03_risk':
+   scatter=next(v for v in visuals if v['visual']['visualType']=='scatterChart')
+   assert scatter['position']['width']==scatter['position']['height']
+   assert 'output tonnes' in literal(scatter['visual']['objects']['categoryAxis'][0]['properties']['titleText'])
    t=next(v for v in visuals if v['visual']['visualType']=='tableEx')
    assert sum(float(literal(v['properties']['value'])[:-1]) for v in t['visual']['objects']['columnWidth'])<=t['position']['width']-24
 
   if cfg['name'] in ['02_trade','04_outlook']:
    chart=next(v for v in visuals if v['visual']['visualType']=='clusteredBarChart')
+   if cfg['name']=='02_trade':
+    assert chart['position']['height']>=488
+    assert literal(chart['visual']['objects']['categoryAxis'][0]['properties']['preferredCategoryWidth'])=='12D'
    q=chart['visual']['query'];assert q['queryState']['Category']['showAll']
    assert q['sortDefinition']['sort'][0]['direction']=='Ascending'
   if cfg['name']=='03_risk':

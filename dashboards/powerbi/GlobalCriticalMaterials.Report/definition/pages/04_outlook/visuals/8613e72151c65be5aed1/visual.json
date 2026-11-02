@@ -2,10 +2,10 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.5.0/schema.json",
   "name": "8613e72151c65be5aed1",
   "position": {
-    "x": 28,
-    "y": 858,
-    "width": 740,
-    "height": 42,
+    "x": 1474,
+    "y": 91,
+    "width": 44,
+    "height": 32,
     "z": 11000,
     "tabOrder": 11000
   },
@@ -259,7 +259,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'Physical gap/capacity unavailable · Supply ends 2040, demand 2050'"
+                  "Value": "'group'"
                 }
               }
             },
@@ -283,10 +283,10 @@
               {
                 "textRuns": [
                   {
-                    "value": "Physical gap/capacity unavailable · Supply ends 2040, demand 2050",
+                    "value": "group",
                     "textStyle": {
                       "fontFamily": "'Avenir Next', Arial, sans-serif",
-                      "fontSize": "8.5pt",
+                      "fontSize": "7pt",
                       "color": "#59695D",
                       "fontWeight": "normal"
                     }

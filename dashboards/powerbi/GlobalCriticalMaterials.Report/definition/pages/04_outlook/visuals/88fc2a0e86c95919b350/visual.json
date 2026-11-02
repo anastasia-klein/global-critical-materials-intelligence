@@ -2,8 +2,8 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.5.0/schema.json",
   "name": "88fc2a0e86c95919b350",
   "position": {
-    "x": 1242.6666666666667,
-    "y": 286,
+    "x": 1084.0,
+    "y": 262,
     "width": 158.66666666666666,
     "height": 70,
     "z": 28000,
@@ -180,7 +180,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'STEPS'"
+                  "Value": "'CPS'"
                 }
               }
             },
@@ -189,7 +189,7 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#FF686B'"
+                      "Value": "'#08B7AE'"
                     }
                   }
                 }
@@ -266,7 +266,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'STEPS'"
+                  "Value": "'CPS'"
                 }
               }
             },
@@ -291,7 +291,7 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#FF686B'"
+                      "Value": "'#08B7AE'"
                     }
                   }
                 }
@@ -347,11 +347,11 @@
                       "Entity": "ReportMeasures"
                     }
                   },
-                  "Property": "STEPS CAGR label"
+                  "Property": "CPS CAGR label"
                 }
               },
-              "queryRef": "ReportMeasures.STEPS CAGR label",
-              "nativeQueryRef": "STEPS CAGR label",
+              "queryRef": "ReportMeasures.CPS CAGR label",
+              "nativeQueryRef": "CPS CAGR label",
               "active": true
             }
           ]

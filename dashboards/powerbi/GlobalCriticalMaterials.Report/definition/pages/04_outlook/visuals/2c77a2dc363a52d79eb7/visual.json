@@ -3,7 +3,7 @@
   "name": "2c77a2dc363a52d79eb7",
   "position": {
     "x": 660,
-    "y": 681,
+    "y": 646,
     "width": 240,
     "height": 23,
     "z": 37000,
@@ -259,7 +259,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'STEPS: Stated Policies'"
+                  "Value": "'CPS: Current Policies'"
                 }
               }
             },
@@ -283,16 +283,16 @@
               {
                 "textRuns": [
                   {
-                    "value": "STEPS",
+                    "value": "CPS",
                     "textStyle": {
                       "fontFamily": "'Avenir Next', Arial, sans-serif",
                       "fontSize": "10pt",
-                      "color": "#FF686B",
+                      "color": "#08B7AE",
                       "fontWeight": "bold"
                     }
                   },
                   {
-                    "value": ": Stated Policies",
+                    "value": ": Current Policies",
                     "textStyle": {
                       "fontFamily": "'Avenir Next', Arial, sans-serif",
                       "fontSize": "10pt",

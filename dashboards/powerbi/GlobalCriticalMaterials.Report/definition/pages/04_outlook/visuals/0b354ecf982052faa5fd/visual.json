@@ -3,9 +3,9 @@
   "name": "0b354ecf982052faa5fd",
   "position": {
     "x": 660,
-    "y": 740,
+    "y": 692,
     "width": 240,
-    "height": 90,
+    "height": 23,
     "z": 39000,
     "tabOrder": 39000
   },
@@ -259,7 +259,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'Scenarios are alternatives. Supply output is available only for STEPS; it is not installed capacity.'"
+                  "Value": "'HDS: High Demand'"
                 }
               }
             },
@@ -283,7 +283,16 @@
               {
                 "textRuns": [
                   {
-                    "value": "Scenarios are alternatives. Supply output is available only for STEPS; it is not installed capacity.",
+                    "value": "HDS",
+                    "textStyle": {
+                      "fontFamily": "'Avenir Next', Arial, sans-serif",
+                      "fontSize": "10pt",
+                      "color": "#465A5D",
+                      "fontWeight": "bold"
+                    }
+                  },
+                  {
+                    "value": ": High Demand",
                     "textStyle": {
                       "fontFamily": "'Avenir Next', Arial, sans-serif",
                       "fontSize": "10pt",

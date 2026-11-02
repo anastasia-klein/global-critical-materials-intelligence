@@ -2,10 +2,10 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.5.0/schema.json",
   "name": "7801a4f1dbc55b64a263",
   "position": {
-    "x": 29,
-    "y": 159,
-    "width": 820,
-    "height": 38,
+    "x": 28,
+    "y": 92,
+    "width": 830,
+    "height": 48,
     "z": 3000,
     "tabOrder": 3000
   },
@@ -259,7 +259,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'Above diagonal: refining lower-bound HHI exceeds mining · Concentration comparison, not a physical deficit'"
+                  "Value": "'Where does concentration sit along the chain?'"
                 }
               }
             },
@@ -283,12 +283,12 @@
               {
                 "textRuns": [
                   {
-                    "value": "Above diagonal: refining lower-bound HHI exceeds mining · Concentration comparison, not a physical deficit",
+                    "value": "Where does concentration sit along the chain?",
                     "textStyle": {
                       "fontFamily": "'Avenir Next', Arial, sans-serif",
-                      "fontSize": "10pt",
-                      "color": "#59695D",
-                      "fontWeight": "normal"
+                      "fontSize": "26pt",
+                      "color": "#18271D",
+                      "fontWeight": "bold"
                     }
                   }
                 ],
