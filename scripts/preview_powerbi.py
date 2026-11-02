@@ -227,8 +227,8 @@ class Renderer:
     vals=sorted({r[col] for r in self.d[table]},key=lambda v:(v!='Graphite',str(v)) if table=='DefinitionChoice' else v)
     chosen=z.get('objects',{}).get('general',[{'properties':{}}])[0]['properties'].get('filter',{}).get('filter',{}).get('Where',[{'Condition':{'In':{'Values':[[{'Literal':{'Value':''}}]]}}}])[0]['Condition']['In']['Values'][0][0]['Literal']['Value'].strip("'").rstrip('L')
     if table=='DefinitionChoice':
-     self.c.setFillColor(HexColor('#A8B2AC'));self.c.roundRect(x,H-y-h,w,h,h/2,fill=1,stroke=0)
-     self.dot(x+h/2,y+h/2,h/2-2,'#FFFFFF');return
+     self.c.setFillColor(HexColor('#FFFFFF'));self.c.setStrokeColor(HexColor('#8A8886'));self.c.setLineWidth(1);self.c.roundRect(x,H-y-h+2,w,h-4,(h-4)/2,fill=1,stroke=1)
+     self.dot(x+11,y+h/2,7,'#8A8886');self.text(x+24,y+6,'Off',10,'#605E5C');return
     width=(w-8*(len(vals)-1))/len(vals)
     for i,val in enumerate(vals):
      xx=x+i*(width+8);selected=str(val)==chosen;self.c.setFillColor(HexColor(C['teal'] if selected else C['panel']));self.c.setStrokeColor(HexColor(C['edge']));self.c.roundRect(xx,H-y-34,width,34,6,fill=1,stroke=1);self.text(xx+12,y+8,str(val),11,C['canvas'] if selected else C['text'],selected)

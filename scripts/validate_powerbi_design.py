@@ -34,6 +34,7 @@ def validate(project):
    if v['visual']['visualType']=='slicer':assert v['position']['height']>=80
    if v['visual']['visualType']=='advancedSlicerVisual':
     for name in ['image','accentBar','selectionIcon']:
+     if name=='image' and v['visual']['query']['queryState']['Values']['projections'][0]['queryRef']=='DefinitionChoice.GraphiteScope':continue
      assert all(literal(row['properties']['show'])=='false' for row in v['visual']['objects'][name])
   text=[v for v in visuals if v['visual']['visualType']=='textbox']
   numbers=[v for v in text if v['visual']['objects']['general'][0]['properties']['paragraphs'][0]['textRuns'][0]['value'] in ['29','27','3','28','6','group']]
@@ -54,9 +55,21 @@ def validate(project):
    toggle=next(v for v in visuals if v['visual'].get('query',{}).get('queryState',{}).get('Values',{}).get('projections',[{}])[0].get('queryRef')=='DefinitionChoice.GraphiteScope')
    assert toggle['position']['width']==52 and toggle['position']['height']==28 and toggle['position']['x']==1400 and toggle['position']['y']==114
    assert 'general' not in toggle['visual']['objects']
-   state_values={r['selector']['id']:r['properties'] for r in toggle['visual']['objects']['value']}
-   assert literal(state_values['default']['horizontalAlignment'])=="'left'"
-   for state in ['selection:selected','selection:selected-interaction:hover','selection:selected-interaction:press']:assert literal(state_values[state]['horizontalAlignment'])=="'right'"
+   assert all(literal(r['properties']['show'])=='false' for r in toggle['visual']['objects']['value'])
+   state_images={r['selector']['id']:r['properties'] for r in toggle['visual']['objects']['image']}
+   for state in ['default','interaction:hover','interaction:press','selection:selected','selection:selected-interaction:hover','selection:selected-interaction:press']:
+    image=state_images[state];assert literal(image['show'])=='true' and literal(image['sourceType'])=="'image'"
+    expected='GraphiteToggle'+('On' if 'selection:selected' in state else 'Off')+'0001.svg'
+    assert image['imageFile']['image']['url']['expr']['ResourcePackageItem']['ItemName']==expected
+   from xml.etree import ElementTree as ET
+   report=project/'GlobalCriticalMaterials.Report'
+   package=json.loads((report/'definition/report.json').read_text())['resourcePackages'][0]
+   for on in [False,True]:
+    name='GraphiteToggle'+('On' if on else 'Off')+'0001.svg'
+    assert any(r['name']==name and r['path']==name and r['type']=='Image' for r in package['items'])
+    svg=ET.fromstring((report/'StaticResources/RegisteredResources'/name).read_text())
+    circle=svg.find('{http://www.w3.org/2000/svg}circle');assert circle.attrib['cx']==('47' if on else '13')
+    assert svg.find('.//{http://www.w3.org/2000/svg}text').text==('On' if on else 'Off')
    for scenario,expected in [('CPS','#08B7AE'),('STEPS','#FF686B'),('HDS','#465A5D')]:
     run=next(v['visual']['objects']['general'][0]['properties']['paragraphs'][0]['textRuns'][0] for v in text if v['visual']['objects']['general'][0]['properties']['paragraphs'][0]['textRuns'][0]['value']==scenario)
     assert run['textStyle']['color']==expected

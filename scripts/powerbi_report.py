@@ -70,16 +70,21 @@ class Page:
   # SELECTEDVALUE's Graphite default without a second visible button.
   v=self.buttons(1400,114,52,'','DefinitionChoice','GraphiteScope',None,1)
   v['position']['height']=28
-  # Native selected/unselected states form a pill track and a moving thumb.
-  # Combined hover/press states retain the selected thumb position.
+  # Use embedded vector states: a slicer callout cannot replace its field's
+  # displayed text with a decorative glyph. No font glyph represents the thumb.
   states=['default','selection:selected','interaction:hover','selection:selected-interaction:hover','interaction:press','selection:selected-interaction:press']
   def st(fn):return [{'selector':{'id':state},'properties':fn('selection:selected' in state)} for state in states]
   obj=v['visual']['objects']
-  obj['value']=st(lambda on:dict(show=lit(True),text=lit('●'),fontFamily=lit(BODY_FONT),fontSize=lit(21),fontColor=color('#FFFFFF'),horizontalAlignment=lit('right' if on else 'left'),verticalAlignment=lit('middle'),textWrap=lit(False)))
-  obj['padding']=st(lambda _:dict(paddingSelection=lit('Custom'),topMargin=lit(0),bottomMargin=lit(0),leftMargin=lit(2),rightMargin=lit(2)))
-  obj['fillCustom']=st(lambda on:dict(show=lit(True),fillColor=color('#08B7AE' if on else '#A8B2AC'),transparency=lit(0)))
+  obj['value']=st(lambda _:dict(show=lit(False)))
+  obj['padding']=st(lambda _:dict(paddingSelection=lit('Custom'),topMargin=lit(0),bottomMargin=lit(0),leftMargin=lit(0),rightMargin=lit(0)))
+  obj['fillCustom']=st(lambda _:dict(show=lit(False)))
   obj['outline']=st(lambda _:dict(show=lit(False)))
   obj['shapeCustomRectangle']=st(lambda _:dict(tileShape=lit('pill')))
+  def image_state(on):
+   name='GraphiteToggle'+('On' if on else 'Off')+'0001.svg'
+   resource={'expr':{'ResourcePackageItem':{'PackageName':'RegisteredResources','PackageType':1,'ItemName':name}}}
+   return dict(show=lit(True),sourceType=lit('image'),imageFile={'image':{'name':lit(name),'url':resource,'scaling':lit('Normal')}},imageFit=lit('Normal'),setAsBackGround=lit(True),ignorePadding=lit(True),padding=lit(0),transparency=lit(0),altText=lit('All grades On' if on else 'All grades Off'))
+  obj['image']=st(image_state)
   v['visual']['visualContainerObjects']['general'][0]['properties']['altText']=lit('All grades graphite toggle: off = Graphite; on = All grades. Click to change scope.')
   self.text(1354,216,104,26,'All grades',8,align='right')
   v['visual']['objects']['selection']=props(singleSelect=lit(False),strictSingleSelect=lit(False),selectAllCheckboxEnabled=lit(False))
@@ -200,11 +205,19 @@ def build_report(root,manifest,display_font=FONT_STACK):
   'textClasses':{k:{'fontFace':BODY_FONT if k=='label' else DISPLAY_FONT,'fontSize':n,'color':C['text'] if k!='label' else C['muted']} for k,n in [('callout',28),('title',14),('header',12),('label',10)]}}
  save(root/'CriticalMaterialsSage.theme.json',theme)
  save(report/'StaticResources/RegisteredResources/CriticalMaterialsSage.json',theme)
+ # Original SVG artwork matches Power BI's compact On/Off control language.
+ for on in [False,True]:
+  name='GraphiteToggle'+('On' if on else 'Off')+'0001.svg'
+  track='<rect x="1" y="1" width="58" height="26" rx="13" fill="#008272"/>' if on else '<rect x="1" y="1" width="58" height="26" rx="13" fill="#FFFFFF" stroke="#8A8886" stroke-width="1.5"/>'
+  thumb='<circle cx="47" cy="14" r="8" fill="#FFFFFF"/>' if on else '<circle cx="13" cy="14" r="8" fill="#8A8886"/>'
+  label='<text x="9" y="18" fill="#FFFFFF">On</text>' if on else '<text x="27" y="18" fill="#605E5C">Off</text>'
+  svg='<svg xmlns="http://www.w3.org/2000/svg" width="60" height="28" viewBox="0 0 60 28" role="img" aria-label="All grades '+('On' if on else 'Off')+'">'+track+thumb+'<g font-family="Arial, sans-serif" font-size="12">'+label+'</g></svg>\n'
+  (report/'StaticResources/RegisteredResources'/name).write_text(svg)
  save(report/'definition.pbir',{'$schema':BASE+'item/report/definitionProperties/2.0.0/schema.json','version':'4.0','datasetReference':{'byPath':{'path':'../GlobalCriticalMaterials.SemanticModel'}}})
  save(report/'definition/version.json',{'$schema':BASE+'item/report/definition/versionMetadata/1.0.0/schema.json','version':'2.0.0'})
  save(report/'definition/report.json',{'$schema':BASE+'item/report/definition/report/3.0.0/schema.json',
   'themeCollection':{'customTheme':{'name':'CriticalMaterialsSage','reportVersionAtImport':{'visual':'2.5.0','page':'2.0.0','report':'3.0.0'},'type':'RegisteredResources'}},
-  'resourcePackages':[{'name':'RegisteredResources','type':'RegisteredResources','items':[{'name':'CriticalMaterialsSage','path':'CriticalMaterialsSage.json','type':'CustomTheme'}]}],
+  'resourcePackages':[{'name':'RegisteredResources','type':'RegisteredResources','items':[{'name':'CriticalMaterialsSage','path':'CriticalMaterialsSage.json','type':'CustomTheme'}]+[{'name':'GraphiteToggle'+state+'0001.svg','path':'GraphiteToggle'+state+'0001.svg','type':'Image'} for state in ['Off','On']]}],
   'settings':{'useStylableVisualContainerHeader':True,'exportDataMode':'AllowSummarized'}})
  save(report/'definition/pages/pages.json',{'$schema':BASE+'item/report/definition/pagesMetadata/1.0.0/schema.json','pageOrder':[p[0] for p in PAGES],'activePageName':PAGES[0][0]})
  # Supply: independent stage points, no legend field that could trigger pies.

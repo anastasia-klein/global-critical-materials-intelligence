@@ -20,6 +20,16 @@
           "name": "CriticalMaterialsSage",
           "path": "CriticalMaterialsSage.json",
           "type": "CustomTheme"
+        },
+        {
+          "name": "GraphiteToggleOff0001.svg",
+          "path": "GraphiteToggleOff0001.svg",
+          "type": "Image"
+        },
+        {
+          "name": "GraphiteToggleOn0001.svg",
+          "path": "GraphiteToggleOn0001.svg",
+          "type": "Image"
         }
       ]
     }
