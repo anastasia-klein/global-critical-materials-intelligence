@@ -2,9 +2,9 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.5.0/schema.json",
   "name": "def0db6cc2865bab89f2",
   "position": {
-    "x": 564,
+    "x": 326,
     "y": 184,
-    "width": 300,
+    "width": 220,
     "height": 80,
     "z": 15000,
     "tabOrder": 15000
@@ -180,7 +180,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'Measure basis'"
+                  "Value": "'Snapshot year'"
                 }
               }
             },
@@ -259,7 +259,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'Measure basis'"
+                  "Value": "'Snapshot year'"
                 }
               }
             },
@@ -387,7 +387,7 @@
                 "From": [
                   {
                     "Name": "s",
-                    "Entity": "BasisChoice",
+                    "Entity": "TradeYears",
                     "Type": 0
                   }
                 ],
@@ -403,7 +403,7 @@
                                   "Source": "s"
                                 }
                               },
-                              "Property": "BasisLabel"
+                              "Property": "Year"
                             }
                           }
                         ],
@@ -411,7 +411,7 @@
                           [
                             {
                               "Literal": {
-                                "Value": "'Value · EUR'"
+                                "Value": "2024L"
                               }
                             }
                           ]
@@ -435,14 +435,14 @@
                 "Column": {
                   "Expression": {
                     "SourceRef": {
-                      "Entity": "BasisChoice"
+                      "Entity": "TradeYears"
                     }
                   },
-                  "Property": "BasisLabel"
+                  "Property": "Year"
                 }
               },
-              "queryRef": "BasisChoice.BasisLabel",
-              "nativeQueryRef": "BasisLabel",
+              "queryRef": "TradeYears.Year",
+              "nativeQueryRef": "Year",
               "active": true
             }
           ]

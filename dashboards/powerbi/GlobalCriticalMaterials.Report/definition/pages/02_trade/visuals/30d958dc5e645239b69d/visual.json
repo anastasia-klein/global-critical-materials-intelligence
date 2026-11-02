@@ -2,7 +2,7 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.5.0/schema.json",
   "name": "30d958dc5e645239b69d",
   "position": {
-    "x": 1276,
+    "x": 964,
     "y": 282,
     "width": 296,
     "height": 92,
@@ -180,7 +180,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'Supplier HHI'"
+                  "Value": "'Top supplier share'"
                 }
               }
             },
@@ -259,7 +259,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'Supplier HHI'"
+                  "Value": "'Top supplier share'"
                 }
               }
             },
@@ -300,7 +300,7 @@
             "fontSize": {
               "expr": {
                 "Literal": {
-                  "Value": "19D"
+                  "Value": "25D"
                 }
               }
             },
@@ -340,11 +340,11 @@
                       "Entity": "ReportMeasures"
                     }
                   },
-                  "Property": "Supplier HHI label"
+                  "Property": "Top supplier label"
                 }
               },
-              "queryRef": "ReportMeasures.Supplier HHI label",
-              "nativeQueryRef": "Supplier HHI label",
+              "queryRef": "ReportMeasures.Top supplier label",
+              "nativeQueryRef": "Top supplier label",
               "active": true
             }
           ]

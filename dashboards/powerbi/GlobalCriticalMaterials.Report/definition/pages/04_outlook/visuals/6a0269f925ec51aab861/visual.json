@@ -2,7 +2,7 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.5.0/schema.json",
   "name": "6a0269f925ec51aab861",
   "position": {
-    "x": 562.0,
+    "x": 357.3333333333333,
     "y": 286,
     "width": 158.66666666666666,
     "height": 70,
@@ -180,7 +180,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'CPS'"
+                  "Value": "'HDS'"
                 }
               }
             },
@@ -189,7 +189,7 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#08B7AE'"
+                      "Value": "'#465A5D'"
                     }
                   }
                 }
@@ -266,7 +266,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'CPS'"
+                  "Value": "'HDS'"
                 }
               }
             },
@@ -291,7 +291,7 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#08B7AE'"
+                      "Value": "'#465A5D'"
                     }
                   }
                 }
@@ -347,11 +347,11 @@
                       "Entity": "ReportMeasures"
                     }
                   },
-                  "Property": "CPS growth label"
+                  "Property": "HDS endpoint label"
                 }
               },
-              "queryRef": "ReportMeasures.CPS growth label",
-              "nativeQueryRef": "CPS growth label",
+              "queryRef": "ReportMeasures.HDS endpoint label",
+              "nativeQueryRef": "HDS endpoint label",
               "active": true
             }
           ]

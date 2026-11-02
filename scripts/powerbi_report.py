@@ -68,8 +68,20 @@ class Page:
   # A visual-only domain filter leaves the unselected page context unfiltered.
   # Selecting the single visible item applies All grades; clearing it restores
   # SELECTEDVALUE's Graphite default without a second visible button.
-  v=self.buttons(1354,216,104,'','DefinitionChoice','GraphiteScope',None,1)
-  v['position']['height']=36
+  v=self.buttons(1400,114,52,'','DefinitionChoice','GraphiteScope',None,1)
+  v['position']['height']=28
+  # Native selected/unselected states form a pill track and a moving thumb.
+  # Combined hover/press states retain the selected thumb position.
+  states=['default','selection:selected','interaction:hover','selection:selected-interaction:hover','interaction:press','selection:selected-interaction:press']
+  def st(fn):return [{'selector':{'id':state},'properties':fn('selection:selected' in state)} for state in states]
+  obj=v['visual']['objects']
+  obj['value']=st(lambda on:dict(show=lit(True),text=lit('●'),fontFamily=lit(BODY_FONT),fontSize=lit(21),fontColor=color('#FFFFFF'),horizontalAlignment=lit('right' if on else 'left'),verticalAlignment=lit('middle'),textWrap=lit(False)))
+  obj['padding']=st(lambda _:dict(paddingSelection=lit('Custom'),topMargin=lit(0),bottomMargin=lit(0),leftMargin=lit(2),rightMargin=lit(2)))
+  obj['fillCustom']=st(lambda on:dict(show=lit(True),fillColor=color('#08B7AE' if on else '#A8B2AC'),transparency=lit(0)))
+  obj['outline']=st(lambda _:dict(show=lit(False)))
+  obj['shapeCustomRectangle']=st(lambda _:dict(tileShape=lit('pill')))
+  v['visual']['visualContainerObjects']['general'][0]['properties']['altText']=lit('All grades graphite toggle: off = Graphite; on = All grades. Click to change scope.')
+  self.text(1354,216,104,26,'All grades',8,align='right')
   v['visual']['objects']['selection']=props(singleSelect=lit(False),strictSingleSelect=lit(False),selectAllCheckboxEnabled=lit(False))
   definition={'Version':2,'From':[{'Name':'g','Entity':'DefinitionChoice','Type':0}],'Where':[{'Condition':{'In':{'Expressions':[{'Column':{'Expression':{'SourceRef':{'Source':'g'}},'Property':'GraphiteScope'}}],'Values':[[{'Literal':{'Value':"'All grades'"}}]]}}}]}
   v['filterConfig']={'filters':[{'name':'graphite_scope_domain','field':field('DefinitionChoice','GraphiteScope'),'type':'Categorical','filter':definition,'howCreated':'User','isHiddenInViewMode':True,'isLockedInViewMode':True}]}
@@ -152,7 +164,8 @@ class Page:
   self.text(29,159,820,38,sub,10,C['muted'])
   self.materials(optional=self.name=='03_risk')
   self.text(28,858,740,42,footer,8.5,C['muted'])
-  self.text(800,854,772,46,'IEA GCMO2026 · CC BY 4.0 · Eurostat DS-045409\n'+CAPTURE_LABEL+' · Reuse with attribution',9,C['teal'],align='right')
+  self.text(850,854,722,22,'IEA GCMO2026 · CC BY 4.0 · Eurostat DS-045409',9,C['teal'],align='right')
+  self.text(850,876,722,22,CAPTURE_LABEL+' · Reuse with attribution',9,C['teal'],align='right')
  def finish(self):
   interactions=[]
   charts=[v for v in self.visuals if v['visual']['visualType'] not in ['slicer','advancedSlicerVisual','textbox','pageNavigator','card']]
@@ -253,5 +266,10 @@ def build_report(root,manifest,display_font=FONT_STACK):
  v['visual']['query']['queryState']['Category']['showAll']=True
  p.text(1160,384,398,34,'0 = reported zero · — / blank = not returned',8,align='right')
  p.chart('lineChart',28,628,600,214,'Expected output · Mining / Refining · STEPS · kt',{'Category':[('Outlook','Year',False)],'Y':[('ReportMeasures','Mining outlook kt',True),('ReportMeasures','Refining outlook kt',True)]},('Outlook','Year',False,'asc'))
- p.note(646,628,268,214,'Scenario context','CPS: Current Policies\nSTEPS: Stated Policies\nHDS: High Demand\n\nScenarios are alternatives. Supply output is available only for STEPS; it is not installed capacity.')
+ p.note(646,628,268,214,'Scenario context','')
+ for i,(scenario,description) in enumerate([('CPS','Current Policies'),('STEPS','Stated Policies'),('HDS','High Demand')]):
+  v=p.text(660,658+i*23,240,23,scenario+': '+description,10)
+  style=v['visual']['objects']['general'][0]['properties']['paragraphs'][0]['textRuns'][0]['textStyle']
+  v['visual']['objects']['general'][0]['properties']['paragraphs'][0]['textRuns']=[{'value':scenario,'textStyle':dict(style,color=SCENARIO_COLORS[scenario],fontWeight='bold')},{'value':': '+description,'textStyle':style}]
+ p.text(660,740,240,90,'Scenarios are alternatives. Supply output is available only for STEPS; it is not installed capacity.',10)
  p.finish()

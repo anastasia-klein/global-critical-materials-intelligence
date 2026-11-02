@@ -2,7 +2,7 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.5.0/schema.json",
   "name": "dc4f24e064175e41a8e7",
   "position": {
-    "x": 1401.3333333333333,
+    "x": 1084.0,
     "y": 286,
     "width": 158.66666666666666,
     "height": 70,
@@ -180,7 +180,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'HDS'"
+                  "Value": "'CPS'"
                 }
               }
             },
@@ -189,7 +189,7 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#465A5D'"
+                      "Value": "'#08B7AE'"
                     }
                   }
                 }
@@ -266,7 +266,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'HDS'"
+                  "Value": "'CPS'"
                 }
               }
             },
@@ -291,7 +291,7 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#465A5D'"
+                      "Value": "'#08B7AE'"
                     }
                   }
                 }
@@ -347,11 +347,11 @@
                       "Entity": "ReportMeasures"
                     }
                   },
-                  "Property": "HDS CAGR label"
+                  "Property": "CPS CAGR label"
                 }
               },
-              "queryRef": "ReportMeasures.HDS CAGR label",
-              "nativeQueryRef": "HDS CAGR label",
+              "queryRef": "ReportMeasures.CPS CAGR label",
+              "nativeQueryRef": "CPS CAGR label",
               "active": true
             }
           ]

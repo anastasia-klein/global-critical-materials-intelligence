@@ -2,7 +2,7 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.5.0/schema.json",
   "name": "77afabc5def155f4b53e",
   "position": {
-    "x": 964,
+    "x": 652,
     "y": 282,
     "width": 296,
     "height": 92,
@@ -180,7 +180,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'Top supplier share'"
+                  "Value": "'Trade balance'"
                 }
               }
             },
@@ -259,7 +259,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'Top supplier share'"
+                  "Value": "'Trade balance'"
                 }
               }
             },
@@ -340,11 +340,11 @@
                       "Entity": "ReportMeasures"
                     }
                   },
-                  "Property": "Top supplier label"
+                  "Property": "Trade balance label"
                 }
               },
-              "queryRef": "ReportMeasures.Top supplier label",
-              "nativeQueryRef": "Top supplier label",
+              "queryRef": "ReportMeasures.Trade balance label",
+              "nativeQueryRef": "Trade balance label",
               "active": true
             }
           ]

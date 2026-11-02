@@ -52,8 +52,14 @@ def validate(project):
    assert len(scenario_cards)==9
    assert all(literal(v['visual']['visualContainerObjects']['title'][0]['properties']['alignment'])=="'center'" for v in scenario_cards)
    toggle=next(v for v in visuals if v['visual'].get('query',{}).get('queryState',{}).get('Values',{}).get('projections',[{}])[0].get('queryRef')=='DefinitionChoice.GraphiteScope')
-   assert toggle['position']['width']==104 and toggle['position']['height']==36
+   assert toggle['position']['width']==52 and toggle['position']['height']==28 and toggle['position']['x']==1400 and toggle['position']['y']==114
    assert 'general' not in toggle['visual']['objects']
+   state_values={r['selector']['id']:r['properties'] for r in toggle['visual']['objects']['value']}
+   assert literal(state_values['default']['horizontalAlignment'])=="'left'"
+   for state in ['selection:selected','selection:selected-interaction:hover','selection:selected-interaction:press']:assert literal(state_values[state]['horizontalAlignment'])=="'right'"
+   for scenario,expected in [('CPS','#08B7AE'),('STEPS','#FF686B'),('HDS','#465A5D')]:
+    run=next(v['visual']['objects']['general'][0]['properties']['paragraphs'][0]['textRuns'][0] for v in text if v['visual']['objects']['general'][0]['properties']['paragraphs'][0]['textRuns'][0]['value']==scenario)
+    assert run['textStyle']['color']==expected
    assert literal(toggle['visual']['objects']['selection'][0]['properties']['strictSingleSelect'])=='false'
    assert toggle['filterConfig']['filters'][0]['filter']['Where'][0]['Condition']['In']['Values']==[[{'Literal':{'Value':"'All grades'"}}]]
    labels=[v['visual']['query']['queryState']['Values']['projections'][0]['queryRef'].split('.')[1] for v in scenario_cards]
