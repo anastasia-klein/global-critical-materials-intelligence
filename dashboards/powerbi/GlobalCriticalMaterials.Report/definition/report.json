@@ -34,8 +34,24 @@
       ]
     }
   ],
+  "objects": {
+    "outspacePane": [
+      {
+        "properties": {
+          "expanded": {
+            "expr": {
+              "Literal": {
+                "Value": "false"
+              }
+            }
+          }
+        }
+      }
+    ]
+  },
   "settings": {
     "useStylableVisualContainerHeader": true,
-    "exportDataMode": "AllowSummarized"
+    "exportDataMode": "AllowSummarized",
+    "useEnhancedTooltips": false
   }
 }

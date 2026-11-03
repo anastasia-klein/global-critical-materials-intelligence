@@ -392,13 +392,6 @@
             "autoSizeColumnWidth": {
               "expr": {
                 "Literal": {
-                  "Value": "false"
-                }
-              }
-            },
-            "customColumnWidth": {
-              "expr": {
-                "Literal": {
                   "Value": "true"
                 }
               }

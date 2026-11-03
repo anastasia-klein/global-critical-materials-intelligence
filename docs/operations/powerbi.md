@@ -49,7 +49,7 @@ Static checks have passed; native Desktop rendering and DAX execution must be ch
 - Compare Germany / Li carbonates / 2024 / EUR with the source query: imports, exports, Chile/Belgium/US shares and supplier HHI.
 - Switch every reporter, basis and material. EU27 remains external-only; national totals include intra-EU. Multiple product/reporter selections must not create sums of incompatible scopes.
 - On risk, clear material selection to compare all six. Mining/refining bars show lower HHI; upper bounds are in tooltips. The square 0–1 scatter compares concentration, not physical shortage.
-- On outlook, each KPI and demand chart shows CPS, STEPS and HDS with the same fixed colours. There is no scenario selector. The year is a single-row button choice; the All grades pill toggle is below the Graphite card (On/green/right when selected, Off/grey/left for Graphite). Cobalt/grid storage retains reported 0. A source-missing category remains blank/dash with the status tooltip. Graphite scope changes do not affect other material families. Supply stops at 2040; demand extends to 2050.
+- On outlook, each KPI and demand chart shows CPS, STEPS and HDS with the same fixed colours. There is no scenario selector. The year is a single-row button choice; the All grades pill toggle is at the top of the Graphite card (On/green/right when selected, Off/grey/left for Graphite). Cobalt/grid storage retains reported 0. A source-missing category remains blank/dash with the status tooltip. Graphite scope changes do not affect other material families. Supply stops at 2040; demand extends to 2050.
 - The combined map shows separate circles in two stage colours, not pies. Offsets of ±3° are display-only; they are not facility coordinates. Nearby circles may overlap. Other countries is excluded.
 
 The preview PNGs are design previews, not proof of Desktop acceptance. No automatic Service publication is performed by this workflow.
@@ -61,3 +61,5 @@ Working-copy inputs are verified against the selected commit on every launch, in
 The graphite scope control uses two embedded SVG images with a drawn circular thumb and explicit On/Off labels, including selected hover and press states. Its artwork does not depend on a callout font or external image hosting.
 
 The All grades caption sits to the left of the switch. The native callout and label are both hidden with explicit transparency across default, selected, hover and press states so the product-field text cannot overlap the SVG.
+
+Saved starting selections are Copper/2025 on Supply, rare-earth-containing magnets/Germany/2024/EUR on Trade, all materials/2030 on Risk, and Copper/2030 with All grades selected on Outlook. All grades changes graphite only. The SQL-derived preview intentionally illustrates Lithium/2030 supply and Lithium/2040 demand; it is not a screenshot of the saved opening selections.

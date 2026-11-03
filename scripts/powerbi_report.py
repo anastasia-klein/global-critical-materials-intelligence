@@ -41,7 +41,7 @@ class Page:
   count=count or 4
   states=['default','selection:selected','interaction:hover']
   def st(fn):return [{'selector':{'id':state},'properties':fn(state)} for state in states]
-  if label:self.text(x,y+2,118,32,label,10,C['muted'],True);x+=124;w-=124
+  if label:self.text(x+4,y+12,112,30,label,10,C['muted'],True);x+=124;w-=124
   gap=8;tile_width=int((w-gap*(count-1))/count)
   objects={
    'layout':props(orientation=lit(2),rowCount=lit(1),columnCount=lit(count),showFixedSize=lit(False),autoGrid=lit(True),cellPadding=lit(gap),style=lit('Cards'),topOuterMargin=lit(0),bottomOuterMargin=lit(0),leftOuterMargin=lit(0),rightOuterMargin=lit(0)),
@@ -65,10 +65,9 @@ class Page:
    v=self.add('card',x+12+i*inner,y+32,inner,70,scenario,{'Values':[('ReportMeasures',scenario+' '+suffix,True)]},{'labels':props(color=color(SCENARIO_COLORS[scenario]),fontFamily=lit(DISPLAY_FONT),fontSize=lit(18),labelDisplayUnits=lit(1)),'categoryLabels':props(show=lit(False))},transparent=True)
    v['visual']['visualContainerObjects']['title'][0]['properties'].update(fontSize=lit(10),fontColor=color(SCENARIO_COLORS[scenario]),alignment=lit('center'))
  def graphite_toggle(self):
-  # A visual-only domain filter leaves the unselected page context unfiltered.
-  # Selecting the single visible item applies All grades; clearing it restores
-  # SELECTEDVALUE's Graphite default without a second visible button.
-  v=self.buttons(1410,198,48,'','DefinitionChoice','GraphiteScope',None,1)
+  # The visible item applies All grades; clearing it restores the Graphite
+  # default. The saved report starts with All grades selected.
+  v=self.buttons(1412,103,48,'','DefinitionChoice','GraphiteScope','All grades',1)
   v['position']['height']=28
   # Use embedded vector states: a slicer callout cannot replace its field's
   # displayed text with a decorative glyph. No font glyph represents the thumb.
@@ -87,7 +86,7 @@ class Page:
    return dict(show=lit(True),sourceType=lit('image'),imageFile={'image':{'name':lit(name),'url':resource,'scaling':lit('Normal')}},imageFit=lit('Normal'),setAsBackGround=lit(True),ignorePadding=lit(True),padding=lit(0),transparency=lit(0),altText=lit('All grades On' if on else 'All grades Off'))
   obj['image']=st(image_state)
   v['visual']['visualContainerObjects']['general'][0]['properties']['altText']=lit('All grades graphite toggle: off = Graphite; on = All grades. Click to change scope.')
-  self.text(1354,201,54,26,'All grades',8,align='left')
+  self.text(1359,105,54,26,'All grades',8,align='left')
   v['visual']['objects']['selection']=props(singleSelect=lit(False),strictSingleSelect=lit(False),selectAllCheckboxEnabled=lit(False))
   definition={'Version':2,'From':[{'Name':'g','Entity':'DefinitionChoice','Type':0}],'Where':[{'Condition':{'In':{'Expressions':[{'Column':{'Expression':{'SourceRef':{'Source':'g'}},'Property':'GraphiteScope'}}],'Values':[[{'Literal':{'Value':"'All grades'"}}]]}}}]}
   v['filterConfig']={'filters':[{'name':'graphite_scope_domain','field':field('DefinitionChoice','GraphiteScope'),'type':'Categorical','filter':definition,'howCreated':'User','isHiddenInViewMode':True,'isLockedInViewMode':True}]}
@@ -113,7 +112,8 @@ class Page:
    'image':st(lambda _:dict(show=lit(False)))}
   for entry in objects['fillCustom']:entry['selector']['data']=[{'dataViewWildcard':{'matchingOption':1}}]
   if not optional:
-   objects['general']=props(filter={'filter':{'Version':2,'From':[{'Name':'s','Entity':'Materials','Type':0}],'Where':[{'Condition':{'In':{'Expressions':[{'Column':{'Expression':{'SourceRef':{'Source':'s'}},'Property':'Symbol'}}],'Values':[[{'Literal':{'Value':"'Li'"}}]]}}}]}})
+   default_material={'01_supply':'Cu','02_trade':'REE','04_outlook':'Cu'}[self.name]
+   objects['general']=props(filter={'filter':{'Version':2,'From':[{'Name':'s','Entity':'Materials','Type':0}],'Where':[{'Condition':{'In':{'Expressions':[{'Column':{'Expression':{'SourceRef':{'Source':'s'}},'Property':'Symbol'}}],'Values':[[{'Literal':{'Value':"'"+default_material+"'"}}]]}}}]}})
   v=self.add('advancedSlicerVisual',x,y,w,h,'',{'Values':[('Materials','Symbol',False)],'Label':[('ReportMeasures','Material tile label',True)]},objects,transparent=True,alt='Material family: Cu Copper, Co Cobalt, Li Lithium, Ni Nickel, C Graphite, REE Rare earths. Colors identify chemical categories, not risk.')
   v['visual']['visualContainerObjects']['padding']=props(top=lit(0),bottom=lit(0),left=lit(0),right=lit(0))
   v['visual']['query']['sortDefinition']={'sort':[{'field':field('Materials','Symbol'),'direction':'Ascending'}],'isDefaultSort':True}
@@ -159,8 +159,10 @@ class Page:
     'grid':props(gridHorizontal=lit(True),gridHorizontalColor=color(C['edge']),gridVertical=lit(False),rowPadding=lit(5)),
     'total':props(totals=lit(False))})
  def common(self,headline,sub,footer):
-  self.text(28,12,550,42,'Global critical materials',26,C['text'],True)
-  self.text(29,57,550,26,'Exploratory analysis of public IEA & Eurostat data',10)
+  self.text(28,12,550,60,'Global critical materials',26,C['text'],True)
+  subtitle=self.text(29,57,550,26,'EXPLORATORY ANALYSIS · IEA & EUROSTAT DATA',10)
+  base_style=subtitle['visual']['objects']['general'][0]['properties']['paragraphs'][0]['textRuns'][0]['textStyle']
+  subtitle['visual']['objects']['general'][0]['properties']['paragraphs'][0]['textRuns']=[{'value':'EXPLORATORY ANALYSIS ','textStyle':dict(base_style)},{'value':'·','textStyle':dict(base_style,fontWeight='bold',fontSize='9pt',color=C['teal'])},{'value':' IEA & EUROSTAT DATA','textStyle':dict(base_style)}]
   nav=self.add('pageNavigator',600,24,972,50,transparent=True,objects={
     'layout':props(orientation=lit(2),cellPadding=lit(8)),
     'text':[{'selector':{'id':state},'properties':{'fontFamily':lit(BODY_FONT),'fontSize':lit(10.5),'fontColor':color(C['canvas'] if state=='selected' else C['muted']),'bold':lit(state=='selected'),'leftMargin':lit(4),'rightMargin':lit(4)}} for state in ['default','selected']],
@@ -220,14 +222,15 @@ def build_report(root,manifest,display_font=FONT_STACK):
  save(report/'definition/report.json',{'$schema':BASE+'item/report/definition/report/3.0.0/schema.json',
   'themeCollection':{'customTheme':{'name':'CriticalMaterialsSage','reportVersionAtImport':{'visual':'2.5.0','page':'2.0.0','report':'3.0.0'},'type':'RegisteredResources'}},
   'resourcePackages':[{'name':'RegisteredResources','type':'RegisteredResources','items':[{'name':'CriticalMaterialsSage','path':'CriticalMaterialsSage.json','type':'CustomTheme'}]+[{'name':'GraphiteToggle'+state+'0001.svg','path':'GraphiteToggle'+state+'0001.svg','type':'Image'} for state in ['Off','On']]}],
-  'settings':{'useStylableVisualContainerHeader':True,'exportDataMode':'AllowSummarized'}})
+  'objects':{'outspacePane':props(expanded=lit(False))},
+  'settings':{'useStylableVisualContainerHeader':True,'exportDataMode':'AllowSummarized','useEnhancedTooltips':False}})
  save(report/'definition/pages/pages.json',{'$schema':BASE+'item/report/definition/pagesMetadata/1.0.0/schema.json','pageOrder':[p[0] for p in PAGES],'activePageName':PAGES[0][0]})
  # Supply: independent stage points, no legend field that could trigger pies.
  p=Page(report,*PAGES[0]);p.common('Where are mining and refining concentrated?',
   'STEPS / Base Case · Mining: forest green · Refining: leaf green · Independent stage denominators',
   'Expected output, not capacity · 2025 baseline/basis unverified · Other countries is opaque')
- p.buttons(28,180,650,'Supply year','SupplyYears','Year',2030,4)
- p.text(735,196,837,34,'Material scope: native IEA definition · Graphite excludes all-grades graphite · Tile colours identify chemical category',9)
+ p.buttons(28,180,650,'Supply year','SupplyYears','Year',2025,4)
+ p.text(896,200,672,32,'Material scope: native IEA definition · Graphite excludes all-grades graphite · Tile colours identify chemical category',9)
  for i,(label,m) in enumerate([('Mining · Output','Mining output label'),('Refining · Output','Refining output label'),('Mining · HHI bounds','Mining concentration label'),('Refining · HHI bounds','Refining concentration label'),('Mining · Top 3 bounds','Mining top3 label'),('Refining · Top 3 bounds','Refining top3 label')]):
   p.card(28+(i%2)*260,230+(i//2)*108,244,label,m,C['teal'] if i%2==0 else C['blue'])
  p.add('azureMap',550,230,604,308,'Country shares · Mining / Refining',{'Category':[('Supply','MapPoint',False)],'X':[('ReportMeasures','Map longitude',True)],'Y':[('ReportMeasures','Map latitude',True)],'Size':[('ReportMeasures','Map share',True)],'Tooltips':[('ReportMeasures','Map country',True),('ReportMeasures','Map stage',True)]},
@@ -266,7 +269,7 @@ def build_report(root,manifest,display_font=FONT_STACK):
  p.chart('clusteredBarChart',658,230,380,612,'Supply concentration · Mining / Refining',{'Category':[('Materials','Symbol',False)],'Y':[('ReportMeasures','Mining HHI lower',True),('ReportMeasures','Refining HHI lower',True)],'Tooltips':[('ReportMeasures','Mining HHI upper',True),('ReportMeasures','Refining HHI upper',True)]},('Materials','Symbol',False,'asc'),extra={'valueAxis':props(start=lit(0),end=lit(1),labelColor=color(C['muted']),fontSize=lit(10)),'labels':props(show=lit(True),fontFamily=lit(BODY_FONT),fontSize=lit(10),labelPrecision=lit(3),labelPosition=lit('OutsideEnd'))})
  v=p.table(1056,426,516,294,'Supplier HHI · EUR / Mass',[('Products','ProductShort',False),('ReportMeasures','Value exposure HHI',True),('ReportMeasures','Mass exposure HHI',True)])
  for item,label,width in zip(v['visual']['query']['queryState']['Values']['projections'],['Product','HHI (EUR)','HHI (mass)'],[280,90,90]):item['displayName']=label
- v['visual']['objects']['columnHeaders'][0]['properties'].update(autoSizeColumnWidth=lit(False),customColumnWidth=lit(True))
+ v['visual']['objects']['columnHeaders'][0]['properties'].update(autoSizeColumnWidth=lit(True))
  v['visual']['objects']['columnWidth']=[{'selector':{'metadata':item['queryRef']},'properties':{'value':lit(width)}} for item,width in zip(v['visual']['query']['queryState']['Values']['projections'],[280,90,90])]
  p.note(1056,738,516,104,'Interpretation','Supply HHI uses country shares of expected-output tonnes. Higher refining HHI means greater concentration, not surplus. The trade table compares EUR and product-mass HHI; partners can differ from mine origin.')
  p.finish()
@@ -274,7 +277,7 @@ def build_report(root,manifest,display_font=FONT_STACK):
  p=Page(report,*PAGES[3]);p.common('How does the outlook change across scenarios?',
   '2025 native baseline and scenario years · Demand sums returned end uses · Supply: STEPS only',
   'Physical gap/capacity unavailable · Supply ends 2040, demand 2050')
- p.buttons(28,180,800,'Outlook year','FutureYears','Year',2040,6)
+ p.buttons(28,180,800,'Outlook year','FutureYears','Year',2030,6)
  p.graphite_toggle()
  for x,label,suffix in [(28,'Demand at endpoint · native scope','endpoint label'),(550,'Demand growth from baseline','growth label'),(1072,'Annualised growth','CAGR label')]:p.scenario_panel(x,230,500,label,suffix)
  p.chart('lineChart',28,354,886,256,'Demand scenarios · kt',{'Category':[('Outlook','Year',False)],'Y':[('ReportMeasures',sc+' demand kt',True) for sc in SCENARIO_COLORS]},('Outlook','Year',False,'asc'))

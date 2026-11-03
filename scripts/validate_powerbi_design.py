@@ -43,7 +43,9 @@ def validate(project):
   assert len(licenses)==1 and licenses[0]['position']['x']>=800
   assert licenses[0]['visual']['objects']['general'][0]['properties']['paragraphs'][0]['horizontalTextAlignment']=='right'
   visible=' '.join(run['value'] for v in text for paragraph in v['visual']['objects']['general'][0]['properties']['paragraphs'] for run in paragraph['textRuns'])
-  assert 'Exploratory analysis of public IEA & Eurostat data' in visible
+  assert 'EXPLORATORY ANALYSIS  ·  IEA & EUROSTAT DATA' in visible
+  heading=next(v for v in text if v['visual']['objects']['general'][0]['properties']['paragraphs'][0]['textRuns'][0]['value']=='Global critical materials')
+  assert heading['position']['height']==60
   assert tiles[-1]['y']==90
   assert 'PORTFOLIO ANALYSIS' not in visible and 'SUPPLY INTELLIGENCE / EUROPE' not in visible
   if cfg['name']=='01_supply':
@@ -57,8 +59,8 @@ def validate(project):
    assert len(scenario_cards)==9
    assert all(literal(v['visual']['visualContainerObjects']['title'][0]['properties']['alignment'])=="'center'" for v in scenario_cards)
    toggle=next(v for v in visuals if v['visual'].get('query',{}).get('queryState',{}).get('Values',{}).get('projections',[{}])[0].get('queryRef')=='DefinitionChoice.GraphiteScope')
-   assert toggle['position']['width']==48 and toggle['position']['height']==28 and toggle['position']['x']==1410 and toggle['position']['y']==198
-   assert 'general' not in toggle['visual']['objects']
+   assert toggle['position']['width']==48 and toggle['position']['height']==28 and toggle['position']['x']==1412 and toggle['position']['y']==103
+   assert toggle['visual']['objects']['general'][0]['properties']['filter']['filter']['Where'][0]['Condition']['In']['Values']==[[{'Literal':{'Value':"'All grades'"}}]]
    for card in ['value','label']:
     assert all(literal(r['properties']['transparency'])=='100D' for r in toggle['visual']['objects'][card])
    assert all(literal(r['properties']['show'])=='false' for r in toggle['visual']['objects']['value'])

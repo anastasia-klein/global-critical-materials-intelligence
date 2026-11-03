@@ -259,7 +259,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'Exploratory analysis of public IEA & Eurostat data'"
+                  "Value": "'EXPLORATORY ANALYSIS · IEA & EUROSTAT DATA'"
                 }
               }
             },
@@ -283,7 +283,25 @@
               {
                 "textRuns": [
                   {
-                    "value": "Exploratory analysis of public IEA & Eurostat data",
+                    "value": "EXPLORATORY ANALYSIS ",
+                    "textStyle": {
+                      "fontFamily": "'Avenir Next', Arial, sans-serif",
+                      "fontSize": "10pt",
+                      "color": "#59695D",
+                      "fontWeight": "normal"
+                    }
+                  },
+                  {
+                    "value": "·",
+                    "textStyle": {
+                      "fontFamily": "'Avenir Next', Arial, sans-serif",
+                      "fontSize": "9pt",
+                      "color": "#183323",
+                      "fontWeight": "bold"
+                    }
+                  },
+                  {
+                    "value": " IEA & EUROSTAT DATA",
                     "textStyle": {
                       "fontFamily": "'Avenir Next', Arial, sans-serif",
                       "fontSize": "10pt",
