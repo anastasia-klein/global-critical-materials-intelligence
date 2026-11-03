@@ -44,7 +44,7 @@ table ReportMeasures
 		displayFolder: Supply
 		formatString: #,0
 
-	measure 'Country share' = CALCULATE(IF([One definition] && HASONEVALUE(Stages[Stage]),CALCULATE(MAX(Supply[Share]),Supply[EntityType]="country_or_territory",TREATAS({[Selected supply year]},Supply[Year]))),KEEPFILTERS(FILTER(ALL(Definitions[Material]),IF(SELECTEDVALUE(DefinitionChoice[GraphiteScope],"Graphite")="All grades",Definitions[Material]<>"Graphite",Definitions[Material]<>"Graphite: all grades"))))
+	measure 'Country share' = CALCULATE(IF([One definition] && HASONEVALUE(Stages[Stage]),CALCULATE(MAX(Supply[Share]),Supply[EntityType] IN {"country_or_territory","residual"},TREATAS({[Selected supply year]},Supply[Year]))),KEEPFILTERS(FILTER(ALL(Definitions[Material]),IF(SELECTEDVALUE(DefinitionChoice[GraphiteScope],"Graphite")="All grades",Definitions[Material]<>"Graphite",Definitions[Material]<>"Graphite: all grades"))))
 		lineageTag: ad7dce98-6a94-5f91-8242-595ad70fe32c
 		displayFolder: Supply
 		formatString: 0.0%

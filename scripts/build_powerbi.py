@@ -30,7 +30,7 @@ measure('One definition','HASONEVALUE(Definitions[DefinitionKey])')
 measure('One product','HASONEVALUE(Products[ProductCode])')
 measure('One reporter','HASONEVALUE(Reporters[ReporterKey])')
 measure('Panel tonnes','IF([One definition] && HASONEVALUE(Stages[Stage]),CALCULATE(MAX(Supply[PanelTonnes]),TREATAS({[Selected supply year]},Supply[Year])))','#,0','Supply')
-measure('Country share','IF([One definition] && HASONEVALUE(Stages[Stage]),CALCULATE(MAX(Supply[Share]),Supply[EntityType]="country_or_territory",TREATAS({[Selected supply year]},Supply[Year])))','0.0%','Supply')
+measure('Country share','IF([One definition] && HASONEVALUE(Stages[Stage]),CALCULATE(MAX(Supply[Share]),Supply[EntityType] IN {"country_or_territory","residual"},TREATAS({[Selected supply year]},Supply[Year])))','0.0%','Supply')
 measure('Supply trend kt','IF([One definition] && HASONEVALUE(Stages[Stage]),DIVIDE(SUM(Supply[QuantityTonnes]),1000))','#,0.0','Supply')
 for suffix,col in [('lower','HHILower'),('upper','HHIUpper'),('residual','ResidualShare'),('top3 lower','Top3Lower'),('top3 upper','Top3Upper'),('top5 lower','Top5Lower'),('top5 upper','Top5Upper')]:
  measure('Supply '+suffix,'IF([One definition] && HASONEVALUE(Stages[Stage]),CALCULATE(MAX(Concentration['+col+']),TREATAS({[Selected supply year]},Concentration[Year])))','0.000' if 'lower' in suffix and suffix=='lower' or suffix=='upper' else '0.0%','Supply')

@@ -2,10 +2,10 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.5.0/schema.json",
   "name": "ca258415f2be5a1c9e29",
   "position": {
-    "x": 564,
-    "y": 268,
-    "width": 560,
-    "height": 32,
+    "x": 958,
+    "y": 234,
+    "width": 184,
+    "height": 28,
     "z": 25000,
     "tabOrder": 25000
   },
@@ -301,7 +301,7 @@
                     }
                   }
                 ],
-                "horizontalTextAlignment": "left"
+                "horizontalTextAlignment": "right"
               }
             ]
           }

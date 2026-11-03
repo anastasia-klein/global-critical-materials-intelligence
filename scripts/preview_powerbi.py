@@ -165,7 +165,7 @@ class Renderer:
   for j,(name,a,bb) in enumerate(pairs):
    fg=PALETTE[j%6];xx=l+side*a;yy=b-side*bb;self.dot(xx,yy,5.8,fg);self.text(xx+8,yy+(5 if name=='Co' else -18 if name=='REE' else -14),name.replace('Magnet rare earth elements','Magnet REE'),10,C['text'],maxwidth=r-xx+15)
  def paired_bars(self,x,y,w,h):
-  rows=[r for r in self.d['Supply'] if r['DefinitionKey']==self.li and r['Year']==2030 and r['EntityType']=='country_or_territory']
+  rows=[r for r in self.d['Supply'] if r['DefinitionKey']==self.li and r['Year']==2030 and r['EntityType'] in ['country_or_territory','residual']]
   lookup={(r['Country'],r['Stage']):r['Share'] for r in rows};countries=sorted({r['Country'] for r in rows})
   self.dot(x+20,y+44,3.5,C['teal']);self.text(x+30,y+36,'Mining',10,C['text']);self.dot(x+140,y+44,3.5,C['blue']);self.text(x+150,y+36,'Refining',10,C['text'])
   left=x+150;pw=w-220;top=y+67;rh=(h-92)/max(len(countries),1);mx=max(lookup.values()) or 1

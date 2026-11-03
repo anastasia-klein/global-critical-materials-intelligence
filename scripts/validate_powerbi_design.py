@@ -51,6 +51,9 @@ def validate(project):
   if cfg['name']=='01_supply':
    country=next(v for v in visuals if v['visual']['visualType']=='clusteredBarChart')
    assert literal(country['visual']['objects']['labels'][0]['properties']['show'])=='true'
+   legend=next(v for v in text if v['visual']['objects']['general'][0]['properties']['paragraphs'][0]['textRuns'][0]['value']=='● Mining     ')
+   assert legend['position']['x']>=950 and legend['position']['y']<260
+   assert legend['visual']['objects']['general'][0]['properties']['paragraphs'][0]['horizontalTextAlignment']=='right'
    m=next(v for v in visuals if v['visual']['visualType']=='azureMap')['visual'];assert 'Series' not in m['query']['queryState']
    assert m['query']['queryState']['Category']['projections'][0]['queryRef']=='Supply.MapPoint'
   if cfg['name']=='04_outlook':
@@ -134,6 +137,14 @@ def validate(project):
  for table in ['Definitions','Products']:assert 'fromColumn: '+table+'.Family\n\ttoColumn: Materials.Family' in rel
  for table,col in [('Materials','Symbol'),('PartnerDisplay','PartnerDisplay'),('EndUses','EndUse')]:
   model=(project/'GlobalCriticalMaterials.SemanticModel/definition/tables'/(table+'.tmdl')).read_text();assert '\tcolumn '+col+'\n' in model and 'sortByColumn: SortOrder' in model
+ # Complete country bars include the opaque residual without assigning it a location.
+ from build_powerbi import MEASURES
+ assert 'IN {"country_or_territory","residual"}' in MEASURES['Country share']['expression']
+ assert 'Supply[EntityType]="country_or_territory"' in MEASURES['Map share']['expression']
+ panels=collections.defaultdict(list)
+ for r in rows('Supply'):panels[(r['DefinitionKey'],r['Year'],r['Stage'])].append(r)
+ assert all(math.isclose(sum(float(r['Share']) for r in rs),1,abs_tol=1e-9) for rs in panels.values())
+ assert all(sum(r['EntityType']=='residual' for r in rs)==1 for rs in panels.values())
  # Display offsets are available for every genuine country point; residuals stay excluded.
  map_rows=[r for r in rows('Supply') if r['EntityType']=='country_or_territory']
  assert all(r['DisplayLatitude'] and r['DisplayLongitude'] for r in map_rows)
@@ -143,7 +154,7 @@ def validate(project):
  assert all(set(v)=={'CPS','STEPS','HDS'} for v in scenarios.values())
  inversions=sum(not (v['CPS']<=v['STEPS']+1e-9<=v['HDS']+1e-9) for v in scenarios.values())
 
- return {'status':'passed_presentation_contracts_pending_Desktop','pages':len(pages),'identical_material_tile_groups':len(tiles),'partner_axis_groups':len(groups),'partner_scope_totals_preserved':scalars,'end_use_axis_categories':len(ends),'reported_zero_observations_preserved':zero_count,'reported_end_use_rows':len(detail),'map_country_rows_with_display_coordinates':len(map_rows),'scenario_end_use_groups_compared':len(scenarios),'nonmonotonic_scenario_groups':inversions,'scenario_chart':'three_comparable_bars_not_additive_stacks','Desktop_rendering_and_DAX_evaluation':'pending'}
+ return {'status':'passed_presentation_contracts_pending_Desktop','pages':len(pages),'identical_material_tile_groups':len(tiles),'partner_axis_groups':len(groups),'partner_scope_totals_preserved':scalars,'end_use_axis_categories':len(ends),'reported_zero_observations_preserved':zero_count,'reported_end_use_rows':len(detail),'supply_panels_with_residual_and_unit_share_sum':len(panels),'map_country_rows_with_display_coordinates':len(map_rows),'scenario_end_use_groups_compared':len(scenarios),'nonmonotonic_scenario_groups':inversions,'scenario_chart':'three_comparable_bars_not_additive_stacks','Desktop_rendering_and_DAX_evaluation':'pending'}
 
 if __name__=='__main__':
  p=argparse.ArgumentParser(description=__doc__);p.add_argument('--project',type=Path,required=True);p.add_argument('--output',type=Path,required=True);a=p.parse_args();r=validate(a.project);a.output.parent.mkdir(parents=True,exist_ok=True);a.output.write_text(json.dumps(r,indent=2)+'\n');print(json.dumps(r))

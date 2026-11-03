@@ -7,6 +7,7 @@
   "end_use_axis_categories": 8,
   "reported_zero_observations_preserved": 9,
   "reported_end_use_rows": 558,
+  "supply_panels_with_residual_and_unit_share_sum": 48,
   "map_country_rows_with_display_coordinates": 400,
   "scenario_end_use_groups_compared": 186,
   "nonmonotonic_scenario_groups": 17,

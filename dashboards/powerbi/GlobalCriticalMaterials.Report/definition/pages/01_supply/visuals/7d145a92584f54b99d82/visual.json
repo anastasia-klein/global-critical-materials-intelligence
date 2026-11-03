@@ -259,7 +259,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'Country shares of stage output. Individually identified countries only; Other countries is excluded from bars but retained in each denominator. Percentages are not rebased to visible countries.'"
+                  "Value": "'Shares of each stage output, including the source residual Other countries. The residual is an undisclosed country group, not a single country. Mining and refining have separate denominators; shares are not rebased to visible bars.'"
                 }
               }
             },

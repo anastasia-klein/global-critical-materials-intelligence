@@ -10,7 +10,7 @@ A small disclosed EU output share does not quantify European consumption-based i
 
 ## Country shares
 
-Country bars show individually identified country rows; Other countries is excluded from the bars and map, but remains in each mining/refining denominator. Shares therefore do not necessarily sum to 100% across the displayed bars. Selecting or scrolling countries does not rebase the shares. The simpler chart title Country shares uses this same contract.
+Country bars include individually identified countries and the source residual Other countries. The residual is an undisclosed group, not one country; it stays off the map because it has no single location. Within an available material/year/stage panel, the complete bars sum to 100% before display rounding. Mining and refining have independent denominators. Selecting or scrolling countries does not rebase the shares.
 
 ## HHI and the diagonal
 
