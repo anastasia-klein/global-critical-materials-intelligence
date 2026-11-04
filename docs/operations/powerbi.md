@@ -49,4 +49,4 @@ Automated checks validate project schemas, field references, presentation contra
 
 Refreshing the source project does not update Power BI Service. Publish and replace the existing report from Desktop to update the published version. Review the [licensing requirements](../sources/licensing.md) before publishing a new source capture.
 
-The committed PNGs are SQL-derived design previews, not native screenshots. The published report and repository may have different update times; record the source capture when interpreting results.
+The [committed screenshots](../../dashboards/screenshots/README.md) record native Power BI visuals and their selected filters. They document the illustrated selections, not every interaction. The published report and repository may have different update times; record the source capture when interpreting results.

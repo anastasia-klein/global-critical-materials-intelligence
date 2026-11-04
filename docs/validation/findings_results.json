@@ -1,0 +1,250 @@
+{
+  "copper_stage_country_shares": [
+    {
+      "Material": "Copper",
+      "Year": 2025,
+      "Country": "Chile",
+      "Stage": "Mining",
+      "Share": 0.2361475868601197,
+      "EntityType": "country_or_territory"
+    },
+    {
+      "Material": "Copper",
+      "Year": 2025,
+      "Country": "Chile",
+      "Stage": "Refining",
+      "Share": 0.06227866213557503,
+      "EntityType": "country_or_territory"
+    },
+    {
+      "Material": "Copper",
+      "Year": 2025,
+      "Country": "China",
+      "Stage": "Mining",
+      "Share": 0.07913204460326344,
+      "EntityType": "country_or_territory"
+    },
+    {
+      "Material": "Copper",
+      "Year": 2025,
+      "Country": "China",
+      "Stage": "Refining",
+      "Share": 0.4675013414416026,
+      "EntityType": "country_or_territory"
+    }
+  ],
+  "material_stage_concentration": [
+    {
+      "Material": "Cobalt",
+      "Year": 2025,
+      "Stage": "Mining",
+      "HHILower": 0.45398711665292035,
+      "HHIUpper": 0.4612269819751575
+    },
+    {
+      "Material": "Cobalt",
+      "Year": 2025,
+      "Stage": "Refining",
+      "HHILower": 0.5811030562094659,
+      "HHIUpper": 0.5850833466715663
+    },
+    {
+      "Material": "Copper",
+      "Year": 2025,
+      "Stage": "Mining",
+      "HHILower": 0.099537964986416,
+      "HHIUpper": 0.22046236072648057
+    },
+    {
+      "Material": "Copper",
+      "Year": 2025,
+      "Stage": "Refining",
+      "HHILower": 0.23619039094341296,
+      "HHIUpper": 0.2942514781450028
+    },
+    {
+      "Material": "Graphite",
+      "Year": 2025,
+      "Stage": "Mining",
+      "HHILower": 0.6513731095407908,
+      "HHIUpper": 0.6555528692635506
+    },
+    {
+      "Material": "Graphite",
+      "Year": 2025,
+      "Stage": "Refining",
+      "HHILower": 0.8922088683305259,
+      "HHIUpper": 0.8926065129171318
+    },
+    {
+      "Material": "Lithium",
+      "Year": 2025,
+      "Stage": "Mining",
+      "HHILower": 0.21378384264481945,
+      "HHIUpper": 0.21949133316391964
+    },
+    {
+      "Material": "Lithium",
+      "Year": 2025,
+      "Stage": "Refining",
+      "HHILower": 0.572689071337244,
+      "HHIUpper": 0.572979276164912
+    },
+    {
+      "Material": "Magnet rare earth elements",
+      "Year": 2025,
+      "Stage": "Mining",
+      "HHILower": 0.3816314141412327,
+      "HHIUpper": 0.39231774025189997
+    },
+    {
+      "Material": "Magnet rare earth elements",
+      "Year": 2025,
+      "Stage": "Refining",
+      "HHILower": 0.7102349514906321,
+      "HHIUpper": 0.7119734215383469
+    },
+    {
+      "Material": "Nickel",
+      "Year": 2025,
+      "Stage": "Mining",
+      "HHILower": 0.41182039210101146,
+      "HHIUpper": 0.4191839896834161
+    },
+    {
+      "Material": "Nickel",
+      "Year": 2025,
+      "Stage": "Refining",
+      "HHILower": 0.3036971213759634,
+      "HHIUpper": 0.3151809386251566
+    }
+  ],
+  "german_graphite_trade": [
+    {
+      "Reporter": "Germany",
+      "ProductCode": "25041000",
+      "Year": 2024,
+      "Basis": "trade_value",
+      "Imports": 52437532.0,
+      "Exports": 28764455.0,
+      "Balance": -23673077.0
+    }
+  ],
+  "german_graphite_suppliers": [
+    {
+      "Reporter": "Germany",
+      "ProductCode": "25041000",
+      "Partner": "China",
+      "Year": 2024,
+      "Basis": "trade_value",
+      "Share": 0.2728188275527536
+    },
+    {
+      "Reporter": "Germany",
+      "ProductCode": "25041000",
+      "Partner": "Belgium",
+      "Year": 2024,
+      "Basis": "trade_value",
+      "Share": 0.19416567888816735
+    },
+    {
+      "Reporter": "Germany",
+      "ProductCode": "25041000",
+      "Partner": "Netherlands",
+      "Year": 2024,
+      "Basis": "trade_value",
+      "Share": 0.15798325519972983
+    },
+    {
+      "Reporter": "Germany",
+      "ProductCode": "25041000",
+      "Partner": "Brazil",
+      "Year": 2024,
+      "Basis": "trade_value",
+      "Share": 0.12545548482335134
+    }
+  ],
+  "german_concentration_by_basis": [
+    {
+      "Reporter": "Germany",
+      "ProductShort": "Copper ores / concentrates",
+      "Year": 2024,
+      "ValueHHILower": 0.18920834591818766,
+      "ValueHHIUpper": 0.18920834591818766,
+      "MassHHILower": 0.18771001041221927,
+      "MassHHIUpper": 0.18771001041221927
+    },
+    {
+      "Reporter": "Germany",
+      "ProductShort": "Natural graphite powder / flakes",
+      "Year": 2024,
+      "ValueHHILower": 0.16602688398717735,
+      "ValueHHIUpper": 0.16602688398717735,
+      "MassHHILower": 0.19928846030088823,
+      "MassHHIUpper": 0.19928846030088823
+    }
+  ],
+  "nickel_demand_scenarios": [
+    {
+      "Material": "Nickel",
+      "Year": 2035,
+      "ScenarioShort": "CPS",
+      "DemandKT": 4993.120329499245,
+      "Growth": 0.41395582003985454,
+      "CAGR": 0.035246054450621456
+    },
+    {
+      "Material": "Nickel",
+      "Year": 2035,
+      "ScenarioShort": "STEPS",
+      "DemandKT": 5291.443264424801,
+      "Growth": 0.4984351480458882,
+      "CAGR": 0.041271052615048154
+    },
+    {
+      "Material": "Nickel",
+      "Year": 2035,
+      "ScenarioShort": "HDS",
+      "DemandKT": 5766.209025263786,
+      "Growth": 0.6328796970241934,
+      "CAGR": 0.0502565988132333
+    }
+  ],
+  "nickel_end_use_mix": [
+    {
+      "EndUse": "Other uses",
+      "DemandKT": 3255.387451171875,
+      "ReturnedEndUseShare": 0.6152173024434284
+    },
+    {
+      "EndUse": "Electric vehicles",
+      "DemandKT": 1536.3199462890625,
+      "ReturnedEndUseShare": 0.2903404363452182
+    },
+    {
+      "EndUse": "Other low emissions power generation",
+      "DemandKT": 302.4748840332031,
+      "ReturnedEndUseShare": 0.05716302130021671
+    },
+    {
+      "EndUse": "Grid battery storage",
+      "DemandKT": 134.47500610351562,
+      "ReturnedEndUseShare": 0.025413672486599655
+    },
+    {
+      "EndUse": "Wind",
+      "DemandKT": 56.78630065917969,
+      "ReturnedEndUseShare": 0.010731722485047293
+    },
+    {
+      "EndUse": "Hydrogen technologies",
+      "DemandKT": 5.192870140075684,
+      "ReturnedEndUseShare": 0.0009813712215319703
+    },
+    {
+      "EndUse": "Solar PV",
+      "DemandKT": 0.8068060278892517,
+      "ReturnedEndUseShare": 0.00015247371795773274
+    }
+  ]
+}

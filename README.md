@@ -1,6 +1,6 @@
-# Global Critical Materials Intelligence
+# Global Critical Materials
 
-A reproducible analytics product for comparing global mining/refining concentration, European trade exposure and critical-material demand scenarios. Germany is the main analytical lens; the report also supports France, Italy, Spain, Poland, the Netherlands and the official EU27 external-trade aggregate.
+A reproducible analytics product for comparing global mining/refining concentration, European trade exposure and critical-material demand scenarios. The report covers six material groups and trade exposure for Germany, France, Italy, Spain, Poland, the Netherlands and the official EU27 external-trade aggregate.
 
 **[Explore the interactive Power BI report](https://app.powerbi.com/view?r=eyJrIjoiYWM2MzI5NjMtOGUzNi00ZDI1LThkMzYtOGUwNTU3NWJmMjI1IiwidCI6IjM5YTFiNjM3LTFmODktNGQzOS1iZjNlLWFiNzczZGRmOGJhZSJ9)**
 
@@ -23,23 +23,47 @@ A reproducible analytics product for comparing global mining/refining concentrat
 | Supply Chain Risk | Inspect mining/refining and supplier concentration separately |
 | Future Outlook | Compare demand scenarios, end uses and STEPS expected output |
 
-Six periodic material tiles select Cu, Co, Li, Ni, C or REE. Traded CN8 forms remain distinct from IEA material definitions. Fixed partner/end-use axes make selections easier to compare. Three scenario colours are shared by all outlook KPI values, lines and end-use bars; scenario alternatives are not stacked into a sum. Reported zeros stay zero; missing source observations are not filled with zero.
+Six material tiles connect supply, trade, concentration and demand analysis. Native material definitions, traded product forms and scenario assumptions remain explicit throughout the report.
 
-![Global Supply Landscape — SQL-derived design preview](dashboards/previews/design-preview-1.png)
+### Global Supply Landscape
 
-The image is a **SQL-derived design preview**. Use the interactive report above to explore the published Power BI visuals. [Report setup and validation](docs/operations/powerbi.md) explain how to reproduce the report locally.
+![Power BI: copper supply, 2025 baseline](dashboards/screenshots/01-global-supply-copper-2025.png)
 
-## Selected findings
+**Filters:** Copper · Supply year 2025 · IEA STEPS / Base Case. Country shares have separate mining/refining denominators and include the undisclosed Other countries group.
 
-These statements apply to the included source capture and exact definitions, not to all historical supply or all products:
+<details>
+<summary>Explore the other three report pages</summary>
 
-- **Refining is more concentrated than mining for lithium:** 2030 STEPS lower-bound HHI is 0.483 versus 0.185.
-- **Graphite refining has particularly high concentration:** its 2030 lower-bound HHI is 0.815, versus 0.348 for mining.
-- **Nickel has the opposite stage pattern:** 2030 mining lower-bound HHI is 0.499, versus 0.325 for refining.
-- **Germany's lithium-carbonate imports are led by Chile:** 40.6% of 2024 reported import value; Belgium and the United States account for 26.8% and 24.6%.
-- **Electric vehicles dominate the returned lithium end-use total:** 765.3 kt of 932.5 kt in STEPS 2040, approximately 82.1%.
+### European Trade & Dependency
 
-[Reproducible queries and interpretation](docs/business_insights/findings.md) retain the material/year/scenario/basis boundaries.
+![Power BI: German graphite trade, 2024, EUR](dashboards/screenshots/02-european-trade-germany-graphite-2024-eur.png)
+
+**Filters:** Graphite (natural powder/flakes, CN8 25041000) · Germany · 2024 · Value EUR.
+
+### Supply Chain Risk
+
+![Power BI: supply concentration across materials, 2025](dashboards/screenshots/03-supply-risk-all-materials-2025.png)
+
+**Filters:** All materials · Supply year 2025 · Reporting area Germany · Trade year 2024. The scatter and bars use physical-output HHI; the table compares import-value and product-mass HHI.
+
+### Future Outlook
+
+![Power BI: nickel demand scenarios, endpoint 2035](dashboards/screenshots/04-future-outlook-nickel-2035.png)
+
+**Filters:** Nickel · Outlook year 2035 · CPS/STEPS/HDS shown together. All grades is Off and affects only graphite.
+
+</details>
+
+These are actual Power BI screenshots supplied on 4 November 2026. The source capture is 30 October–1 November 2026; the 2025 IEA baseline is not certified here as observed actuals. [Screenshot contexts](dashboards/screenshots/README.md).
+
+## What the data shows
+
+- **The relevant supply-chain stage changes by material.** In the 2025 baseline, lithium refining HHI is 0.573 versus 0.214 for mining; nickel reverses the pattern, at 0.304 versus 0.412. These are lower bounds; the stage intervals do not overlap.
+- **Mining geography does not describe refining geography.** Chile accounts for 23.6% of the copper mining panel but 6.2% of refining; China accounts for 7.9% and 46.8%, respectively.
+- **The measurement basis can change a sourcing comparison.** German imports of natural graphite powder/flakes have lower supplier HHI than copper ores by EUR value (0.166 vs 0.189), but higher HHI by product mass (0.199 vs 0.188), in 2024.
+- **Nickel demand depends on both the scenario and the end-use mix.** Returned 2035 demand totals range from 4,993.1 kt in CPS to 5,766.2 kt in HDS. In STEPS, Other uses accounts for 61.5% of the returned total; electric vehicles account for 29.0%.
+
+[Eight evidence-based findings](docs/business_insights/findings.md) include the business implications, exact page/filter settings, supporting screenshots and [reproducible SQL](docs/business_insights/findings.sql). Results apply to the included capture and native definitions; they are not claims about every material or product.
 
 ## Architecture
 
@@ -73,45 +97,9 @@ The report inputs contain 558 native demand rows, 448 native supply rows and 16,
 
 [Source inventory](docs/sources/inventory.md) · [Licensing and attribution](docs/sources/licensing.md).
 
-## Open the Power BI source project
+## Reproduce the project
 
-The repository includes the text-based Power BI project, report inputs and data manifest. To edit it, use Power BI Desktop on Windows; the published report can be viewed in a browser.
-
-```powershell
-git clone https://github.com/anastasia-klein/global-critical-materials-intelligence.git
-cd global-critical-materials-intelligence
-powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\Update-PowerBI.ps1
-```
-
-The script checks the report inputs, configures local file paths and opens the project. Select **Refresh** to load the included CSVs. See [report setup](docs/operations/powerbi.md) for update and validation instructions.
-
-## Reproduce the analytical pipeline
-
-Use Python 3.12:
-
-```sh
-python3.12 -m venv .venv
-source .venv/bin/activate
-python -m pip install -r requirements-warehouse.lock.txt
-python -m ingestion plan
-python -m ingestion run --data-root data/raw
-python scripts/build_warehouse.py --data-root data/raw
-python scripts/export_powerbi.py --database data/warehouse/gcm.duckdb --output dashboards/powerbi/data
-python scripts/build_powerbi.py
-```
-
-Live APIs can revise their data. The committed report CSVs and fingerprints preserve the distributed report capture; fetching sources again is a new capture, not a guarantee of identical historical bytes. Full raw archives and database files are not in Git. [Warehouse operations](docs/operations/warehouse.md) explain replay, incremental re-fetch, source-contract checks and historical snapshots.
-
-For offline CI using actual bounded source fixtures:
-
-```sh
-python -B -m unittest discover -s tests -v
-python scripts/create_ci_capture.py --output work/ci
-python scripts/build_warehouse.py --data-root work/ci/capture --config work/ci/fixture_config.json --database work/ci/ci.duckdb --output work/ci/evidence --historical-snapshot
-python scripts/validate_business_metrics.py --database work/ci/ci.duckdb --output work/ci/evidence/metrics.json
-```
-
-CI also checks deliberate business-rule failures, portable Power BI exports, and the Windows update script. It uses disposable outputs under `work/` and does not refresh the committed report data from live APIs.
+[Setup and reproduction guide](docs/getting_started.md): open the Power BI source project, rebuild the analytical pipeline, reproduce findings and run offline checks. Detailed operations: [Power BI](docs/operations/powerbi.md) · [warehouse](docs/operations/warehouse.md).
 
 ## Quality and limitations
 
