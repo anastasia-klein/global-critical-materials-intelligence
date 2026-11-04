@@ -1,21 +1,24 @@
 # Power BI report
 
-The report contains four pages, 25 tables, 23 one-direction relationships and 103 explicit measures. Portable CSV inputs and their source-SQL/fingerprint manifest are versioned under data/. Numeric columns have no implicit summarisation.
+**[Open the interactive report](https://app.powerbi.com/view?r=eyJrIjoiYWM2MzI5NjMtOGUzNi00ZDI1LThkMzYtOGUwNTU3NWJmMjI1IiwidCI6IjM5YTFiNjM3LTFmODktNGQzOS1iZjNlLWFiNzczZGRmOGJhZSJ9)**
 
-Use [the Windows update script](../../scripts/Update-PowerBI.ps1) from the repository checkout. It pulls main and opens a separate local runtime with DataFolder configured; do not edit the checkout parameter just to configure a VM path. See [operation and acceptance checks](../../docs/operations/powerbi.md).
+The report explores global mining/refining concentration, European trade exposure and material demand scenarios across four pages. Its semantic model contains 25 tables, 23 one-direction relationships and 103 explicit measures. Versioned CSV inputs and the source-SQL/fingerprint manifest are under `data/`.
 
-Material-family tiles filter both native IEA definitions and native Comext product forms. Graphite/all-grades remain separate. Reporting area, measure basis and reference-year choices preserve their own scopes. Chart selections do not rebase denominators. Material selection is not synchronised between pages; Risk starts with all families; Supply and Outlook start with copper, Trade with rare earths. Supply starts at 2025 and Outlook at 2030. All grades starts selected and only affects graphite.
+## Open and reproduce
 
-Mining/Imports use forest green; Refining/Exports leaf green. Material tile colours identify chemical categories, not risk levels. The report preserves the reader-side font chain `'Avenir Next', Arial, sans-serif`; publishing from Windows keeps this chain. No font files are distributed.
+Use [the setup script](../../scripts/Update-PowerBI.ps1) to prepare a local project with configured file paths, then select **Refresh** in Power BI Desktop. See [report setup and validation](../../docs/operations/powerbi.md).
 
-Fixed import-partner categories are leading suppliers per reporter/product in 2024 EUR, alphabetically ordered plus Other partners. Remaining reported amounts are grouped without rebasing native totals. End-use axes retain all eight source category names. Zero is a reported zero; missing data stay blank.
+## Filters and interpretation
 
-Source: IEA (2026), Critical Minerals Dataset, GCMO2026, https://www.iea.org/data-and-statistics/data-product/critical-minerals-dataset, CC BY 4.0; source capture 30 October 2026. Eurostat DS-045409; source captures 30 October–1 November 2026. Analysis by Anastasia Klein. Source data and adaptations retain the notices in [NOTICE](../../NOTICE.md). Native Desktop rendering/DAX acceptance is pending.
+- Material tiles select copper, cobalt, lithium, nickel, graphite or magnet rare earths. Native IEA definitions and traded CN8 forms remain distinct. The All grades toggle changes only the graphite definition.
+- Reporting area, basis and year retain their own scopes. EU27 covers external trade; national reporters include intra-EU partners. Material selections are independent across pages.
+- Mining/Imports use forest green; Refining/Exports use leaf green. Material tile colours identify chemical categories, not risk levels.
+- Country-share bars include the opaque Other countries residual; the map shows only geographically identified countries. Each supply stage has its own denominator.
+- Import-partner and end-use categories retain a fixed order. Other partners groups the remaining reported partners without rebasing totals. Reported zeroes stay zero; missing observations remain blank.
+- Outlook compares CPS, STEPS and HDS using consistent colours and separate bars. Scenario levels are alternatives and must not be added. Supply is available only for STEPS, through 2040; demand extends to 2050.
 
-Outlook compares CPS, STEPS and HDS simultaneously in each KPI and demand chart. Colours are fixed across visuals. End uses use three bars at a common baseline: 17 source end-use/year groups are nonmonotonic in CPS/STEPS/HDS order, so fixed additive increment stacks would misrepresent scenario levels. Supply still has only STEPS data. All grades is a native pill toggle at the top of the Graphite card on Outlook: On/green/right uses all grades; Off/grey/left restores the Graphite default. It only changes graphite scope. Supply and outlook years use compact single-row buttons.
+[Report interpretation](../../docs/methodology/report_interpretation.md) explains country residuals, HHI bounds, the scatter diagonal and scenario assumptions. [Metric definitions](../../docs/methodology/metrics.md) document the calculations.
 
-Map marker identities are country × stage, with no Legend/Series binding that could trigger automatic pie charts. Marker colours use the same fixed stage colours as the other supply visuals. Country offsets are documented in accessibility/tooltips and source metadata. Number annotation boxes use fixed layer order and sufficient text height. Native Service hover behaviour still requires verification after publication.
+## Attribution
 
-The graphite scope control uses two embedded SVG images with a drawn circular thumb and explicit On/Off labels, including selected hover and press states. Its artwork does not depend on a callout font or external image hosting.
-
-Interpretation of EU27, country residuals, physical-output versus trade HHI, the scatter diagonal and IEA scenarios: [report interpretation](../../docs/methodology/report_interpretation.md). Country shares include percentage labels; the report header identifies the work as exploratory analysis of public IEA and Eurostat data.
+IEA Critical Minerals Dataset, GCMO2026 (CC BY 4.0), captured 30 October 2026; Eurostat DS-045409, captured 30 October–1 November 2026. Analysis by Anastasia Klein. Source data and adaptations retain the notices in [NOTICE](../../NOTICE.md).

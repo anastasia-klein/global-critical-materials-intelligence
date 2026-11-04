@@ -1,8 +1,10 @@
-# Power BI on a Windows VM
+# Power BI setup and validation
 
-## Requirements and first run
+## Requirements
 
-Use Git for Windows, Power BI Desktop with PBIP/PBIR/TMDL support, and Windows PowerShell 5.1 or PowerShell 7. The project is maintained as plain-text definitions; a binary PBIX is not the Git source of truth. See [Microsoft's project documentation](https://learn.microsoft.com/en-us/power-bi/developer/projects/projects-overview).
+To view the published report, follow the link in the [project README](../../README.md). To edit the source, use Git, Power BI Desktop with PBIP/PBIR/TMDL support, and Windows PowerShell 5.1 or PowerShell 7. The report and semantic model are versioned as text definitions. See [Microsoft’s project documentation](https://learn.microsoft.com/en-us/power-bi/developer/projects/projects-overview).
+
+## Open the project
 
 ```powershell
 git clone https://github.com/anastasia-klein/global-critical-materials-intelligence.git
@@ -10,56 +12,41 @@ cd global-critical-materials-intelligence
 powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\Update-PowerBI.ps1
 ```
 
-The process-only execution policy does not change saved Windows policies. Follow organisation-managed restrictions if they disallow local scripts.
+The script checks CSV fingerprints against the export manifest, prepares a separate local copy under `work/powerbi-desktop/`, configures its `DataFolder` parameter and opens `GlobalCriticalMaterials.pbip`. Select **Refresh** to load the included CSVs. Python and the warehouse are required only when rebuilding the analytical pipeline.
 
-## Update
+The execution-policy option applies to this PowerShell process only. Organisation-managed script policies still apply.
 
-Close Power BI Desktop, then invoke the same script. It:
+## Update and save changes
 
-1. Requires a clean repository on main and runs `git pull --ff-only`.
-2. Verifies every CSV fingerprint from the committed export manifest.
-3. Creates `work/powerbi-desktop/<commit>-<font>/` from the report and model folders.
-4. Sets DataFolder to that working copy's absolute data directory.
-5. Opens GlobalCriticalMaterials.pbip. Select Refresh in Desktop.
+Close Power BI Desktop and run the same command to pull the latest source and open its local copy. The script stops if the checkout contains uncommitted changes or cannot be updated with a fast-forward pull.
 
-The checkout's tracked parameter is never edited. Different source commits get different runtime folders, preserving existing local working copies. Reopening the same commit reuses its folder; Desktop edits there are local and are not automatically transferred to a later source commit. Make product changes in the source project and review/commit them through Git.
+Desktop edits are saved in the opened local copy. To retain them in Git, copy the intended report/model definition changes into `dashboards/powerbi/`, inspect the diff and commit the relevant files. Local caches and working folders are ignored by Git. Preserve any edits before preparing a newer copy.
 
-A dirty checkout or non-fast-forward branch causes a clear failure; the script does not discard changes, reset a branch or merge automatically. Local caches and working copies are ignored by Git. Raw downloaded data and warehouse files are not required on the VM.
-
-Optional switches:
+Useful options:
 
 ```powershell
-# Explicit font installed on this VM
-.\scripts\Update-PowerBI.ps1 -FontName 'Avenir Next LT Pro'
-# Build the working copy without opening Desktop
-.\scripts\Update-PowerBI.ps1 -NoOpen
-# Prepare the currently checked-out commit without network access
+# Prepare the checked-out version without pulling or opening Desktop
 .\scripts\Update-PowerBI.ps1 -SkipPull -NoOpen
+# Prepare a fresh copy while preserving existing local copies
+.\scripts\Update-PowerBI.ps1 -FreshCopy
+# Use Arial explicitly
+.\scripts\Update-PowerBI.ps1 -FontName Arial
 ```
 
-By default the published report retains the reader-side font chain `'Avenir Next', Arial, sans-serif`. The reader's available fonts determine the rendering, so the same report URL supports Avenir Next on Mac and Arial on Windows. An explicit `-FontName Arial` forces Arial for all readers; omit it for the shared fallback chain. Explicit families must be installed. Both native font expressions and textbox/theme font strings are configured. Fonts are not embedded in the Power BI project or distributed in Git.
+The default font configuration requests Avenir Next with Arial as a fallback. Rendering depends on the fonts supported by the viewing environment. Font files are not distributed with the project.
 
-## Native acceptance checks
+## Validate and publish
 
-Static checks have passed; native Desktop rendering and DAX execution must be checked separately:
+Automated checks validate project schemas, field references, presentation contracts and exported values against SQL results. They do not execute the Power BI rendering engine or DAX; check the following in Desktop and the published report after substantive changes:
 
-- All 24 imported CSV tables refresh; no path, relationship or measure errors.
-- All six square material tiles are visible with full names and correct states/colours; KPI ranges fit. Hover/click each material tile in the published reading view: corner numbers stay visible with no grey text scrollbars.
-- At Fit to page, no visual requires scrolling. Import partners keep the alphabetical reference order and Other partners last. End uses keep all eight categories.
-- Compare Germany / Li carbonates / 2024 / EUR with the source query: imports, exports, Chile/Belgium/US shares and supplier HHI.
-- Switch every reporter, basis and material. EU27 remains external-only; national totals include intra-EU. Multiple product/reporter selections must not create sums of incompatible scopes.
-- On risk, clear material selection to compare all six. Mining/refining bars show lower HHI; upper bounds are in tooltips. The square 0–1 scatter compares concentration, not physical shortage.
-- On outlook, each KPI and demand chart shows CPS, STEPS and HDS with the same fixed colours. There is no scenario selector. The year is a single-row button choice; the All grades pill toggle is at the top of the Graphite card (On/green/right when selected, Off/grey/left for Graphite). Cobalt/grid storage retains reported 0. A source-missing category remains blank/dash with the status tooltip. Graphite scope changes do not affect other material families. Supply stops at 2040; demand extends to 2050.
-- The combined map shows separate circles in two stage colours, not pies. Offsets of ±3° are display-only; they are not facility coordinates. Nearby circles may overlap. Other countries is excluded.
+- All 24 CSV tables refresh without path, relationship or measure errors.
+- Material, reporting-area, basis and year filters retain their intended scopes; graphite definitions remain separate.
+- Germany / lithium carbonates / 2024 / EUR agrees with the reproducible queries for imports, exports, partner shares and HHI.
+- Country shares, including Other countries, sum to 100% per available stage panel before rounding; map points represent identified countries only.
+- Risk visuals compare physical-output concentration for mining/refining, while the trade table distinguishes EUR and product-mass concentration.
+- Scenario colours and end-use ordering remain consistent; reported zeroes and missing observations stay distinct.
+- Labels, cards, map interactions and navigation remain readable in the published report.
 
-The preview PNGs are design previews, not proof of Desktop acceptance. No automatic Service publication is performed by this workflow.
+Refreshing the source project does not update Power BI Service. Publish and replace the existing report from Desktop to update the published version. Review the [licensing requirements](../sources/licensing.md) before publishing a new source capture.
 
-Pulling updates the source checkout and prepares a Desktop copy. It does not replace the already published Power BI Service report. Refresh and publish the updated report from Desktop to make the new version visible in the Service.
-
-Working-copy inputs are verified against the selected commit on every launch, including reused folders. To open a fresh copy while preserving an older runtime, run `powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\Update-PowerBI.ps1 -FreshCopy`. The Supply import derives the presentation-only MapPoint from Country and Stage if an older CSV lacks it; other required fields must still be present. Refresh the model after opening the new copy, then publish and replace the existing report to retain its URL. Pulling Git alone does not update a published report.
-
-The graphite scope control uses two embedded SVG images with a drawn circular thumb and explicit On/Off labels, including selected hover and press states. Its artwork does not depend on a callout font or external image hosting.
-
-The All grades caption sits to the left of the switch. The native callout and label are both hidden with explicit transparency across default, selected, hover and press states so the product-field text cannot overlap the SVG.
-
-Saved starting selections are Copper/2025 on Supply, rare-earth-containing magnets/Germany/2024/EUR on Trade, all materials/2030 on Risk, and Copper/2030 with All grades selected on Outlook. All grades changes graphite only. The SQL-derived preview intentionally illustrates Lithium/2030 supply and Lithium/2040 demand; it is not a screenshot of the saved opening selections.
+The committed PNGs are SQL-derived design previews, not native screenshots. The published report and repository may have different update times; record the source capture when interpreting results.

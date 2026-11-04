@@ -2,6 +2,8 @@
 
 A reproducible analytics product for comparing global mining/refining concentration, European trade exposure and critical-material demand scenarios. Germany is the main analytical lens; the report also supports France, Italy, Spain, Poland, the Netherlands and the official EU27 external-trade aggregate.
 
+**[Explore the interactive Power BI report](https://app.powerbi.com/view?r=eyJrIjoiYWM2MzI5NjMtOGUzNi00ZDI1LThkMzYtOGUwNTU3NWJmMjI1IiwidCI6IjM5YTFiNjM3LTFmODktNGQzOS1iZjNlLWFiNzczZGRmOGJhZSJ9)**
+
 **Stack:** Python · SQL · DuckDB · dbt Core · Power BI · GitHub Actions.
 
 ## Business questions
@@ -23,9 +25,9 @@ A reproducible analytics product for comparing global mining/refining concentrat
 
 Six periodic material tiles select Cu, Co, Li, Ni, C or REE. Traded CN8 forms remain distinct from IEA material definitions. Fixed partner/end-use axes make selections easier to compare. Three scenario colours are shared by all outlook KPI values, lines and end-use bars; scenario alternatives are not stacked into a sum. Reported zeros stay zero; missing source observations are not filled with zero.
 
-![SQL-derived design preview; native Desktop acceptance pending](dashboards/previews/design-preview-1.png)
+![Global Supply Landscape — SQL-derived design preview](dashboards/previews/design-preview-1.png)
 
-The included images are **SQL-derived design previews**, not Power BI screenshots. PBIP/TMDL/PBIR definitions and data pass offline checks; native Desktop rendering, DAX execution and map interactions require the [acceptance checks](docs/operations/powerbi.md).
+The image is a **SQL-derived design preview**. Use the interactive report above to explore the published Power BI visuals. [Report setup and validation](docs/operations/powerbi.md) explain how to reproduce the report locally.
 
 ## Selected findings
 
@@ -71,9 +73,9 @@ The report inputs contain 558 native demand rows, 448 native supply rows and 16,
 
 [Source inventory](docs/sources/inventory.md) · [Licensing and attribution](docs/sources/licensing.md).
 
-## Open and update on a Windows VM
+## Open the Power BI source project
 
-Install Git for Windows and Power BI Desktop, then run PowerShell:
+The repository includes the text-based Power BI project, report inputs and data manifest. To edit it, use Power BI Desktop on Windows; the published report can be viewed in a browser.
 
 ```powershell
 git clone https://github.com/anastasia-klein/global-critical-materials-intelligence.git
@@ -81,9 +83,7 @@ cd global-critical-materials-intelligence
 powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\Update-PowerBI.ps1
 ```
 
-For every subsequent update, close Power BI Desktop and run that last command again. It performs `git pull --ff-only`, checks CSV fingerprints and opens a commit-specific local working copy with its DataFolder configured. The checkout stays clean. The published report keeps the font chain `'Avenir Next', Arial, sans-serif`: each reader uses Avenir Next when available and Arial otherwise. Omit `-FontName` to preserve this behaviour. `-ExecutionPolicy Bypass` applies only to this PowerShell process, not the machine's saved policy.
-
-No Python, DuckDB driver, cloud warehouse or source API calls are needed just to open the included report inputs. Power BI Desktop still needs **Refresh** after opening. See [VM operation details](docs/operations/powerbi.md).
+The script checks the report inputs, configures local file paths and opens the project. Select **Refresh** to load the included CSVs. See [report setup](docs/operations/powerbi.md) for update and validation instructions.
 
 ## Reproduce the analytical pipeline
 

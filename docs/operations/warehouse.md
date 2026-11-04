@@ -25,7 +25,7 @@ python scripts/validate_powerbi.py --project dashboards/powerbi --database data/
 python scripts/validate_powerbi_design.py --project dashboards/powerbi --output work/validation/presentation.json
 ```
 
-Review the data/model diff together before committing refreshed report inputs. Export manifest fingerprints and CSVs are one atomic Git change. No database or large raw archive is required on the Windows VM. Its update script checks those fingerprints before opening Desktop.
+Review the data/model diff together before committing refreshed report inputs. Export manifest fingerprints and CSVs are one atomic Git change. Opening the Power BI report requires only the exported CSVs. The setup script verifies their fingerprints before opening Desktop.
 
 The independent validator recomputes metrics from native facts with Decimal. Negative controls deliberately corrupt disposable copies and require the expected tests to fail; they never modify the accepted database. CI uses actual bounded source fixtures without live API calls. Local tests and hosted Actions runs are separate evidence.
 

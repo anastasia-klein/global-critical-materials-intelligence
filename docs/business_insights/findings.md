@@ -12,4 +12,4 @@ Run `python scripts/run_findings.py` with the warehouse dependencies installed. 
 
 The concentration comparisons concern lower bounds in named/residual source panels; inspect upper bounds before making an interval-sensitive decision. Expected supply is a scenario estimate, not an observed historical production panel or installed capacity. Graphite/all-grades are different scopes. Partner shares are reported trading locations, not mine origin; CN8 lithium carbonate is not all lithium trade. EV share refers to the sum of returned native end uses, not verified primary-material requirements. Rounded display values are not new source precision.
 
-Visual locations describe the authored report. Native Desktop interactions and DAX values must pass the operation checklist before using screenshots as runtime evidence. These findings can also be checked directly with the SQL, independently of Desktop.
+Visual locations refer to the four report pages. Each finding can be reproduced directly with SQL. After model or report changes, use the [validation checklist](../operations/powerbi.md) to reconcile the visuals with the analytical results.
