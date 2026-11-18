@@ -4,6 +4,8 @@ A reproducible analytics product for comparing global mining/refining concentrat
 
 **[Explore the interactive Power BI report](https://app.powerbi.com/view?r=eyJrIjoiYWM2MzI5NjMtOGUzNi00ZDI1LThkMzYtOGUwNTU3NWJmMjI1IiwidCI6IjM5YTFiNjM3LTFmODktNGQzOS1iZjNlLWFiNzczZGRmOGJhZSJ9)**
 
+**[Explore the independent web report — GitHub Pages](https://anastasia-klein.github.io/global-critical-materials-intelligence/)** · HTML, CSS, JavaScript and SVG; the same fixed data capture, available independently of Power BI.
+
 **Stack:** Python · SQL · DuckDB · dbt Core · Power BI · GitHub Actions.
 
 ## Business questions
@@ -96,6 +98,10 @@ See [model grains](docs/architecture/model_grains.md), [metric formulas](docs/me
 The report inputs contain 558 native demand rows, 448 native supply rows and 16,964 native trade rows before presentation projections. National trade denominators include intra-EU partners; EU27 uses the native external-partner total with fixed 2020 membership. The bloc must not be added to individual countries.
 
 [Source inventory](docs/sources/inventory.md) · [Licensing and attribution](docs/sources/licensing.md).
+
+## Independent web edition
+
+The four-page [GitHub Pages report](https://anastasia-klein.github.io/global-critical-materials-intelligence/) reproduces the primary filters and analytical values without a Power BI licence or Microsoft account. It uses a versioned browser snapshot built from the verified report inputs, local SVG charts and Natural Earth geometry. Filter selections are shareable in the URL; chart values can be viewed as tables or downloaded as CSV. [Implementation, data parity and publishing](web/README.md).
 
 ## Reproduce the project
 

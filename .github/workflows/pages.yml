@@ -1,0 +1,64 @@
+name: Publish independent web report
+on:
+  push:
+    branches: [main]
+    paths: ['web/**', 'scripts/build_web_data.py', 'scripts/verify_report_inputs.py', 'dashboards/powerbi/data/**', 'dashboards/assets/**', 'NOTICE.md', 'LICENSE', '.github/workflows/pages.yml']
+  pull_request:
+    paths: ['web/**', 'scripts/build_web_data.py', 'scripts/verify_report_inputs.py', 'dashboards/powerbi/data/**', 'dashboards/assets/**', 'NOTICE.md', 'LICENSE', '.github/workflows/pages.yml']
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: pages-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  validate-and-package:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v7
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Rebuild browser snapshot from verified report inputs
+        run: |
+          python scripts/build_web_data.py
+          git diff --exit-code -- web/data
+      - name: Validate JavaScript and analytical parity
+        run: |
+          node --check web/core.js
+          node --check web/charts.js
+          node --check web/app.js
+          node --test web/tests/*.test.mjs
+      - name: Package only the public web report
+        if: github.event_name != 'pull_request'
+        run: |
+          mkdir _site
+          cp web/index.html web/styles.css web/core.js web/charts.js web/app.js web/favicon.svg _site/
+          cp -R web/data _site/data
+          cp NOTICE.md LICENSE _site/
+          touch _site/.nojekyll
+      - uses: actions/upload-pages-artifact@v4
+        if: github.event_name != 'pull_request'
+        with:
+          path: _site
+  deploy:
+    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+    needs: validate-and-package
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v5
+      - name: Publish web report
+        id: deployment
+        uses: actions/deploy-pages@v4

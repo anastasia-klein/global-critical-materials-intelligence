@@ -2,7 +2,7 @@
 
 ## Explore the published report
 
-Open the public Power BI report from the [project README](../README.md). No local installation is needed to explore it. [Report interpretation](methodology/report_interpretation.md) explains scope, residual groups, HHI and scenarios.
+Open either the public Power BI report or the independent [GitHub Pages edition](https://anastasia-klein.github.io/global-critical-materials-intelligence/) from the [project README](../README.md). Neither requires a local installation; the web edition is independent of Power BI availability. [Report interpretation](methodology/report_interpretation.md) explains scope, residual groups, HHI and scenarios.
 
 ## Open the Power BI source project
 
@@ -58,3 +58,13 @@ python scripts/validate_business_metrics.py --database work/ci/ci.duckdb --outpu
 ```
 
 CI also checks deliberate business-rule failures, portable report definitions and the Windows setup script. Disposable outputs stay under `work/`; CI does not refresh the committed report capture from live APIs. Static checks do not execute DAX or the native rendering engine; use the [Power BI validation checklist](operations/powerbi.md) after model or report changes.
+
+## Run the independent web report locally
+
+```sh
+python scripts/build_web_data.py
+node --test web/tests/*.test.mjs
+python -m http.server 8768 --directory web
+```
+
+Open `http://localhost:8768/`. Python uses only its standard library for this build; Node 22 runs the tests. See the [web report documentation](../web/README.md) for coverage, snapshot provenance and GitHub Pages deployment.
