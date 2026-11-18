@@ -4,7 +4,7 @@ A reproducible analytics product for comparing global mining/refining concentrat
 
 **[Explore the interactive Power BI report](https://app.powerbi.com/view?r=eyJrIjoiYWM2MzI5NjMtOGUzNi00ZDI1LThkMzYtOGUwNTU3NWJmMjI1IiwidCI6IjM5YTFiNjM3LTFmODktNGQzOS1iZjNlLWFiNzczZGRmOGJhZSJ9)**
 
-**[Explore the independent web report — GitHub Pages](https://anastasia-klein.github.io/global-critical-materials-intelligence/)** · HTML, CSS, JavaScript and SVG; the same fixed data capture, available independently of Power BI.
+If the Power BI report is unavailable, [open the webdashbord](https://anastasia-klein.github.io/global-critical-materials-intelligence/).
 
 **Stack:** Python · SQL · DuckDB · dbt Core · Power BI · GitHub Actions.
 
