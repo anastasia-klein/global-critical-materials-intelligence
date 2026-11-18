@@ -30,6 +30,7 @@ jobs:
           git diff --exit-code -- web/data
       - name: Validate JavaScript and analytical parity
         run: |
+          node --check web/layout.js
           node --check web/core.js
           node --check web/charts.js
           node --check web/app.js
@@ -38,7 +39,7 @@ jobs:
         if: github.event_name != 'pull_request'
         run: |
           mkdir _site
-          cp web/index.html web/styles.css web/core.js web/charts.js web/app.js web/favicon.svg _site/
+          cp web/index.html web/styles.css web/core.js web/charts.js web/app.js web/layout.js web/favicon.svg _site/
           cp -R web/data _site/data
           cp NOTICE.md LICENSE _site/
           touch _site/.nojekyll

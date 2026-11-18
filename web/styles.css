@@ -29,3 +29,74 @@
 @media(max-width:760px){body{padding:16px 12px 0}.header{gap:15px}nav{display:grid!important;grid-template-columns:1fr 1fr;gap:7px;width:100%}nav a{padding:10px;font-size:12px;min-height:45px}.page-head{gap:15px}.material-wrap{width:100%}.materials{justify-content:space-between;gap:5px}.material{width:calc((100vw - 54px)/6);height:82px;min-width:0}.symbol{font-size:26px}.material-name{font-size:9px;letter-spacing:-.3px}.atomic{font-size:9px}.question h2{font-size:26px}.controls{gap:10px}.years{gap:5px}.years button{min-width:0;padding:8px 12px}.supply-grid,.trade-grid,.risk-grid,.outlook-grid{display:flex;flex-direction:column;gap:14px}.country-panel .chart{height:620px}.supply-map .chart{height:250px}.supply-kpis{grid-template-columns:1fr 1fr}.kpi{padding:12px}.trade-kpis{grid-template-columns:1fr 1fr;gap:10px}.trade-kpis .kpi:last-child{grid-column:1/3}.kpi .big{font-size:25px}.scenario-kpis{grid-template-columns:1fr}.scenario-value span{font-size:25px}.scenario-value b{margin-bottom:4px}.scenario-values{margin-top:7px}.risk-side{display:flex;flex-direction:column}.risk-filters{grid-template-columns:1fr}.header-controls{gap:8px}.risk-bars .chart{height:450px}.scatter-panel .chart{height:400px}.enduses-panel .chart{height:570px}.panel{padding:12px 10px 7px;border-radius:16px}.panel h3{font-size:13px}.panel-head{flex-wrap:wrap;gap:4px}.filter{min-width:140px;flex:1}.select-group{width:100%;gap:10px}.trade-grid .chart{height:480px}.chart .axis,.chart .value{font-size:10px}.data-table{font-size:11px}.data-table th,.data-table td{padding:8px 3px}footer{flex-direction:column;gap:8px}footer .attribution{text-align:left}}
 @media(prefers-reduced-motion:no-preference){button,a{transition:background-color .12s,box-shadow .12s}}
 @media print{body{padding:0}nav,.controls,.tile-options,.chart-data,.material-wrap{display:none!important}.panel,.kpi{box-shadow:none;break-inside:avoid}.page-head{display:block}footer{font-size:9px}}
+
+/* Desktop fit-to-window: the complete sheet, including header and footer,
+   is scaled using the actual browser viewport. Nothing is cropped to fake a fit. */
+body.fit-report{height:100vh;height:100dvh;min-height:0;padding:0;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.fit-report .viewport-fit{position:relative;flex:none}
+.fit-report .fit-sheet{position:absolute;left:0;top:0;transform-origin:top left;width:1600px;height:900px;padding:14px 20px 10px;display:flex;flex-direction:column;gap:10px}
+.fit-sheet>.header,.fit-sheet>main,.fit-sheet>footer{width:100%}
+.fit-report .header{flex:none;flex-wrap:nowrap;align-items:center;margin:0;gap:20px;max-width:none}
+.fit-report .brand h1{font-size:30px;line-height:1.2;margin-bottom:4px}
+.fit-report .brand p{font-size:11px}
+.fit-report .header nav{display:flex!important;max-width:65%;width:auto;gap:10px}
+.fit-report nav a{font-size:13px;padding:12px;min-height:44px}
+.fit-report main{flex:1;min-height:0;display:flex;flex-direction:column;margin:0;max-width:none}
+.fit-report .report-frame{height:auto!important;flex:1;min-height:0;display:flex;flex-direction:column;gap:10px}
+.fit-report .page-head{flex:none;flex-wrap:nowrap;gap:20px;margin:0}
+.fit-report .question h2{font-size:26px;line-height:1.15;margin-bottom:6px}
+.fit-report .question p{font-size:11px;line-height:1.4}
+.fit-report .header-controls{margin-top:7px;gap:10px}
+.fit-report .header-controls .select-group{gap:10px;flex-wrap:nowrap;width:auto}
+.fit-report .header-controls .filter{min-width:170px;padding:6px 10px}
+.fit-report .filter label{font-size:11px;margin-bottom:3px}
+.fit-report .filter select{font-size:12px;padding:4px 6px}
+.fit-report .years{gap:7px}
+.fit-report .years button{font-size:12px;min-width:72px;padding:7px 12px}
+.fit-report .material-wrap{width:auto;margin:0}
+.fit-report .materials{gap:8px}
+.fit-report .material{width:78px;height:83px}
+.fit-report .symbol{font-size:29px}
+.fit-report .material-name{font-size:10px;margin-top:8px;letter-spacing:0}
+.fit-report .tile-options{margin-top:5px;min-height:20px}
+.fit-report .report-frame>.kpis{flex:none;margin:0;gap:10px}
+.fit-report .report-frame>.chart-note{flex:none;margin:0;font-size:9px;line-height:1.35}
+.fit-report .kpi{padding:9px 12px;border-radius:15px}
+.fit-report .kpi h3,.fit-report .panel h3{font-size:12px}
+.fit-report .kpi .big{font-size:28px;margin-top:6px}
+.fit-report .kpi .range{font-size:23px}
+.fit-report .scenario-values{margin-top:7px}
+.fit-report .scenario-value b{font-size:10px;margin-bottom:7px}
+.fit-report .scenario-value span{font-size:23px}
+.fit-report .panel{display:flex;flex-direction:column;min-height:0;padding:10px 12px 6px;border-radius:16px}
+.fit-report .panel-head{flex:none;min-height:20px;flex-wrap:nowrap}
+.fit-report .legend{flex:none;font-size:10px;margin:5px 0 3px;min-height:14px}
+.fit-report .panel-head .legend{margin:0}
+.fit-report .chart{flex:1;min-height:0;height:auto}
+.fit-report .chart-note{flex:none;font-size:9px;line-height:1.35;margin:2px 0 4px}
+.fit-report .chart-data{flex:none;font-size:10px;margin-top:3px;padding-top:3px}
+.fit-report .supply-grid,.fit-report .trade-grid,.fit-report .risk-grid,.fit-report .outlook-grid{flex:1;min-height:0;display:grid;gap:12px}
+.fit-report .supply-grid{grid-template-columns:1.1fr 1.7fr 1.25fr;grid-template-rows:minmax(0,1.2fr) minmax(0,1fr)}
+.fit-report .supply-kpis{min-height:0;gap:10px}
+.fit-report .country-panel{grid-column:3;grid-row:1/3}
+.fit-report .supply-trend{grid-column:1/3}
+.fit-report .trade-grid{grid-template-columns:1fr 1fr}
+.fit-report .trade-kpis{grid-template-columns:repeat(5,1fr)}
+.fit-report .trade-kpis .kpi:last-child{grid-column:auto}
+.fit-report .risk-grid{grid-template-columns:1.15fr 1fr 1.1fr}
+.fit-report .risk-side{grid-column:auto;display:flex;flex-direction:column;min-height:0;gap:10px}
+.fit-report .risk-filters{flex:none;grid-template-columns:1fr;gap:8px}
+.fit-report .risk-filters .filter{padding:6px 10px}
+.fit-report .risk-side .note{flex:none;font-size:10px;line-height:1.35}
+.fit-report .note p{margin:5px 0}
+.fit-report .risk-side .data-table{font-size:10px}
+.fit-report .risk-side .data-table td,.fit-report .risk-side .data-table th{padding:6px 4px}
+.fit-report .scenario-kpis{grid-template-columns:repeat(3,1fr)}
+.fit-report .outlook-grid{grid-template-columns:1.2fr .55fr 1.15fr;grid-template-rows:minmax(0,1.05fr) minmax(0,1fr)}
+.fit-report .demand-panel{grid-column:1/3}
+.fit-report .enduses-panel{grid-column:3;grid-row:1/3}
+.fit-report .outlook-context{grid-column:auto;font-size:10px;line-height:1.35}
+.fit-report .methodology{flex:none;margin-top:6px;padding:3px 0;font-size:10px;line-height:1.4}
+.fit-report footer{flex:none;flex-direction:row;max-width:none;margin:0;padding:1px 0 0;font-size:9px;line-height:1.4;gap:20px}
+.fit-report footer .attribution{text-align:right}
+@media print{body.fit-report{display:block;height:auto;overflow:visible}.fit-report .viewport-fit{width:auto!important;height:auto!important}.fit-report .fit-sheet{position:static;transform:none!important;width:auto;height:auto}.fit-report .report-frame{min-height:700px}}

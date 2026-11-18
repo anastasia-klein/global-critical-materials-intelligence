@@ -6,7 +6,7 @@ export function compact(x){if(!finite(x))return '—';const a=Math.abs(x);return
 const tx=(x,y,t,cls='',extra='')=>`<text x="${x}" y="${y}" class="${cls}" ${extra}>${safe(t)}</text>`;
 const ln=(x,y,a,b,cls='grid-line')=>`<line x1="${x}" y1="${y}" x2="${a}" y2="${b}" class="${cls}"/>`;
 const tip=t=>`tabindex="0" data-tip="${safe(t)}" aria-label="${safe(t)}"`;
-function size(host){return {w:Math.max(300,host.clientWidth),h:Math.max(200,host.clientHeight)};}
+function size(host){return {w:Math.max(300,host.clientWidth),h:Math.max(110,host.clientHeight)};}
 function draw(host,w,h,html,label){host.innerHTML=`<svg viewBox="0 0 ${w} ${h}" role="img" aria-label="${safe(label)}">${html}</svg>`;}
 function ticks(max){const raw=Math.max(max,1e-9)/4,p=10**Math.floor(Math.log10(raw)),step=[1,2,2.5,5,10].map(v=>v*p).find(v=>v>=raw);return Array.from({length:Math.ceil(max/step)+1},(_,i)=>i*step);}
 function label(host,w,h){draw(host,w,h,tx(w/2,h/2,'No observations returned for this selection','empty','text-anchor="middle"'),'No source observations');}
